@@ -1,9 +1,9 @@
 //
 //  GSTracker.m
-//  GoSquaredTester
+//  GoSquared-iOS-Native
 //
 //  Created by Giles Williams on 12/10/2014.
-//  Copyright (c) 2014 MCNGoSquaredTester. All rights reserved.
+//  Copyright (c) 2014 Urban Massage. All rights reserved.
 //
 
 #import "GSTracker.h"
@@ -166,6 +166,7 @@ static GSTracker *sharedTracker = nil;
 #pragma mark Private - HTTP Request methods
 
 - (void)scheduleRequest:(GSRequest *)request {
+    // NOTE - this is where we'll add the requests to a queue later to enable offline event sync
     NSLog(@"GSTracker::scheduleRequest - %@", request);
 }
 
