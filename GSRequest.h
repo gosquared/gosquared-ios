@@ -19,4 +19,6 @@ enum GSRequestMethod {
 
 + (GSRequest *)requestWithMethod:(enum GSRequestMethod)method url:(NSURL *)url body:(NSDictionary *)body;
 
+- (void)send;
+
 @end

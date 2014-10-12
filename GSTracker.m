@@ -168,6 +168,8 @@ static GSTracker *sharedTracker = nil;
 - (void)scheduleRequest:(GSRequest *)request {
     // NOTE - this is where we'll add the requests to a queue later to enable offline event sync
     NSLog(@"GSTracker::scheduleRequest - %@", request);
+    
+    [request send];
 }
 
 

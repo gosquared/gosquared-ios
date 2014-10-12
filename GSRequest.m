@@ -8,15 +8,22 @@
 
 #import "GSRequest.h"
 
-@interface GSRequest ()
+const float kGSRequestDefaultTimeout = 20.0f;
+
+@interface GSRequest () <NSURLConnectionDelegate>
 
 @property enum GSRequestMethod method;
 @property (strong, nonatomic) NSURL *url;
 @property (strong, nonatomic) NSDictionary *body;
 
+@property (strong, nonatomic) NSMutableData *responseData;
+
 @end
 
-@implementation GSRequest
+@implementation GSRequest {
+    NSMutableURLRequest *request;
+    NSURLConnection *connection;
+}
 
 + (GSRequest *)requestWithMethod:(enum GSRequestMethod)method url:(NSURL *)url body:(NSDictionary *)body {
     GSRequest *r = [[GSRequest alloc] init];
@@ -31,27 +38,81 @@
 }
 
 - (NSString *)description {
-    NSString *methodStr = nil;
+    NSString *methodStr = [self methodString];
     
+    return [NSString stringWithFormat:@"GSRequest: %p\nMethod: %@\nURL: %@\nBody: %@", self, methodStr, self.url, self.body];
+}
+
+- (NSString *)methodString {
     switch(self.method) {
-        case GSRequestMethodGET:
-            methodStr = @"GET";
-            break;
         case GSRequestMethodPUT:
-            methodStr = @"PUT";
+            return @"PUT";
             break;
         case GSRequestMethodPOST:
-            methodStr = @"POST";
+            return @"POST";
             break;
         case GSRequestMethodDELETE:
-            methodStr = @"DELETE";
+            return @"DELETE";
             break;
             
         default:
-            methodStr = @"<unknown>";
+            return @"GET";
+    }
+}
+
+- (void)send {
+    request = [NSMutableURLRequest requestWithURL:self.url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kGSRequestDefaultTimeout];
+    [request setHTTPMethod:[self methodString]];
+    
+    if(self.body) {
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.body
+                                                           options:kNilOptions
+                                                             error:&error];
+        
+        if (!jsonData) {
+            NSLog(@"GSRequest - error serialising body params to json: %@", error);
+        } else {
+            [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
+            [request setHTTPBody:jsonData];
+        }
     }
     
-    return [NSString stringWithFormat:@"GSRequest: %p\nMethod: %@\nURL: %@\nBody: %@", self, methodStr, self.url, self.body];
+    connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+}
+
+- (void)finished {
+    connection = nil;
+    request = nil;
+}
+
+
+#pragma mark NSURLConnectionDelegate methods
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    // ignore for now
+    
+    self.responseData = [[NSMutableData alloc]init];
+}
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    // ignore for now
+    [self.responseData appendData:data];
+}
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    // ignore for now
+    NSLog(@"GSRequest::didFailWithError - %@", error);
+    
+    [self finished];
+}
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    // ignore for now
+    
+#ifdef DEBUG
+    NSString *string = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
+    NSLog(@"GSRequest received responseData: \n%@", string);
+#endif
+    
+    [self finished];
 }
 
 @end
