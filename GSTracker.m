@@ -97,7 +97,9 @@ static GSTracker *sharedTracker = nil;
 - (void)unidentify {
     [self verifySiteTokenIsSet];
     
-    [self resetUUID];
+    // set userID to a new anon ID
+    identified = NO;
+    currentUserID = [self generateUUID:YES];
 }
 
 
@@ -109,12 +111,6 @@ static GSTracker *sharedTracker = nil;
 
 
 #pragma mark Private - UUID methods
-
-- (void)resetUUID {
-    identified = NO;
-    
-    currentUserID = [self generateUUID:YES];
-}
 
 - (NSString *)generateUUID:(BOOL)forceRegenerate {
     // set forceRegenerate to NO to simply pick up the existing UUID
