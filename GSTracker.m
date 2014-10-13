@@ -12,6 +12,8 @@
 #import "GSEvent.h"
 #import "GSTransaction.h"
 
+#import <UIKit/UIKit.h>
+
 static NSString * const kGSAPIBase = @"https://data.gosquared.com";
 static NSString * const kGSAnonymousUUIDDefaultsKey = @"com.gosquared.defaults.anonUUID";
 static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.identifiedUUID";
@@ -75,11 +77,11 @@ static GSTracker *sharedTracker = nil;
     // NOTE - this method needs input from the GS team to determine if we should track a fake page view or an event
     [self verifySiteTokenIsSet];
     
-    GSEvent *e = [GSEvent eventWithName:[NSString stringWithFormat:@"Screen: %@", screenName]];
+    //GSEvent *e = [GSEvent eventWithName:[NSString stringWithFormat:@"Screen: %@", screenName]];
     
-    NSURL *url = [self urlForEvent:e];
+    NSURL *url = [self urlForScreenView:screenName];
     
-    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST url:url body:e.properties];
+    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST url:url body:nil];//e.properties];
     [self scheduleRequest:r];
 }
 
@@ -163,6 +165,22 @@ static GSTracker *sharedTracker = nil;
     
     // build URL
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@/event?name=%@&userID=%@", kGSAPIBase, self._siteToken, versionString, escapedEventName, escapedUserID];
+    return [NSURL URLWithString:urlString];
+}
+
+- (NSURL *)urlForScreenView:(NSString *)screen {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    int screenWidth = (int)screenRect.size.width;
+    int screenHeight = (int)screenRect.size.height;
+    
+    NSString *escapedScreenName = [screen stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString *fakeURL = [NSString stringWithFormat:@"%@%%2F%@", [[NSBundle mainBundle] bundleIdentifier], escapedScreenName];
+    
+    long time = (long)[[NSDate new] timeIntervalSince1970];
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://data.gosquared.com/pv?cs=UTF-8&cd=24&fl=15.0%%20r0&je=1&la=en-us&sw=%d&sh=%d&dp=1&pu=%@&pt=%@&ri=0&ru=-&re=1&vi=198&pv=422&lv=%li&vw=%d&vh=%d&dw=%d&dh=%d&st=0&sl=0&pp=0&tz=-60&cb=_0&a=%@&id=692873996&cid=%@&tv=6.1.1530", screenWidth, screenHeight, fakeURL, escapedScreenName, time, screenWidth, screenHeight, screenWidth, screenHeight, self._siteToken, currentUserID];
+    
     return [NSURL URLWithString:urlString];
 }
 
