@@ -31,7 +31,7 @@ People
 ----
 
 ####Identify your user
-*Note the library caches your identified user ID and uses it again on the next launch. If you do not want this behavour, call unidentify after setSiteToken on each launch.*
+*Note the library caches your identified user ID and uses it again on the next launch. If you do not want this behavior, call unidentify after setSiteToken on each launch.*
 
 
     [[GSTracker sharedInstance] identify:@"test-user-id" properties:@{ @"name": @"Test User" }];
@@ -47,7 +47,6 @@ Ecommerce
     i.price = [NSNumber numberWithFloat:20.0f];
     i.quantity = [NSNumber numberWithInt:2];
     i.revenue = [NSNumber numberWithFloat:40.0f]; // auto calculated as price * quantity if not set
-    i.name = @"here's an item!";
     i.name = @"here's an item!";
 
     GSTransaction *t = [GSTransaction transactionWithID:@"my-transaction"];
