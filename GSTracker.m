@@ -10,9 +10,11 @@
 
 #import "GSRequest.h"
 #import "GSEvent.h"
+#import "GSTransaction.h"
 
 static NSString * const kGSAPIBase = @"https://data.gosquared.com";
 static NSString * const kGSAnonymousUUIDDefaultsKey = @"com.gosquared.defaults.anonUUID";
+static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.identifiedUUID";
 
 static GSTracker *sharedTracker = nil;
 
@@ -31,9 +33,15 @@ static GSTracker *sharedTracker = nil;
     self = [super init];
     
     if(self) {
-        // create an anonymous userID
-        identified = NO;
-        currentUserID = [self generateUUID:NO];
+        NSString *identifiedUserID = [[NSUserDefaults standardUserDefaults] objectForKey:kGSIdentifiedUUIDDefaultsKey];
+        if(identifiedUserID) {
+            identified = YES;
+            currentUserID = identifiedUserID;
+        }
+        else {
+            identified = NO;
+            currentUserID = [self generateUUID:NO];
+        }
     }
     
     return self;
@@ -67,8 +75,7 @@ static GSTracker *sharedTracker = nil;
     // NOTE - this method needs input from the GS team to determine if we should track a fake page view or an event
     [self verifySiteTokenIsSet];
     
-    GSEvent *e = [GSEvent eventWithName:@"_screen-view"];
-    e.properties = @{@"name": screenName};
+    GSEvent *e = [GSEvent eventWithName:[NSString stringWithFormat:@"Screen: %@", screenName]];
     
     NSURL *url = [self urlForEvent:e];
     
@@ -89,6 +96,9 @@ static GSTracker *sharedTracker = nil;
     
     GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST url:url body:properties];
     [self scheduleRequest:r];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:userID forKey:kGSIdentifiedUUIDDefaultsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 - (void)identify:(NSString *)userID {
     [self identify:userID properties:nil];
@@ -100,6 +110,18 @@ static GSTracker *sharedTracker = nil;
     // set userID to a new anon ID
     identified = NO;
     currentUserID = [self generateUUID:YES];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kGSIdentifiedUUIDDefaultsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)trackTransaction:(GSTransaction *)transaction {
+    [self verifySiteTokenIsSet];
+    
+    NSURL *url = [self urlForTransaction:transaction];
+    
+    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST url:url body:transaction.serialize];
+    [self scheduleRequest:r];
 }
 
 
@@ -144,6 +166,16 @@ static GSTracker *sharedTracker = nil;
     return [NSURL URLWithString:urlString];
 }
 
+- (NSURL *)urlForTransaction:(GSTransaction *)transaction {
+    // build URL parts
+    NSString *versionString = @"v1";
+    NSString *escapedUserID = [currentUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    // build URL
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@/transaction?userID=%@", kGSAPIBase, self._siteToken, versionString, escapedUserID];
+    return [NSURL URLWithString:urlString];
+}
+
 - (NSURL *)urlForIdentify:(NSString *)userID anonymousUserID:(NSString *)anonymousUserID {
     // build URL parts
     NSString *versionString = @"v1";
@@ -152,11 +184,11 @@ static GSTracker *sharedTracker = nil;
     // build URL
     NSString *urlString;
     if(anonymousUserID == nil) {
-        urlString = [NSString stringWithFormat:@"%@/%@/%@/identify?name=%@", kGSAPIBase, self._siteToken, versionString, escapedUserID];
+        urlString = [NSString stringWithFormat:@"%@/%@/%@/identify?userID=%@", kGSAPIBase, self._siteToken, versionString, escapedUserID];
     }
     else {
         NSString *escapedAnonymousUserID = [anonymousUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        urlString = [NSString stringWithFormat:@"%@/%@/%@/identify?name=%@&anonymousID=%@", kGSAPIBase, self._siteToken, versionString, escapedUserID, escapedAnonymousUserID];
+        urlString = [NSString stringWithFormat:@"%@/%@/%@/identify?userID=%@&anonymousID=%@", kGSAPIBase, self._siteToken, versionString, escapedUserID, escapedAnonymousUserID];
     }
     return [NSURL URLWithString:urlString];
 }

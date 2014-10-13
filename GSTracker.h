@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class GSEvent;
+@class GSTransaction;
 
 @interface GSTracker : NSObject
 
@@ -24,5 +25,8 @@
 - (void)identify:(NSString *)userID;
 - (void)identify:(NSString *)userID properties:(NSDictionary *)properties;
 - (void)unidentify;
+
+// ecommerce
+- (void)trackTransaction:(GSTransaction *)transaction;
 
 @end

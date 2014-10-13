@@ -8,7 +8,11 @@
 
 #import "GSRequest.h"
 
+#import <UIKit/UIKit.h>
+
 const float kGSRequestDefaultTimeout = 20.0f;
+
+static NSString *staticUserAgent = nil;
 
 @interface GSRequest () <NSURLConnectionDelegate>
 
@@ -64,6 +68,23 @@ const float kGSRequestDefaultTimeout = 20.0f;
     request = [NSMutableURLRequest requestWithURL:self.url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kGSRequestDefaultTimeout];
     [request setHTTPMethod:[self methodString]];
     
+    if(staticUserAgent == nil) {
+        NSArray *versionComponents = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
+                                      
+        NSBundle *bundle = [NSBundle mainBundle];
+        NSDictionary *info = [bundle infoDictionary];
+        
+        NSString *appNameStr = [info objectForKey:@"CFBundleName"];
+        NSString *appVersionStr = [info objectForKey:@"CFBundleShortVersionString"];
+        NSString *idiomStr = @"iPhone";
+        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) idiomStr = @"iPad";
+        NSString *iOSVersionStr = [versionComponents componentsJoinedByString:@"_"];
+        
+        staticUserAgent = [NSString stringWithFormat:@"%@/%@ (%@; CPU iPhone OS %@ like Mac OS X)", appNameStr, appVersionStr, idiomStr, iOSVersionStr];
+    }
+    
+    [request setValue:staticUserAgent forHTTPHeaderField:@"User-Agent"];
+    
     if(self.body) {
         NSError *error;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.body
@@ -73,7 +94,8 @@ const float kGSRequestDefaultTimeout = 20.0f;
         if (!jsonData) {
             NSLog(@"GSRequest - error serialising body params to json: %@", error);
         } else {
-            [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
+            NSString *jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
             [request setHTTPBody:jsonData];
         }
     }

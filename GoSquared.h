@@ -9,6 +9,8 @@
 #ifndef GoSquaredTester_GoSquared_h
 #define GoSquaredTester_GoSquared_h
 
+#import "GSTransaction.h"
+#import "GSTransactionItem.h"
 #import "GSEvent.h"
 
 #import "GSTracker.h"
