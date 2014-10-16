@@ -8,18 +8,27 @@
 
 #import <Foundation/Foundation.h>
 
+@class UIViewController;
+
 @class GSEvent;
 @class GSTransaction;
+@class GSDevice;
 
 @interface GSTracker : NSObject
+
+@property (strong, nonatomic) NSString *siteToken;
 
 + (GSTracker *)sharedInstance;
 
 - (void)setSiteToken:(NSString *)siteToken;
 
-// tracking
+// event tracking
 - (void)trackEvent:(GSEvent *)event;
-- (void)trackScreenView:(NSString *)screenName;
+
+// page view tracking
+- (void)trackViewController:(UIViewController *)vc;
+- (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title;
+- (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title urlPath:(NSString *)urlPath;
 
 // people
 - (void)identify:(NSString *)userID;

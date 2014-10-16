@@ -12,9 +12,10 @@
 #import "GSEvent.h"
 #import "GSTransaction.h"
 
+#import "GSPageViewTracker.h"
+
 #import <UIKit/UIKit.h>
 
-static NSString * const kGSAPIBase = @"https://data.gosquared.com";
 static NSString * const kGSAnonymousUUIDDefaultsKey = @"com.gosquared.defaults.anonUUID";
 static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.identifiedUUID";
 
@@ -22,13 +23,15 @@ static GSTracker *sharedTracker = nil;
 
 @interface GSTracker()
 
-@property (strong, nonatomic) NSString *_siteToken;
+@property (strong, nonatomic) GSPageViewTracker *pageViewTracker;
 
 @end
 
 @implementation GSTracker {
     BOOL identified;
     NSString *currentUserID;
+    
+    NSDictionary *deviceMetrics;
 }
 
 - (GSTracker *)init {
@@ -60,29 +63,28 @@ static GSTracker *sharedTracker = nil;
 
 #pragma mark Public methods
 
-- (void)setSiteToken:(NSString *)siteToken {
-    self._siteToken = siteToken;
-}
-
 - (void)trackEvent:(GSEvent *)event {
     [self verifySiteTokenIsSet];
     
-    NSURL *url = [self urlForEvent:event];
+    NSString *urlPath = [self pathForEvent:event];
     
-    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST url:url body:event.properties];
+    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:urlPath body:event.properties];
     [self scheduleRequest:r];
 }
 
-- (void)trackScreenView:(NSString *)screenName {
-    // NOTE - this method needs input from the GS team to determine if we should track a fake page view or an event
-    [self verifySiteTokenIsSet];
+- (void)trackViewController:(UIViewController *)vc {
+    [self trackViewController:vc withTitle:vc.title];
+}
+- (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title {
+    NSString *fakeURL = [NSString stringWithFormat:@"ios-native://%@/%@", [[NSBundle mainBundle] bundleIdentifier], [title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [self trackViewController:vc withTitle:title urlString:fakeURL];
+}
+- (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title urlString:(NSString *)urlString {
+    if(self.pageViewTracker == nil) {
+        self.pageViewTracker = [[GSPageViewTracker alloc] init];
+    }
     
-    //GSEvent *e = [GSEvent eventWithName:[NSString stringWithFormat:@"Screen: %@", screenName]];
-    
-    NSURL *url = [self urlForScreenView:screenName];
-    
-    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST url:url body:nil];//e.properties];
-    [self scheduleRequest:r];
+    [self.pageViewTracker startWithURLString:urlString title:title];
 }
 
 - (void)identify:(NSString *)userID properties:(NSDictionary *)properties {
@@ -94,9 +96,9 @@ static GSTracker *sharedTracker = nil;
     identified = YES;
     currentUserID = userID;
     
-    NSURL *url = [self urlForIdentify:userID anonymousUserID:anonymousUserID];
+    NSString *urlPath = [self pathForIdentify:userID anonymousUserID:anonymousUserID];
     
-    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST url:url body:properties];
+    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:urlPath body:properties];
     [self scheduleRequest:r];
     
     [[NSUserDefaults standardUserDefaults] setObject:userID forKey:kGSIdentifiedUUIDDefaultsKey];
@@ -120,9 +122,9 @@ static GSTracker *sharedTracker = nil;
 - (void)trackTransaction:(GSTransaction *)transaction {
     [self verifySiteTokenIsSet];
     
-    NSURL *url = [self urlForTransaction:transaction];
+    NSString *urlPath = [self pathForTransaction:transaction];
     
-    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST url:url body:transaction.serialize];
+    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:urlPath body:transaction.serialize];
     [self scheduleRequest:r];
 }
 
@@ -130,7 +132,7 @@ static GSTracker *sharedTracker = nil;
 #pragma mark Private - Assertion methods
 
 - (void)verifySiteTokenIsSet {
-    NSAssert((self._siteToken != nil), @"You must call setSiteToken: before any tracking methods");
+    NSAssert((self.siteToken != nil), @"You must call setSiteToken: before any tracking methods");
 }
 
 
@@ -155,60 +157,55 @@ static GSTracker *sharedTracker = nil;
 }
 
 
-#pragma mark Private - URL builder methods
+#pragma mark Private - URL path builder methods
 
-- (NSURL *)urlForEvent:(GSEvent *)event {
+- (NSString *)pathForEvent:(GSEvent *)event {
     // build URL parts
     NSString *versionString = @"v1";
     NSString *escapedEventName = [event.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *escapedUserID = [currentUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     // build URL
-    NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@/event?name=%@&userID=%@", kGSAPIBase, self._siteToken, versionString, escapedEventName, escapedUserID];
-    return [NSURL URLWithString:urlString];
+    return [NSString stringWithFormat:@"/%@/%@/event?name=%@&userID=%@", self.siteToken, versionString, escapedEventName, escapedUserID];
 }
 
-- (NSURL *)urlForScreenView:(NSString *)screen {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    int screenWidth = (int)screenRect.size.width;
-    int screenHeight = (int)screenRect.size.height;
-    
-    NSString *escapedScreenName = [screen stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    NSString *fakeURL = [NSString stringWithFormat:@"%@%%2F%@", [[NSBundle mainBundle] bundleIdentifier], escapedScreenName];
-    
-    long time = (long)[[NSDate new] timeIntervalSince1970];
-    
-    NSString *urlString = [NSString stringWithFormat:@"http://data.gosquared.com/pv?cs=UTF-8&cd=24&fl=15.0%%20r0&je=1&la=en-us&sw=%d&sh=%d&dp=1&pu=%@&pt=%@&ri=0&ru=-&re=1&vi=198&pv=422&lv=%li&vw=%d&vh=%d&dw=%d&dh=%d&st=0&sl=0&pp=0&tz=-60&cb=_0&a=%@&id=692873996&cid=%@&tv=6.1.1530", screenWidth, screenHeight, fakeURL, escapedScreenName, time, screenWidth, screenHeight, screenWidth, screenHeight, self._siteToken, currentUserID];
-    
-    return [NSURL URLWithString:urlString];
-}
-
-- (NSURL *)urlForTransaction:(GSTransaction *)transaction {
+- (NSString *)pathForTransaction:(GSTransaction *)transaction {
     // build URL parts
     NSString *versionString = @"v1";
     NSString *escapedUserID = [currentUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     // build URL
-    NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@/transaction?userID=%@", kGSAPIBase, self._siteToken, versionString, escapedUserID];
-    return [NSURL URLWithString:urlString];
+    return [NSString stringWithFormat:@"/%@/%@/transaction?userID=%@", self.siteToken, versionString, escapedUserID];
 }
 
-- (NSURL *)urlForIdentify:(NSString *)userID anonymousUserID:(NSString *)anonymousUserID {
+- (NSString *)pathForIdentify:(NSString *)userID anonymousUserID:(NSString *)anonymousUserID {
     // build URL parts
     NSString *versionString = @"v1";
     NSString *escapedUserID = [userID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     // build URL
-    NSString *urlString;
     if(anonymousUserID == nil) {
-        urlString = [NSString stringWithFormat:@"%@/%@/%@/identify?userID=%@", kGSAPIBase, self._siteToken, versionString, escapedUserID];
+        return [NSString stringWithFormat:@"/%@/%@/identify?userID=%@", self.siteToken, versionString, escapedUserID];
     }
     else {
         NSString *escapedAnonymousUserID = [anonymousUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        urlString = [NSString stringWithFormat:@"%@/%@/%@/identify?userID=%@&anonymousID=%@", kGSAPIBase, self._siteToken, versionString, escapedUserID, escapedAnonymousUserID];
+        return [NSString stringWithFormat:@"/%@/%@/identify?userID=%@&anonymousID=%@", self.siteToken, versionString, escapedUserID, escapedAnonymousUserID];
     }
-    return [NSURL URLWithString:urlString];
+}
+
+
+#pragma mark Private - Device metrics methods
+
+- (NSDictionary *)deviceMetrics {
+    if(deviceMetrics == nil) {
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    
+        dict[@"screenHeight"] = 
+        
+        deviceMetrics = [NSDictionary dictionaryWithDictionary:dict];
+    }
+    
+    return deviceMetrics;
 }
 
 
@@ -217,10 +214,10 @@ static GSTracker *sharedTracker = nil;
 
 - (void)scheduleRequest:(GSRequest *)request {
     // NOTE - this is where we'll add the requests to a queue later to enable offline event sync
-    NSLog(@"GSTracker::scheduleRequest - %@", request);
-    
     [request send];
 }
+
+
 
 
 @end

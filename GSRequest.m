@@ -11,6 +11,7 @@
 #import <UIKit/UIKit.h>
 
 const float kGSRequestDefaultTimeout = 20.0f;
+static NSString * const kGSAPIBase = @"https://data.gosquared.com";
 
 static NSString *staticUserAgent = nil;
 
@@ -29,12 +30,12 @@ static NSString *staticUserAgent = nil;
     NSURLConnection *connection;
 }
 
-+ (GSRequest *)requestWithMethod:(enum GSRequestMethod)method url:(NSURL *)url body:(NSDictionary *)body {
++ (GSRequest *)requestWithMethod:(enum GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body {
     GSRequest *r = [[GSRequest alloc] init];
     
     if(r) {
         r.method = method;
-        r.url = url;
+        r.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kGSAPIBase, path]];
         r.body = body;
     }
     
@@ -65,6 +66,8 @@ static NSString *staticUserAgent = nil;
 }
 
 - (void)send {
+    NSLog(@"GSRequest::send - %@", self);
+    
     request = [NSMutableURLRequest requestWithURL:self.url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kGSRequestDefaultTimeout];
     [request setHTTPMethod:[self methodString]];
     
