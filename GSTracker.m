@@ -185,11 +185,11 @@ static GSTracker *sharedTracker = nil;
     
     // build URL
     if(anonymousUserID == nil) {
-        return [NSString stringWithFormat:@"/%@/%@/identify?userID=%@", self.siteToken, versionString, escapedUserID];
+        return [NSString stringWithFormat:@"/%@/%@/people/%@/identify", self.siteToken, versionString, escapedUserID];
     }
     else {
         NSString *escapedAnonymousUserID = [anonymousUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        return [NSString stringWithFormat:@"/%@/%@/identify?userID=%@&anonymousID=%@", self.siteToken, versionString, escapedUserID, escapedAnonymousUserID];
+        return [NSString stringWithFormat:@"/%@/%@/people/%@/identify/%@", self.siteToken, versionString, escapedAnonymousUserID, escapedUserID];
     }
 }
 

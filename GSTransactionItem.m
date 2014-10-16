@@ -27,11 +27,11 @@
 - (NSDictionary *)serialize {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     
-    if(self.name) dict[@"name"] = self.name;
-    if(self.categories) dict[@"categories"] = self.categories;
-    if(self.revenue) dict[@"revenue"] = self.revenue;
-    if(self.quantity) dict[@"quantity"] = self.quantity;
-    if(self.price) dict[@"price"] = self.price;
+    if(self.name != nil) dict[@"name"] = self.name;
+    if(self.categories != nil) dict[@"categories"] = self.categories;
+    if(self.revenue != nil) dict[@"revenue"] = self.revenue;
+    if(self.quantity != nil) dict[@"quantity"] = self.quantity;
+    if(self.price != nil) dict[@"price"] = self.price;
     
     return [NSDictionary dictionaryWithDictionary:dict];
 }
