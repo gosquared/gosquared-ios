@@ -14,6 +14,9 @@
 
 #import "GoSquared.h"
 
+static char const * const kGSDoNotTrackViewControllerTag = "kGSDoNotTrackViewControllerTag";
+static char const * const kGSTrackingTitleViewControllerTag = "kGSTrackingTitleViewControllerTag";
+
 @implementation UIViewController (GSTracking)
 
 + (void)load {
@@ -42,30 +45,39 @@
         } else {
             method_exchangeImplementations(originalVDAMethod, swizzledVDAMethod);
         }
-        /*
-        // swizzle viewWillDisappear
-        SEL originalVWDSelector = @selector(viewWillDisappear:);
-        SEL swizzledVWDSelector = @selector(_gs__viewWillDisappear:);
-        
-        Method originalVWDMethod = class_getInstanceMethod(class, originalVWDSelector);
-        Method swizzledVWDMethod = class_getInstanceMethod(class, swizzledVWDSelector);
-        
-        BOOL didAddVWDMethod =
-        class_addMethod(class,
-                        originalVWDSelector,
-                        method_getImplementation(swizzledVWDMethod),
-                        method_getTypeEncoding(swizzledVWDMethod));
-        
-        if (didAddVWDMethod) {
-            class_replaceMethod(class,
-                                swizzledVWDSelector,
-                                method_getImplementation(originalVWDMethod),
-                                method_getTypeEncoding(originalVWDMethod));
-        } else {
-            method_exchangeImplementations(originalVWDMethod, swizzledVWDMethod);
-        }*/
     });
 }
+
+
+#pragma mark - Associated objects
+
+// allows you to not track a particular ViewController
+- (void)setDoNotTrack:(BOOL)doNotTrack
+{
+    NSNumber *number = [NSNumber numberWithBool:doNotTrack];
+    objc_setAssociatedObject(self, kGSDoNotTrackViewControllerTag, number, OBJC_ASSOCIATION_RETAIN);
+}
+- (BOOL)doNotTrack
+{
+    NSNumber *number = objc_getAssociatedObject(self, kGSDoNotTrackViewControllerTag);
+    
+    if(number == nil) return NO;
+    
+    return [number boolValue];
+}
+
+// allows you to override the title in ViewController.title
+- (void)setTrackingTitle:(NSString *)trackingTitle
+{
+    objc_setAssociatedObject(self, kGSTrackingTitleViewControllerTag, trackingTitle, OBJC_ASSOCIATION_RETAIN);
+}
+- (NSString *)trackingTitle
+{
+    NSString *trackingTitle = objc_getAssociatedObject(self, kGSTrackingTitleViewControllerTag);
+    
+    return trackingTitle;
+}
+
 
 #pragma mark - Method Swizzling
 
@@ -73,27 +85,34 @@
     [self _gs__viewDidAppear:animated];
     
     if([self isKindOfClass:[UINavigationController class]]) {
+        // don't track navigation controllers
+        return;
+    }
+    
+    if([self isKindOfClass:[UIPageViewController class]]) {
+        // don't track page view controllers
         return;
     }
     
     if([[NSString stringWithFormat:@"%@", [self class]] isEqualToString:@"UIInputWindowController"]) {
+        // don't track the keyboard
         return;
     }
     
-    NSLog(@"viewDidAppear: %@ - %@", self.title, [self class]);
+    if([self doNotTrack] == YES) {
+        // adhere to the doNotTrack property
+        return;
+    }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[GSTracker sharedInstance] trackViewController:self];
+        NSString *title = self.title;
+        NSString *trackingTitle = [self trackingTitle];
+        if(trackingTitle != nil) {
+            title = trackingTitle;
+        }
+        
+        [[GSTracker sharedInstance] trackViewController:self withTitle:title];
     });
-    
 }
-/*
-- (void)_gs__viewWillDisappear:(BOOL)animated {
-    [self _gs__viewWillDisappear:animated];
-    
-    NSLog(@"viewWillDissapear: %@", self);
-    
-    [[GSTracker sharedInstance] trackViewController:self];
-}*/
 
 @end

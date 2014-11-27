@@ -10,4 +10,7 @@
 
 @interface UIViewController (GSTracking)
 
+@property (readwrite) BOOL doNotTrack;
+@property (readwrite) NSString *trackingTitle;
+
 @end

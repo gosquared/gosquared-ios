@@ -10,6 +10,8 @@
 
 #import <UIKit/UIKit.h>
 
+static NSMutableArray *GSRequestsInProgress;
+
 const float kGSRequestDefaultTimeout = 20.0f;
 static NSString * const kGSAPIBase = @"https://data.gosquared.com";
 
@@ -17,17 +19,30 @@ static NSString *staticUserAgent = nil;
 
 @interface GSRequest () <NSURLConnectionDelegate>
 
+@property (nonatomic, copy) GSRequestBlock requestCB;
+
 @property enum GSRequestMethod method;
 @property (strong, nonatomic) NSURL *url;
 @property (strong, nonatomic) NSDictionary *body;
-
-@property (strong, nonatomic) NSMutableData *responseData;
 
 @end
 
 @implementation GSRequest {
     NSMutableURLRequest *request;
     NSURLConnection *connection;
+}
+
++ (void)addRequestRetain:(GSRequest *)req {
+    if(!GSRequestsInProgress) {
+        GSRequestsInProgress = [[NSMutableArray alloc] init];
+    }
+    
+    [GSRequestsInProgress addObject:req];
+}
++ (void)clearRequestRetain:(GSRequest *)req {
+    if(GSRequestsInProgress) {
+        [GSRequestsInProgress removeObject:req];
+    }
 }
 
 + (GSRequest *)requestWithMethod:(enum GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body {
@@ -65,15 +80,13 @@ static NSString *staticUserAgent = nil;
     }
 }
 
-- (void)send {
-    NSLog(@"GSRequest::send - %@", self);
-    
+- (void)prepareRequest {
     request = [NSMutableURLRequest requestWithURL:self.url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kGSRequestDefaultTimeout];
     [request setHTTPMethod:[self methodString]];
     
     if(staticUserAgent == nil) {
         NSArray *versionComponents = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
-                                      
+        
         NSBundle *bundle = [NSBundle mainBundle];
         NSDictionary *info = [bundle infoDictionary];
         
@@ -102,29 +115,56 @@ static NSString *staticUserAgent = nil;
             [request setHTTPBody:jsonData];
         }
     }
+}
+
+- (void)sendWithCompletionHandler:(GSRequestBlock)cb {
+#ifdef DEBUG
+    NSLog(@"GSRequest::send - %@", self);
+#endif
+    [self prepareRequest];
     
+    _requestCB = cb;
+    
+    [GSRequest addRequestRetain:self];
     connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+}
+- (void)send {
+    [self sendWithCompletionHandler:nil];
+}
+
+
+- (void)sendSync {
+    [self prepareRequest];
+    
+    NSError *error;
+    NSURLResponse *response;
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    self.responseData = [NSMutableData dataWithData:responseData];
+    self.response = (NSHTTPURLResponse *)response;
+    
+    return;
 }
 
 - (void)finished {
-    connection = nil;
-    request = nil;
+    [GSRequest clearRequestRetain:self];
+    
+    if(_requestCB == nil) return;
+    
+    _requestCB(self.success, self);
 }
 
 
 #pragma mark NSURLConnectionDelegate methods
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    // ignore for now
+    self.response = (NSHTTPURLResponse *)response;
     
-    self.responseData = [[NSMutableData alloc]init];
+    self.responseData = [[NSMutableData alloc] init];
 }
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    // ignore for now
     [self.responseData appendData:data];
 }
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    // ignore for now
     NSLog(@"GSRequest::didFailWithError - %@", error);
     
     [self finished];
@@ -136,6 +176,14 @@ static NSString *staticUserAgent = nil;
     NSString *string = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
     NSLog(@"GSRequest received responseData: \n%@", string);
 #endif
+    
+    NSArray *errorCodes = [NSArray arrayWithObjects:[NSNumber numberWithInt:400], [NSNumber numberWithInt:402], [NSNumber numberWithInt:404],[NSNumber numberWithInt:500],[NSNumber numberWithInt:401],[NSNumber numberWithInt:409], nil];
+    if([errorCodes containsObject:[NSNumber numberWithInteger:[self.response statusCode]]]) {
+        self.success = NO;
+    }
+    else {
+        self.success = YES;
+    }
     
     [self finished];
 }

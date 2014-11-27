@@ -25,11 +25,12 @@ static GSTracker *sharedTracker = nil;
 
 @property (strong, nonatomic) GSPageViewTracker *pageViewTracker;
 
+@property (strong, nonatomic) NSString *currentUserID;
+
 @end
 
 @implementation GSTracker {
     BOOL identified;
-    NSString *currentUserID;
     
     NSDictionary *deviceMetrics;
 }
@@ -41,11 +42,11 @@ static GSTracker *sharedTracker = nil;
         NSString *identifiedUserID = [[NSUserDefaults standardUserDefaults] objectForKey:kGSIdentifiedUUIDDefaultsKey];
         if(identifiedUserID) {
             identified = YES;
-            currentUserID = identifiedUserID;
+            self.currentUserID = identifiedUserID;
         }
         else {
             identified = NO;
-            currentUserID = [self generateUUID:NO];
+            self.currentUserID = [self generateUUID:NO];
         }
     }
     
@@ -73,7 +74,18 @@ static GSTracker *sharedTracker = nil;
 }
 
 - (void)trackViewController:(UIViewController *)vc {
-    [self trackViewController:vc withTitle:vc.title];
+    NSString *title = vc.title;
+    
+    if(title == nil) {
+        if(vc.navigationItem.title != nil) {
+            title = vc.navigationItem.title;
+        }
+        else if(vc.navigationController.title != nil) {
+            title = vc.navigationController.title;
+        }
+    }
+    
+    [self trackViewController:vc withTitle:title];
 }
 - (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title {
     NSString *fakeURL = [NSString stringWithFormat:@"ios-native://%@/%@", [[NSBundle mainBundle] bundleIdentifier], [title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -91,10 +103,10 @@ static GSTracker *sharedTracker = nil;
     [self verifySiteTokenIsSet];
     
     NSString *anonymousUserID = nil;
-    if(!identified) anonymousUserID = currentUserID;
+    if(!identified) anonymousUserID = self.currentUserID;
     
     identified = YES;
-    currentUserID = userID;
+    self.currentUserID = userID;
     
     NSString *urlPath = [self pathForIdentify:userID anonymousUserID:anonymousUserID];
     
@@ -113,7 +125,7 @@ static GSTracker *sharedTracker = nil;
     
     // set userID to a new anon ID
     identified = NO;
-    currentUserID = [self generateUUID:YES];
+    self.currentUserID = [self generateUUID:YES];
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kGSIdentifiedUUIDDefaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -163,7 +175,7 @@ static GSTracker *sharedTracker = nil;
     // build URL parts
     NSString *versionString = @"v1";
     NSString *escapedEventName = [event.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *escapedUserID = [currentUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *escapedUserID = [self.currentUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     // build URL
     return [NSString stringWithFormat:@"/%@/%@/event?name=%@&userID=%@", self.siteToken, versionString, escapedEventName, escapedUserID];
@@ -172,7 +184,7 @@ static GSTracker *sharedTracker = nil;
 - (NSString *)pathForTransaction:(GSTransaction *)transaction {
     // build URL parts
     NSString *versionString = @"v1";
-    NSString *escapedUserID = [currentUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *escapedUserID = [self.currentUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     // build URL
     return [NSString stringWithFormat:@"/%@/%@/transaction?userID=%@", self.siteToken, versionString, escapedUserID];
@@ -185,27 +197,12 @@ static GSTracker *sharedTracker = nil;
     
     // build URL
     if(anonymousUserID == nil) {
-        return [NSString stringWithFormat:@"/%@/%@/identify?userID=%@", self.siteToken, versionString, escapedUserID];
+        return [NSString stringWithFormat:@"/%@/%@/people/%@/identify", self.siteToken, versionString, escapedUserID];
     }
     else {
         NSString *escapedAnonymousUserID = [anonymousUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        return [NSString stringWithFormat:@"/%@/%@/identify?userID=%@&anonymousID=%@", self.siteToken, versionString, escapedUserID, escapedAnonymousUserID];
+        return [NSString stringWithFormat:@"/%@/%@/people/%@/identify/%@", self.siteToken, versionString, escapedAnonymousUserID, escapedUserID];
     }
-}
-
-
-#pragma mark Private - Device metrics methods
-
-- (NSDictionary *)deviceMetrics {
-    if(deviceMetrics == nil) {
-        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    
-        dict[@"screenHeight"] = 
-        
-        deviceMetrics = [NSDictionary dictionaryWithDictionary:dict];
-    }
-    
-    return deviceMetrics;
 }
 
 
@@ -213,7 +210,7 @@ static GSTracker *sharedTracker = nil;
 #pragma mark Private - HTTP Request methods
 
 - (void)scheduleRequest:(GSRequest *)request {
-    // NOTE - this is where we'll add the requests to a queue later to enable offline event sync
+    // NOTE - this is where we'll make the requests durable later to enable offline event sync
     [request send];
 }
 

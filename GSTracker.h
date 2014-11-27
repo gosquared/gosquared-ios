@@ -18,6 +18,8 @@
 
 @property (strong, nonatomic) NSString *siteToken;
 
+@property (readonly) NSString *currentUserID;
+
 + (GSTracker *)sharedInstance;
 
 - (void)setSiteToken:(NSString *)siteToken;
@@ -25,7 +27,7 @@
 // event tracking
 - (void)trackEvent:(GSEvent *)event;
 
-// page view tracking
+// page view tracking - only used if not using the UIViewController+GSTracking category
 - (void)trackViewController:(UIViewController *)vc;
 - (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title;
 - (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title urlPath:(NSString *)urlPath;

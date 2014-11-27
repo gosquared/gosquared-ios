@@ -15,10 +15,20 @@ enum GSRequestMethod {
     GSRequestMethodDELETE
 };
 
+@class GSRequest;
+typedef void (^GSRequestBlock)(bool success, GSRequest *req);
+
 @interface GSRequest : NSObject
+
+@property (strong, nonatomic) NSHTTPURLResponse *response;
+@property (strong, nonatomic) NSMutableData *responseData;
+
+@property BOOL success;
 
 + (GSRequest *)requestWithMethod:(enum GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body;
 
+- (void)sendWithCompletionHandler:(GSRequestBlock)cb;
 - (void)send;
+- (void)sendSync;
 
 @end
