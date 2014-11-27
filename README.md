@@ -15,8 +15,9 @@ the below line to your UIApplication's *didFinishLaunchingWithOptions* implement
 #Page View Tracking
 
 Page view tracking can be acheived in one of two ways:
-* Use the drop-in UIViewController category that will automatically track each UIViewController as they come into view without you having to do any extra work (recommended)
-* Use the manual methods in each UIViewController you wish to track - this method may be more recognisable to those of you who have used Google Analytics mobile tracking, however as with GA, you may find that if you do not add the correct tracking code to every view controller, it could appear as though a view which has since been dismissed is still visible
+
+ * Use the drop-in UIViewController category that will automatically track each UIViewController as they come into view without you having to do any extra work (recommended)
+ * Use the manual methods in each UIViewController you wish to track - this method may be more recognisable to those of you who have used Google Analytics mobile tracking, however as with GA, you may find that if you do not add the correct tracking code to every view controller, it could appear as though a view which has since been dismissed is still visible
 
 ####Using the drop in category
 
