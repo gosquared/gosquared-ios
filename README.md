@@ -3,8 +3,6 @@ GoSquared iOS Native Tracker
 
 *Written by Giles Williams of Urban Massage Ltd*
 
-Note this library is very much a proof of concept at this stage
-
 #Initialisation
 
 Make sure you initialise the library with your site token before calling any tracking / people methods otherwise the library will throw an exception. It is recommended to add 
