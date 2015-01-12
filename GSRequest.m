@@ -13,7 +13,7 @@
 static NSMutableArray *GSRequestsInProgress;
 
 const float kGSRequestDefaultTimeout = 20.0f;
-static NSString * const kGSAPIBase = @"https://data.gosquared.com";
+static NSString * const kGSAPIBase = @"https://api.gosquared.com";
 
 static NSString *staticUserAgent = nil;
 
@@ -141,7 +141,7 @@ static NSString *staticUserAgent = nil;
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     self.responseData = [NSMutableData dataWithData:responseData];
     self.response = (NSHTTPURLResponse *)response;
-    
+    NSString *responseStr = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
     return;
 }
 
