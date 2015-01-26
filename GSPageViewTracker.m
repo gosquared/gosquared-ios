@@ -203,7 +203,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
                            @"document_height": device.screenHeight,
                            @"max_scroll_top": @0,
                            @"max_scroll_left": @0,
-                           @"anonymous_id": device.udid,
+                           @"visitor_id": device.udid,
                            @"tracker_version": @""
                            };
 
