@@ -129,7 +129,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
     // use GCD barrier to force queuing of requests
     dispatch_barrier_async(GSPageViewTrackerQueue(), ^{
         GSDevice *device = [GSDevice currentDevice];
-        NSDictionary *body = @{
+        NSMutableDictionary *body = @{
                                @"character_set": @"UTF-8",
                                @"color_depth": device.colorDepth,
                                @"java_enabled": @0,
@@ -151,10 +151,16 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
                                @"scroll_left": @0,
                                @"previous_page": [NSNumber numberWithLongLong:pageIndex],
                                @"timezone_offset": device.timezoneOffset,
-                               @"anonymous_id": device.udid,
+                               @"visitor_id": device.udid,
                                @"tracker_version": @""
                                };
-        GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:[NSString stringWithFormat:@"/%@/v1%@/pageview", [GSTracker sharedInstance].siteToken, self.peopleURLStr] body:body];
+
+        if([GSTracker sharedInstance].identified) {
+          body[@"person_id"] = [GSTracker sharedInstance].currentUserID;
+        }
+
+        NSString *path = [NSString stringWithFormat:@"/tracking/v1/pageview?%@", [GSTracker sharedInstance].trackingAPIParams];
+        GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
         [req sendSync];
         
         @try {
@@ -186,8 +192,8 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
     if(!self.isValid) return;
     
     GSDevice *device = [GSDevice currentDevice];
-    
-    NSDictionary *body = @{
+
+    NSMutableDictionary *body = @{
                            @"current_page": [NSNumber numberWithLongLong:pageIndex],
                            @"engaged_time": @0,
                            @"viewport_width": device.screenWidth,
@@ -200,8 +206,13 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
                            @"anonymous_id": device.udid,
                            @"tracker_version": @""
                            };
-    
-    GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:[NSString stringWithFormat:@"/%@/v1%@/ping", [GSTracker sharedInstance].siteToken, self.peopleURLStr] body:body];
+
+     if([GSTracker sharedInstance].identified) {
+       body[@"person_id"] = [GSTracker sharedInstance].currentUserID;
+     }
+
+    NSString *path = [NSString stringWithFormat:@"/tracking/v1/ping?%@", [GSTracker sharedInstance].trackingAPIParams];
+    GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [req send];
 }
 

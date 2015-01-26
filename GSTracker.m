@@ -65,11 +65,19 @@ static GSTracker *sharedTracker = nil;
 #pragma mark Public methods
 
 - (void)trackEvent:(GSEvent *)event {
-    [self verifySiteTokenIsSet];
-    
-    NSString *urlPath = [self pathForEvent:event];
-    
-    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:urlPath body:event.properties];
+    [self verifyCredsAreSet];
+
+    NSString *path = [NSString stringWithFormat: @"/tracking/v1/event?%@", self.trackingAPIParams];
+    NSMutableDictionary *body = @{
+      @"visitor_id": self.currentUserID,
+      @"event": event
+    };
+
+    if(identified) {
+      body[@"person_id"] = self.currentUserID;
+    }
+
+    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:r];
 }
 
@@ -100,17 +108,22 @@ static GSTracker *sharedTracker = nil;
 }
 
 - (void)identify:(NSString *)userID properties:(NSDictionary *)properties {
-    [self verifySiteTokenIsSet];
-    
+    [self verifyCredsAreSet];
+
     NSString *anonymousUserID = nil;
     if(!identified) anonymousUserID = self.currentUserID;
     
     identified = YES;
     self.currentUserID = userID;
-    
-    NSString *urlPath = [self pathForIdentify:userID anonymousUserID:anonymousUserID];
-    
-    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:urlPath body:properties];
+
+    NSString *path = [NSString stringWithFormat: @"/tracking/v1/identify?%@", self.trackingAPIParams];
+    NSDictionary *body = @{
+      @"visitor_id": anonymousUserID,
+      @"person_id": userID,
+      @"properties": properties
+    };
+
+    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:r];
     
     [[NSUserDefaults standardUserDefaults] setObject:userID forKey:kGSIdentifiedUUIDDefaultsKey];
@@ -121,8 +134,8 @@ static GSTracker *sharedTracker = nil;
 }
 
 - (void)unidentify {
-    [self verifySiteTokenIsSet];
-    
+    [self verifyCredsAreSet];
+
     // set userID to a new anon ID
     identified = NO;
     self.currentUserID = [self generateUUID:YES];
@@ -132,19 +145,28 @@ static GSTracker *sharedTracker = nil;
 }
 
 - (void)trackTransaction:(GSTransaction *)transaction {
-    [self verifySiteTokenIsSet];
-    
-    NSString *urlPath = [self pathForTransaction:transaction];
-    
-    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:urlPath body:transaction.serialize];
+    [self verifyCredsAreSet];
+
+    NSString *path = [NSString stringWithFormat: @"/tracking/v1/transaction?%@", self.trackingAPIParams];
+    NSMutableDictionary *body = @{
+      @"visitor_id": self.currentUserID,
+      @"transaction": transaction.serialize
+    };
+
+    if(identified) {
+      body[@"person_id"] = self.currentUserID;
+    }
+
+    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:r];
 }
 
 
 #pragma mark Private - Assertion methods
 
-- (void)verifySiteTokenIsSet {
+- (void)verifyCredsAreSet {
     NSAssert((self.siteToken != nil), @"You must call setSiteToken: before any tracking methods");
+    NSAssert((self.apiKey != nil), @"You must call setApiKey: before any tracking methods");
 }
 
 
@@ -171,38 +193,8 @@ static GSTracker *sharedTracker = nil;
 
 #pragma mark Private - URL path builder methods
 
-- (NSString *)pathForEvent:(GSEvent *)event {
-    // build URL parts
-    NSString *versionString = @"v1";
-    NSString *escapedEventName = [event.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *escapedUserID = [self.currentUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    // build URL
-    return [NSString stringWithFormat:@"/%@/%@/event?name=%@&userID=%@", self.siteToken, versionString, escapedEventName, escapedUserID];
-}
-
-- (NSString *)pathForTransaction:(GSTransaction *)transaction {
-    // build URL parts
-    NSString *versionString = @"v1";
-    NSString *escapedUserID = [self.currentUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    // build URL
-    return [NSString stringWithFormat:@"/%@/%@/transaction?userID=%@", self.siteToken, versionString, escapedUserID];
-}
-
-- (NSString *)pathForIdentify:(NSString *)userID anonymousUserID:(NSString *)anonymousUserID {
-    // build URL parts
-    NSString *versionString = @"v1";
-    NSString *escapedUserID = [userID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    // build URL
-    if(anonymousUserID == nil) {
-        return [NSString stringWithFormat:@"/%@/%@/people/%@/identify", self.siteToken, versionString, escapedUserID];
-    }
-    else {
-        NSString *escapedAnonymousUserID = [anonymousUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        return [NSString stringWithFormat:@"/%@/%@/people/%@/identify/%@", self.siteToken, versionString, escapedAnonymousUserID, escapedUserID];
-    }
+- (NSString *)trackingAPIParams {
+  return [NSString stringWithFormat:@"site_token=%@&api_key=%@", self.siteToken, self.apiKey];
 }
 
 

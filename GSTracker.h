@@ -17,12 +17,14 @@
 @interface GSTracker : NSObject
 
 @property (strong, nonatomic) NSString *siteToken;
+@property (strong, nonatomic) NSString *apiKey;
 
 @property (readonly) NSString *currentUserID;
 
 + (GSTracker *)sharedInstance;
 
 - (void)setSiteToken:(NSString *)siteToken;
+- (void)setAPIKey:(NSString *)apiKey;
 
 // event tracking
 - (void)trackEvent:(GSEvent *)event;
