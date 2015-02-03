@@ -68,10 +68,10 @@ static GSTracker *sharedTracker = nil;
     [self verifyCredsAreSet];
 
     NSString *path = [NSString stringWithFormat: @"/tracking/v1/event?%@", self.trackingAPIParams];
-    NSMutableDictionary *body = @{
+    NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
       @"visitor_id": self.currentUserID,
       @"event": event
-    };
+    }];
 
     if(identified) {
       body[@"person_id"] = self.currentUserID;
@@ -97,14 +97,14 @@ static GSTracker *sharedTracker = nil;
 }
 - (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title {
     NSString *fakeURL = [NSString stringWithFormat:@"ios-native://%@/%@", [[NSBundle mainBundle] bundleIdentifier], [title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    [self trackViewController:vc withTitle:title urlString:fakeURL];
+    [self trackViewController:vc withTitle:title urlPath:fakeURL];
 }
-- (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title urlString:(NSString *)urlString {
+- (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title urlPath:(NSString *)urlPath {
     if(self.pageViewTracker == nil) {
         self.pageViewTracker = [[GSPageViewTracker alloc] init];
     }
     
-    [self.pageViewTracker startWithURLString:urlString title:title];
+    [self.pageViewTracker startWithURLString:urlPath title:title];
 }
 
 - (void)identify:(NSString *)userID properties:(NSDictionary *)properties {
@@ -117,11 +117,16 @@ static GSTracker *sharedTracker = nil;
     self.currentUserID = userID;
 
     NSString *path = [NSString stringWithFormat: @"/tracking/v1/identify?%@", self.trackingAPIParams];
-    NSDictionary *body = @{
-      @"visitor_id": anonymousUserID,
-      @"person_id": userID,
-      @"properties": properties
-    };
+    NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
+        @"person_id": userID
+    }];
+    
+    if(properties != nil) {
+        body[@"properties"] = properties;
+    }
+    if(anonymousUserID != nil) {
+        body[@"visitor_id"] = anonymousUserID;
+    }
 
     GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:r];
@@ -142,6 +147,10 @@ static GSTracker *sharedTracker = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kGSIdentifiedUUIDDefaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (BOOL)identified {
+    return identified;
 }
 
 - (void)trackTransaction:(GSTransaction *)transaction {
@@ -191,7 +200,7 @@ static GSTracker *sharedTracker = nil;
 }
 
 
-#pragma mark Private - URL path builder methods
+#pragma mark Public - URL path builder methods
 
 - (NSString *)trackingAPIParams {
   return [NSString stringWithFormat:@"site_token=%@&api_key=%@", self.siteToken, self.apiKey];

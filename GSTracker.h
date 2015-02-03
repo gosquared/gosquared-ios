@@ -23,8 +23,10 @@
 
 + (GSTracker *)sharedInstance;
 
-- (void)setSiteToken:(NSString *)siteToken;
-- (void)setAPIKey:(NSString *)apiKey;
+//- (void)setSiteToken:(NSString *)siteToken;
+//- (void)setAPIKey:(NSString *)apiKey;
+
+- (NSString *)trackingAPIParams;
 
 // event tracking
 - (void)trackEvent:(GSEvent *)event;
@@ -38,6 +40,7 @@
 - (void)identify:(NSString *)userID;
 - (void)identify:(NSString *)userID properties:(NSDictionary *)properties;
 - (void)unidentify;
+- (BOOL)identified;
 
 // ecommerce
 - (void)trackTransaction:(GSTransaction *)transaction;

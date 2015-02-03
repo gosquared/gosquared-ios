@@ -129,7 +129,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
     // use GCD barrier to force queuing of requests
     dispatch_barrier_async(GSPageViewTrackerQueue(), ^{
         GSDevice *device = [GSDevice currentDevice];
-        NSMutableDictionary *body = @{
+        NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
                                @"character_set": @"UTF-8",
                                @"color_depth": device.colorDepth,
                                @"java_enabled": @0,
@@ -153,7 +153,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
                                @"timezone_offset": device.timezoneOffset,
                                @"visitor_id": device.udid,
                                @"tracker_version": @""
-                               };
+                               }];
 
         if([GSTracker sharedInstance].identified) {
           body[@"person_id"] = [GSTracker sharedInstance].currentUserID;
@@ -193,7 +193,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
     
     GSDevice *device = [GSDevice currentDevice];
 
-    NSMutableDictionary *body = @{
+    NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
                            @"current_page": [NSNumber numberWithLongLong:pageIndex],
                            @"engaged_time": @0,
                            @"viewport_width": device.screenWidth,
@@ -205,7 +205,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
                            @"max_scroll_left": @0,
                            @"visitor_id": device.udid,
                            @"tracker_version": @""
-                           };
+                           }];
 
      if([GSTracker sharedInstance].identified) {
        body[@"person_id"] = [GSTracker sharedInstance].currentUserID;

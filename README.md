@@ -8,7 +8,8 @@ GoSquared iOS Native Tracker
 Make sure you initialise the library with your site token before calling any tracking / people methods otherwise the library will throw an exception. It is recommended to add
 the below line to your UIApplication's *didFinishLaunchingWithOptions* implementation.
 
-    [[GSTracker sharedInstance] setSiteToken:@"your-site-token" setAPIKey:@"your-api-key"];
+    [[GSTracker sharedInstance] setSiteToken:@"your-site-token"];
+    [[GSTracker sharedInstance] setApiKey:@"your-api-key"];
 
 
 
