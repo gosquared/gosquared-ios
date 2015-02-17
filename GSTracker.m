@@ -16,6 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+static NSString * const kGSTrackerVersion = @"ios_0.2";
+
 static NSString * const kGSAnonymousUUIDDefaultsKey = @"com.gosquared.defaults.anonUUID";
 static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.identifiedUUID";
 
@@ -25,7 +27,8 @@ static GSTracker *sharedTracker = nil;
 
 @property (strong, nonatomic) GSPageViewTracker *pageViewTracker;
 
-@property (strong, nonatomic) NSString *currentUserID;
+@property (strong, nonatomic) NSString *currentPersonID;
+@property (strong, nonatomic) NSString *anonID;
 
 @end
 
@@ -35,24 +38,25 @@ static GSTracker *sharedTracker = nil;
     NSDictionary *deviceMetrics;
 }
 
+
+#pragma mark Public methods
+
 - (GSTracker *)init {
     self = [super init];
     
     if(self) {
-        NSString *identifiedUserID = [[NSUserDefaults standardUserDefaults] objectForKey:kGSIdentifiedUUIDDefaultsKey];
-        if(identifiedUserID) {
-            identified = YES;
-            self.currentUserID = identifiedUserID;
-        }
-        else {
-            identified = NO;
-            self.currentUserID = [self generateUUID:NO];
+        // grab a saved anon UDID or generate on if it doesn't exist
+        self.anonID = [self generateUUID:NO];
+        
+        // grab a saved People Analytics user ID if one is saved
+        NSString *identifiedPersonID = [[NSUserDefaults standardUserDefaults] objectForKey:kGSIdentifiedUUIDDefaultsKey];
+        if(identifiedPersonID) {
+            self.currentPersonID = identifiedPersonID;
         }
     }
     
     return self;
 }
-
 + (GSTracker *)sharedInstance {
     if(sharedTracker == nil) {
         sharedTracker = [[GSTracker alloc] init];
@@ -60,26 +64,12 @@ static GSTracker *sharedTracker = nil;
     
     return sharedTracker;
 }
-
-
-#pragma mark Public methods
-
-- (void)trackEvent:(GSEvent *)event {
-    [self verifyCredsAreSet];
-
-    NSString *path = [NSString stringWithFormat: @"/tracking/v1/event?%@", self.trackingAPIParams];
-    NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
-      @"visitor_id": self.currentUserID,
-      @"event": event
-    }];
-
-    if(identified) {
-      body[@"person_id"] = self.currentUserID;
-    }
-
-    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
-    [self scheduleRequest:r];
+- (NSString *)trackerVersion {
+    return kGSTrackerVersion;
 }
+
+
+#pragma mark Public - Page view tracking
 
 - (void)trackViewController:(UIViewController *)vc {
     NSString *title = vc.title;
@@ -107,67 +97,90 @@ static GSTracker *sharedTracker = nil;
     [self.pageViewTracker startWithURLString:urlPath title:title];
 }
 
-- (void)identify:(NSString *)userID properties:(NSDictionary *)properties {
+
+#pragma mark Public - Event tracking
+
+- (void)trackEvent:(GSEvent *)event {
     [self verifyCredsAreSet];
-
-    NSString *anonymousUserID = nil;
-    if(!identified) anonymousUserID = self.currentUserID;
     
-    identified = YES;
-    self.currentUserID = userID;
-
-    NSString *path = [NSString stringWithFormat: @"/tracking/v1/identify?%@", self.trackingAPIParams];
+    NSString *path = [NSString stringWithFormat: @"/tracking/v1/event?%@", self.trackingAPIParams];
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
-        @"person_id": userID
-    }];
+                                                                                @"visitor_id": self.anonID, // anonymous user ID
+                                                                                @"event": event.serialize // json object for event
+                                                                                }];
     
-    if(properties != nil) {
-        body[@"properties"] = properties;
+    if(self.currentPersonID != nil) {
+        body[@"person_id"] = self.currentPersonID;
     }
-    if(anonymousUserID != nil) {
-        body[@"visitor_id"] = anonymousUserID;
-    }
-
+    
     GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:r];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:userID forKey:kGSIdentifiedUUIDDefaultsKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-- (void)identify:(NSString *)userID {
-    [self identify:userID properties:nil];
 }
 
-- (void)unidentify {
-    [self verifyCredsAreSet];
 
-    // set userID to a new anon ID
-    identified = NO;
-    self.currentUserID = [self generateUUID:YES];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kGSIdentifiedUUIDDefaultsKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (BOOL)identified {
-    return identified;
-}
+#pragma mark Public - Ecommerce tracking
 
 - (void)trackTransaction:(GSTransaction *)transaction {
     [self verifyCredsAreSet];
 
     NSString *path = [NSString stringWithFormat: @"/tracking/v1/transaction?%@", self.trackingAPIParams];
-    NSMutableDictionary *body = @{
-      @"visitor_id": self.currentUserID,
-      @"transaction": transaction.serialize
-    };
+    NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
+        @"visitor_id": self.anonID, // anonymous UDID
+        @"transaction": transaction.serialize
+    }];
 
-    if(identified) {
-      body[@"person_id"] = self.currentUserID;
+    if(self.currentPersonID != nil) {
+        body[@"person_id"] = self.currentPersonID;
     }
 
     GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:r];
+}
+
+
+#pragma mark Public - People Analytics
+
+- (void)identify:(NSString *)userID {
+    [self identify:userID properties:nil];
+}
+- (void)identify:(NSString *)userID properties:(NSDictionary *)properties {
+    [self verifyCredsAreSet];
+    
+    self.currentPersonID = userID;
+    
+    NSString *path = [NSString stringWithFormat: @"/tracking/v1/identify?%@", self.trackingAPIParams];
+    NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
+                                                                                @"person_id": self.currentPersonID
+                                                                                }];
+    
+    if(properties != nil) {
+        body[@"properties"] = properties;
+    }
+    if(self.anonID != nil) {
+        body[@"visitor_id"] = self.anonID; // anonymous user ID for stiching
+    }
+    
+    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
+    [self scheduleRequest:r];
+    
+    // save the identified People user id for later app launches
+    [[NSUserDefaults standardUserDefaults] setObject:self.currentPersonID forKey:kGSIdentifiedUUIDDefaultsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+- (void)unidentify {
+    [self verifyCredsAreSet];
+    
+    // wipe the current anon ID
+    self.anonID = [self generateUUID:YES];
+    
+    // wipe the current people ID
+    self.currentPersonID = nil;
+    
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kGSIdentifiedUUIDDefaultsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+- (BOOL)identified {
+    return identified;
 }
 
 
@@ -185,7 +198,7 @@ static GSTracker *sharedTracker = nil;
     // set forceRegenerate to NO to simply pick up the existing UUID
     NSString *uuid = [[NSUserDefaults standardUserDefaults] objectForKey:kGSAnonymousUUIDDefaultsKey];
     
-    if(forceRegenerate || !uuid) {
+    if(forceRegenerate || uuid == nil) {
         // need to generate a UUID
         CFUUIDRef theUUID = CFUUIDCreate(NULL);
         CFStringRef string = CFUUIDCreateString(NULL, theUUID);
@@ -203,7 +216,7 @@ static GSTracker *sharedTracker = nil;
 #pragma mark Public - URL path builder methods
 
 - (NSString *)trackingAPIParams {
-  return [NSString stringWithFormat:@"site_token=%@&api_key=%@", self.siteToken, self.apiKey];
+    return [NSString stringWithFormat:@"site_token=%@&api_key=%@", self.siteToken, self.apiKey];
 }
 
 

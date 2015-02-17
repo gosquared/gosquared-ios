@@ -20,6 +20,8 @@
 
 @property (retain) NSString *isoLanguage;
 
+@property (retain) NSString *userAgent;
+
 
 + (GSDevice *)currentDevice;
 

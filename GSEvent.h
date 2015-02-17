@@ -14,5 +14,6 @@
 @property (nonatomic) NSDictionary *properties;
 
 + (GSEvent *)eventWithName:(NSString *)name;
+- (NSDictionary *)serialize;
 
 @end

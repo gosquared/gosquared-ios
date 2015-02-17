@@ -52,6 +52,20 @@ static GSDevice *currentGSDevice = nil;
         
         // language
         self.isoLanguage = [[[l objectForKey:NSLocaleIdentifier] lowercaseString] stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
+        
+        // user agent
+        NSArray *versionComponents = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
+            
+        NSBundle *bundle = [NSBundle mainBundle];
+        NSDictionary *info = [bundle infoDictionary];
+        
+        NSString *appNameStr = [info objectForKey:@"CFBundleName"];
+        NSString *appVersionStr = [info objectForKey:@"CFBundleShortVersionString"];
+        NSString *idiomStr = @"iPhone";
+        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) idiomStr = @"iPad";
+        NSString *iOSVersionStr = [versionComponents componentsJoinedByString:@"_"];
+        
+        self.userAgent = [NSString stringWithFormat:@"%@/%@ (%@; CPU iPhone OS %@ like Mac OS X)", appNameStr, appVersionStr, idiomStr, iOSVersionStr];
     }
     
     return self;

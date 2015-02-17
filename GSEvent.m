@@ -41,4 +41,17 @@
     return _properties;
 }
 
+- (NSDictionary *)serialize {
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    
+    if(self.name != nil && [self.name isKindOfClass:[NSString class]]) {
+        dict[@"name"] = self.name;
+    }
+    if(self.properties) {
+        dict[@"data"] = self.properties;
+    }
+    
+    return [NSDictionary dictionaryWithDictionary:dict];
+}
+
 @end

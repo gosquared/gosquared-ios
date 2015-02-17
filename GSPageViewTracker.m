@@ -21,6 +21,8 @@ dispatch_queue_t GSPageViewTrackerQueue() {
     return queue;
 }
 
+
+
 const float kGSPageViewTrackerDefaultPingInterval = 20.0f;
 static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared.pageviewtracker.returning";
 
@@ -40,14 +42,14 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
 @end
 
 @implementation GSPageViewTracker {
-    long long pageIndex;
+    long long currentPageIndex;
 }
 
 - (id)init {
     self = [super init];
     
     if(self) {
-        pageIndex = 0;
+        currentPageIndex = 0;
         
         self.returning = [[NSUserDefaults standardUserDefaults] objectForKey:kGSPageViewTrackerReturningDefaultsKey];
         
@@ -63,7 +65,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
 }
 
 - (void)setPageIndex:(long long)index {
-    pageIndex = index;
+    currentPageIndex = index;
 }
 
 #pragma mark Lifecycle methods
@@ -114,13 +116,59 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
 
 #pragma mark Track methods (tracks initial page view)
 
-- (NSString *)peopleURLStr {
-    if([GSTracker sharedInstance].currentUserID == nil) {
-        return @"";
+- (NSDictionary *)generateBodyForPing:(BOOL)isForPing {
+    GSDevice *device = [GSDevice currentDevice];
+    
+    NSMutableDictionary *page = [NSMutableDictionary dictionaryWithDictionary:@{
+                                                                                @"url": self.urlString,
+                                                                                @"title": [NSString stringWithFormat:@"iOS: %@", self.title]
+                                                                                }];
+    
+    if(isForPing) {
+        page[@"index"] = [NSNumber numberWithLongLong:currentPageIndex];
     }
     else {
-        return [NSString stringWithFormat:@"/people/%@", [GSTracker sharedInstance].currentUserID];
+        page[@"previous"] = [NSNumber numberWithLongLong:currentPageIndex];
     }
+    
+    NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
+                                                                                @"timestamp": [NSNumber numberWithLong:(long)[NSDate new].timeIntervalSince1970],
+                                                                                @"visitor_id": [GSTracker sharedInstance].anonID,
+                                                                                @"page": page,
+                                                                                @"character_set": @"UTF-8",
+                                                                                @"language": device.isoLanguage,
+                                                                                @"user_agent": device.userAgent,
+                                                                                @"returning": self.returning,
+                                                                                @"engaged_time": @0,
+                                                                                @"screen": @{
+                                                                                        @"height": device.screenHeight,
+                                                                                        @"width": device.screenWidth,
+                                                                                        @"pixel_ratio": device.screenPixelRatio,
+                                                                                        @"depth": device.colorDepth,
+                                                                                        },
+                                                                                @"document": @{
+                                                                                        @"height": device.screenHeight,
+                                                                                        @"width": device.screenWidth
+                                                                                        },
+                                                                                @"viewport": @{
+                                                                                        @"height": device.screenHeight,
+                                                                                        @"width": device.screenWidth
+                                                                                        },
+                                                                                @"scroll": @{
+                                                                                        @"top": @0,
+                                                                                        @"left": @0
+                                                                                        },
+                                                                                @"location": @{
+                                                                                        @"timezone_offset": device.timezoneOffset
+                                                                                        },
+                                                                                @"tracker_version": [GSTracker sharedInstance].trackerVersion
+                                                                                }];
+    
+    if([GSTracker sharedInstance].currentPersonID != nil) {
+        body[@"person_id"] = [GSTracker sharedInstance].currentPersonID;
+    }
+    
+    return [NSDictionary dictionaryWithDictionary:body];
 }
 
 - (void)track {
@@ -128,50 +176,24 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
     
     // use GCD barrier to force queuing of requests
     dispatch_barrier_async(GSPageViewTrackerQueue(), ^{
-        GSDevice *device = [GSDevice currentDevice];
-        NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
-                               @"character_set": @"UTF-8",
-                               @"color_depth": device.colorDepth,
-                               @"java_enabled": @0,
-                               @"language": device.isoLanguage,
-                               @"screen_width": device.screenWidth,
-                               @"screen_height": device.screenHeight,
-                               @"device_pixel_ratio": device.screenPixelRatio,
-                               @"url": self.urlString,
-                               @"title": [NSString stringWithFormat:@"iOS: %@", self.title],
-                               @"internal_referrer": @0,
-                               @"referrer": @"-",
-                               @"returning": self.returning,
-                               @"last_pageview": @"",
-                               @"viewport_width": device.screenWidth,
-                               @"viewport_height": device.screenHeight,
-                               @"document_width": device.screenWidth,
-                               @"document_height": device.screenHeight,
-                               @"scroll_top": @0,
-                               @"scroll_left": @0,
-                               @"previous_page": [NSNumber numberWithLongLong:pageIndex],
-                               @"timezone_offset": device.timezoneOffset,
-                               @"visitor_id": device.udid,
-                               @"tracker_version": @""
-                               }];
-
-        if([GSTracker sharedInstance].identified) {
-          body[@"person_id"] = [GSTracker sharedInstance].currentUserID;
-        }
+        
+        NSDictionary *body = [self generateBodyForPing:NO];
 
         NSString *path = [NSString stringWithFormat:@"/tracking/v1/pageview?%@", [GSTracker sharedInstance].trackingAPIParams];
         GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
         [req sendSync];
         
         @try {
-            NSMutableString *str = [[NSMutableString alloc] initWithData:req.responseData encoding:NSUTF8StringEncoding];
+            NSError *localError;
+            NSDictionary *parsedResponse = [NSJSONSerialization JSONObjectWithData:req.responseData options:0 error:&localError];
             
-            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:
-                                          @"([^0-9]+)" options:0 error:nil];
-            
-            [regex replaceMatchesInString:str options:0 range:NSMakeRange(0, [str length]) withTemplate:@""];
-            
-            [self setPageIndex:[str longLongValue]];
+            if(parsedResponse != nil) {
+                NSNumber *index = parsedResponse[@"index"];
+                
+                if(index != nil && ![index isKindOfClass:[NSNull class]]) {
+                    [self setPageIndex:[index longLongValue]];
+                }
+            }
         }
         @catch(NSException *e) {
             
@@ -190,27 +212,9 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
 
 - (void)ping {
     if(!self.isValid) return;
+
+    NSDictionary *body = [self generateBodyForPing:YES];
     
-    GSDevice *device = [GSDevice currentDevice];
-
-    NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
-                           @"current_page": [NSNumber numberWithLongLong:pageIndex],
-                           @"engaged_time": @0,
-                           @"viewport_width": device.screenWidth,
-                           @"viewport_width": device.screenWidth,
-                           @"viewport_height": device.screenHeight,
-                           @"document_width": device.screenWidth,
-                           @"document_height": device.screenHeight,
-                           @"max_scroll_top": @0,
-                           @"max_scroll_left": @0,
-                           @"visitor_id": device.udid,
-                           @"tracker_version": @""
-                           }];
-
-     if([GSTracker sharedInstance].identified) {
-       body[@"person_id"] = [GSTracker sharedInstance].currentUserID;
-     }
-
     NSString *path = [NSString stringWithFormat:@"/tracking/v1/ping?%@", [GSTracker sharedInstance].trackingAPIParams];
     GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [req send];

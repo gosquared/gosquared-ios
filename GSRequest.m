@@ -7,6 +7,7 @@
 //
 
 #import "GSRequest.h"
+#import "GSDevice.h"
 
 #import <UIKit/UIKit.h>
 
@@ -84,22 +85,7 @@ static NSString *staticUserAgent = nil;
     request = [NSMutableURLRequest requestWithURL:self.url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kGSRequestDefaultTimeout];
     [request setHTTPMethod:[self methodString]];
     
-    if(staticUserAgent == nil) {
-        NSArray *versionComponents = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
-        
-        NSBundle *bundle = [NSBundle mainBundle];
-        NSDictionary *info = [bundle infoDictionary];
-        
-        NSString *appNameStr = [info objectForKey:@"CFBundleName"];
-        NSString *appVersionStr = [info objectForKey:@"CFBundleShortVersionString"];
-        NSString *idiomStr = @"iPhone";
-        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) idiomStr = @"iPad";
-        NSString *iOSVersionStr = [versionComponents componentsJoinedByString:@"_"];
-        
-        staticUserAgent = [NSString stringWithFormat:@"%@/%@ (%@; CPU iPhone OS %@ like Mac OS X)", appNameStr, appVersionStr, idiomStr, iOSVersionStr];
-    }
-    
-    [request setValue:staticUserAgent forHTTPHeaderField:@"User-Agent"];
+    [request setValue:[GSDevice currentDevice].userAgent forHTTPHeaderField:@"User-Agent"];
     
     if(self.body) {
         NSError *error;
@@ -110,7 +96,11 @@ static NSString *staticUserAgent = nil;
         if (!jsonData) {
             NSLog(@"GSRequest - error serialising body params to json: %@", error);
         } else {
+#ifdef DEBUG
             NSString *jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            NSLog(@"GSRequest body - %@", jsonStr);
+#endif
+            
             [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
             [request setHTTPBody:jsonData];
         }
@@ -141,7 +131,12 @@ static NSString *staticUserAgent = nil;
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     self.responseData = [NSMutableData dataWithData:responseData];
     self.response = (NSHTTPURLResponse *)response;
+    
+#ifdef DEBUG
     NSString *responseStr = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+    NSLog(@"GSRequest::sendSync response - %@", responseStr);
+#endif
+    
     return;
 }
 
