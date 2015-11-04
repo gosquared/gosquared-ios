@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Urban Massage. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+
 #import "GSPageViewTracker.h"
 #import "GSTracker.h"
 #import "GSDevice.h"

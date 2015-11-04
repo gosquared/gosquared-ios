@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Urban Massage. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+
 #ifndef GoSquaredTester_GoSquared_h
 #define GoSquaredTester_GoSquared_h
 
