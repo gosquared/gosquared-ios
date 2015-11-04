@@ -1,10 +1,13 @@
 //
 //  GSPageViewTracker.m
-//  GoSquared-iOS-Native
+//  GoSquared
 //
 //  Created by Giles Williams on 15/10/2014.
 //  Copyright (c) 2014 Urban Massage. All rights reserved.
+//  Copyright (c) 2015 Go Squared Ltd. All rights reserved.
 //
+
+#import <UIKit/UIKit.h>
 
 #import "GSPageViewTracker.h"
 #import "GSTracker.h"
