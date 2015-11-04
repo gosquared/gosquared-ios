@@ -146,8 +146,9 @@
 		B7E1BD9C1BEA32B600422FA0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = GS;
 				LastUpgradeCheck = 0710;
-				ORGANIZATIONNAME = "Edward Wellbrook";
+				ORGANIZATIONNAME = "Go Squared Ltd.";
 				TargetAttributes = {
 					B7E1BDA41BEA32B600422FA0 = {
 						CreatedOnToolsVersion = 7.1;
