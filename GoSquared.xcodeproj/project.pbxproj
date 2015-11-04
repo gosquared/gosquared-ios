@@ -7,19 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B7E1BDCB1BEA334800422FA0 /* GSDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDBF1BEA334800422FA0 /* GSDevice.h */; };
+		B7E1BDCB1BEA334800422FA0 /* GSDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDBF1BEA334800422FA0 /* GSDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7E1BDCC1BEA334800422FA0 /* GSDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC01BEA334800422FA0 /* GSDevice.m */; };
-		B7E1BDCD1BEA334800422FA0 /* GSEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC11BEA334800422FA0 /* GSEvent.h */; };
+		B7E1BDCD1BEA334800422FA0 /* GSEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC11BEA334800422FA0 /* GSEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7E1BDCE1BEA334800422FA0 /* GSEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC21BEA334800422FA0 /* GSEvent.m */; };
-		B7E1BDCF1BEA334800422FA0 /* GSPageViewTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC31BEA334800422FA0 /* GSPageViewTracker.h */; };
+		B7E1BDCF1BEA334800422FA0 /* GSPageViewTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC31BEA334800422FA0 /* GSPageViewTracker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7E1BDD01BEA334800422FA0 /* GSPageViewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC41BEA334800422FA0 /* GSPageViewTracker.m */; };
-		B7E1BDD11BEA334800422FA0 /* GSRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC51BEA334800422FA0 /* GSRequest.h */; };
+		B7E1BDD11BEA334800422FA0 /* GSRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC51BEA334800422FA0 /* GSRequest.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		B7E1BDD21BEA334800422FA0 /* GSRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC61BEA334800422FA0 /* GSRequest.m */; };
-		B7E1BDD31BEA334800422FA0 /* GSTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC71BEA334800422FA0 /* GSTracker.h */; };
+		B7E1BDD31BEA334800422FA0 /* GSTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC71BEA334800422FA0 /* GSTracker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7E1BDD41BEA334800422FA0 /* GSTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC81BEA334800422FA0 /* GSTracker.m */; };
-		B7E1BDD51BEA334800422FA0 /* UIViewController+GSTracking.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC91BEA334800422FA0 /* UIViewController+GSTracking.h */; };
+		B7E1BDD51BEA334800422FA0 /* UIViewController+GSTracking.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC91BEA334800422FA0 /* UIViewController+GSTracking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7E1BDD61BEA334800422FA0 /* UIViewController+GSTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDCA1BEA334800422FA0 /* UIViewController+GSTracking.m */; };
-		B7E1BDD81BEA338F00422FA0 /* GoSquared.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDD71BEA338F00422FA0 /* GoSquared.h */; };
+		B7E1BDD81BEA338F00422FA0 /* GoSquared.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDD71BEA338F00422FA0 /* GoSquared.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B7E1BE011BEA5A9A00422FA0 /* GSTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDFD1BEA5A9A00422FA0 /* GSTransaction.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B7E1BE021BEA5A9A00422FA0 /* GSTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDFE1BEA5A9A00422FA0 /* GSTransaction.m */; };
+		B7E1BE031BEA5A9A00422FA0 /* GSTransactionItem.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDFF1BEA5A9A00422FA0 /* GSTransactionItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B7E1BE041BEA5A9A00422FA0 /* GSTransactionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BE001BEA5A9A00422FA0 /* GSTransactionItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +42,10 @@
 		B7E1BDC91BEA334800422FA0 /* UIViewController+GSTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+GSTracking.h"; sourceTree = "<group>"; };
 		B7E1BDCA1BEA334800422FA0 /* UIViewController+GSTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+GSTracking.m"; sourceTree = "<group>"; };
 		B7E1BDD71BEA338F00422FA0 /* GoSquared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoSquared.h; sourceTree = "<group>"; };
+		B7E1BDFD1BEA5A9A00422FA0 /* GSTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSTransaction.h; sourceTree = "<group>"; };
+		B7E1BDFE1BEA5A9A00422FA0 /* GSTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSTransaction.m; sourceTree = "<group>"; };
+		B7E1BDFF1BEA5A9A00422FA0 /* GSTransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSTransactionItem.h; sourceTree = "<group>"; };
+		B7E1BE001BEA5A9A00422FA0 /* GSTransactionItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSTransactionItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +89,10 @@
 				B7E1BDC61BEA334800422FA0 /* GSRequest.m */,
 				B7E1BDC71BEA334800422FA0 /* GSTracker.h */,
 				B7E1BDC81BEA334800422FA0 /* GSTracker.m */,
+				B7E1BDFD1BEA5A9A00422FA0 /* GSTransaction.h */,
+				B7E1BDFE1BEA5A9A00422FA0 /* GSTransaction.m */,
+				B7E1BDFF1BEA5A9A00422FA0 /* GSTransactionItem.h */,
+				B7E1BE001BEA5A9A00422FA0 /* GSTransactionItem.m */,
 				B7E1BDC91BEA334800422FA0 /* UIViewController+GSTracking.h */,
 				B7E1BDCA1BEA334800422FA0 /* UIViewController+GSTracking.m */,
 				B7E1BDAA1BEA32B600422FA0 /* Info.plist */,
@@ -98,10 +110,12 @@
 				B7E1BDD81BEA338F00422FA0 /* GoSquared.h in Headers */,
 				B7E1BDCB1BEA334800422FA0 /* GSDevice.h in Headers */,
 				B7E1BDD51BEA334800422FA0 /* UIViewController+GSTracking.h in Headers */,
+				B7E1BE031BEA5A9A00422FA0 /* GSTransactionItem.h in Headers */,
 				B7E1BDD31BEA334800422FA0 /* GSTracker.h in Headers */,
+				B7E1BE011BEA5A9A00422FA0 /* GSTransaction.h in Headers */,
 				B7E1BDCD1BEA334800422FA0 /* GSEvent.h in Headers */,
-				B7E1BDD11BEA334800422FA0 /* GSRequest.h in Headers */,
 				B7E1BDCF1BEA334800422FA0 /* GSPageViewTracker.h in Headers */,
+				B7E1BDD11BEA334800422FA0 /* GSRequest.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,7 +189,9 @@
 				B7E1BDCE1BEA334800422FA0 /* GSEvent.m in Sources */,
 				B7E1BDD41BEA334800422FA0 /* GSTracker.m in Sources */,
 				B7E1BDD21BEA334800422FA0 /* GSRequest.m in Sources */,
+				B7E1BE021BEA5A9A00422FA0 /* GSTransaction.m in Sources */,
 				B7E1BDD61BEA334800422FA0 /* UIViewController+GSTracking.m in Sources */,
+				B7E1BE041BEA5A9A00422FA0 /* GSTransactionItem.m in Sources */,
 				B7E1BDCC1BEA334800422FA0 /* GSDevice.m in Sources */,
 				B7E1BDD01BEA334800422FA0 /* GSPageViewTracker.m in Sources */,
 			);
