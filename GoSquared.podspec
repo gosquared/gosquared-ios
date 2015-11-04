@@ -13,7 +13,16 @@ Pod::Spec.new do |s|
 
   s.platform         = :ios, '6.0'
   s.requires_arc     = true
-  s.source           = { :git => "https://github.com/gosquared/gosquared-ios.git", :tag => "0.0.1" }
-  s.source_files     = 'GoSquared/**/*.{m,h}'
+  s.source           = { :git => "https://github.com/gosquared/gosquared-ios.git", :tag => "v#{s.version}" }
+  s.default_subspec  = "GoSquared"
+
+  s.subspec "GoSquared" do |ss|
+    ss.source_files  = "GoSquared/*.{m,h}"
+  end
+
+  # include swizzling to automatically track view controllers
+  s.subspec "Autoload" do |ss|
+    ss.source_files  = "GoSquared/**/*.{m,h}"
+  end
 
 end
