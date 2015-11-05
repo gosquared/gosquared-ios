@@ -21,22 +21,22 @@
 
 - (id)init {
     self = [super init];
-    
+
     if(self) {
         self.items = [[NSMutableArray alloc] init];
     }
-    
+
     return self;
 }
 
 + (GSTransaction *)transactionWithID:(NSString *)transactionID properties:(NSDictionary *)properties {
     GSTransaction *t = [[GSTransaction alloc] init];
-    
+
     if(t) {
         t.transactionID = transactionID;
         t.properties = properties;
     }
-    
+
     return t;
 }
 
@@ -47,6 +47,7 @@
 - (void)addItem:(GSTransactionItem *)item {
     [self.items addObject:item];
 }
+
 - (void)addItems:(NSArray *)items {
     for(GSTransactionItem *item in items) {
         [self.items addObject:item];
@@ -55,16 +56,16 @@
 
 - (NSDictionary *)serialize {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    
+
     dict[@"id"] = self.transactionID;
-    
+
     if(self.properties) {
         dict[@"opts"] = self.properties;
     }
-    
+
     // make sure we don't attempt to serialize a nil items array
     if(self.items == nil) self.items = [[NSMutableArray alloc] init];
-    
+
     // serialize items
     NSMutableArray *items = [[NSMutableArray alloc] init];
     for(GSTransactionItem *item in self.items) {
@@ -73,7 +74,7 @@
         }
     }
     dict[@"items"] = [NSArray arrayWithArray:items];
-        
+
     return [NSDictionary dictionaryWithDictionary:dict];
 }
 

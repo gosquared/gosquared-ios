@@ -10,7 +10,7 @@
 #import "GSEvent.h"
 
 @implementation GSEvent {
-    
+
 }
 
 @synthesize name = _name;
@@ -18,11 +18,11 @@
 
 + (GSEvent *)eventWithName:(NSString *)name {
     GSEvent *e = [[GSEvent alloc] init];
-    
+
     if(e) {
         [e setName:name];
     }
-        
+
     return e;
 }
 
@@ -44,14 +44,14 @@
 
 - (NSDictionary *)serialize {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    
+
     if(self.name != nil && [self.name isKindOfClass:[NSString class]]) {
         dict[@"name"] = self.name;
     }
     if(self.properties) {
         dict[@"data"] = self.properties;
     }
-    
+
     return [NSDictionary dictionaryWithDictionary:dict];
 }
 

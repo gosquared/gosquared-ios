@@ -16,13 +16,9 @@
 @property (retain) NSNumber *screenWidth;
 @property (retain) NSNumber *screenPixelRatio;
 @property (retain) NSNumber *colorDepth;
-
 @property (retain) NSNumber *timezoneOffset;
-
 @property (retain) NSString *isoLanguage;
-
 @property (retain) NSString *userAgent;
-
 
 + (GSDevice *)currentDevice;
 
