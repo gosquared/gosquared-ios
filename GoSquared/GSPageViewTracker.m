@@ -74,6 +74,10 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
     currentPageIndex = index;
 }
 
+- (NSNumber *)pageIndex {
+    return [NSNumber numberWithLongLong:currentPageIndex];
+}
+
 #pragma mark Lifecycle methods
 
 - (void)appEnteredBackground {
@@ -132,10 +136,10 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
                                                                                 }];
 
     if(isForPing) {
-        page[@"index"] = [NSNumber numberWithLongLong:currentPageIndex];
+        page[@"index"] = [self pageIndex];
     }
     else {
-        page[@"previous"] = [NSNumber numberWithLongLong:currentPageIndex];
+        page[@"previous"] = [self pageIndex];
     }
 
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{

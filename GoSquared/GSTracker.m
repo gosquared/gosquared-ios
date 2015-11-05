@@ -104,6 +104,12 @@ static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.
                                                                                 @"event": event.serialize // json object for event
                                                                                 }];
 
+    if(self.pageViewTracker != nil) {
+        body[@"page"] = @{
+                          @"index": [self.pageViewTracker pageIndex]
+                          };
+    }
+
     if(self.currentPersonID != nil) {
         body[@"person_id"] = self.currentPersonID;
     }
