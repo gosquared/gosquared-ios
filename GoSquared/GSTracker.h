@@ -23,11 +23,6 @@
 @property (strong, readonly) NSString *currentPersonID;
 @property (strong, readonly) NSString *anonID;
 
-+ (GSTracker *)sharedInstance;
-
-//- (void)setSiteToken:(NSString *)siteToken;
-//- (void)setAPIKey:(NSString *)apiKey;
-
 - (NSString *)trackerVersion;
 
 - (NSString *)trackingAPIParams;

@@ -15,9 +15,10 @@
 
 @interface GSPageViewTracker : NSObject
 
+- (id)initWithTracker:(GSTracker *)tracker;
 - (void)startWithURLString:(NSString *)urlString title:(NSString *)title;
-
 - (BOOL)isValid;
+- (NSNumber *)pageIndex;
 
 @property (readonly) __weak UIViewController *currentlyTrackedViewController;
 

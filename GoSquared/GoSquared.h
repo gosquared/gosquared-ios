@@ -13,3 +13,9 @@
 #import "GSTransactionItem.h"
 #import "GSEvent.h"
 #import "GSTracker.h"
+
+@interface GoSquared : NSObject
+
++ (GSTracker *)sharedTracker;
+
+@end

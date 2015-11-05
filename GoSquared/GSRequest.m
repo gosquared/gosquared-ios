@@ -38,7 +38,7 @@ static NSString *staticUserAgent = nil;
     if(!GSRequestsInProgress) {
         GSRequestsInProgress = [[NSMutableArray alloc] init];
     }
-    
+
     [GSRequestsInProgress addObject:req];
 }
 + (void)clearRequestRetain:(GSRequest *)req {
@@ -49,19 +49,19 @@ static NSString *staticUserAgent = nil;
 
 + (GSRequest *)requestWithMethod:(enum GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body {
     GSRequest *r = [[GSRequest alloc] init];
-    
+
     if(r) {
         r.method = method;
         r.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kGSAPIBase, path]];
         r.body = body;
     }
-    
+
     return r;
 }
 
 - (NSString *)description {
     NSString *methodStr = [self methodString];
-    
+
     return [NSString stringWithFormat:@"GSRequest: %p\nMethod: %@\nURL: %@\nBody: %@", self, methodStr, self.url, self.body];
 }
 
@@ -76,7 +76,7 @@ static NSString *staticUserAgent = nil;
         case GSRequestMethodDELETE:
             return @"DELETE";
             break;
-            
+
         default:
             return @"GET";
     }
@@ -85,15 +85,15 @@ static NSString *staticUserAgent = nil;
 - (void)prepareRequest {
     request = [NSMutableURLRequest requestWithURL:self.url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kGSRequestDefaultTimeout];
     [request setHTTPMethod:[self methodString]];
-    
+
     [request setValue:[GSDevice currentDevice].userAgent forHTTPHeaderField:@"User-Agent"];
-    
+
     if(self.body) {
         NSError *error;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.body
                                                            options:kNilOptions
                                                              error:&error];
-        
+
         if (!jsonData) {
             NSLog(@"GSRequest - error serialising body params to json: %@", error);
         } else {
@@ -101,7 +101,7 @@ static NSString *staticUserAgent = nil;
             NSString *jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             NSLog(@"GSRequest body - %@", jsonStr);
 #endif
-            
+
             [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
             [request setHTTPBody:jsonData];
         }
@@ -113,9 +113,9 @@ static NSString *staticUserAgent = nil;
     NSLog(@"GSRequest::send - %@", self);
 #endif
     [self prepareRequest];
-    
+
     _requestCB = cb;
-    
+
     [GSRequest addRequestRetain:self];
     connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
@@ -126,26 +126,26 @@ static NSString *staticUserAgent = nil;
 
 - (void)sendSync {
     [self prepareRequest];
-    
+
     NSError *error;
     NSURLResponse *response;
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     self.responseData = [NSMutableData dataWithData:responseData];
     self.response = (NSHTTPURLResponse *)response;
-    
+
 #ifdef DEBUG
     NSString *responseStr = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
     NSLog(@"GSRequest::sendSync response - %@", responseStr);
 #endif
-    
+
     return;
 }
 
 - (void)finished {
     [GSRequest clearRequestRetain:self];
-    
+
     if(_requestCB == nil) return;
-    
+
     _requestCB(self.success, self);
 }
 
@@ -154,7 +154,7 @@ static NSString *staticUserAgent = nil;
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     self.response = (NSHTTPURLResponse *)response;
-    
+
     self.responseData = [[NSMutableData alloc] init];
 }
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -162,17 +162,17 @@ static NSString *staticUserAgent = nil;
 }
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     NSLog(@"GSRequest::didFailWithError - %@", error);
-    
+
     [self finished];
 }
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     // ignore for now
-    
+
 #ifdef DEBUG
     NSString *string = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
     NSLog(@"GSRequest received responseData: \n%@", string);
 #endif
-    
+
     NSArray *errorCodes = [NSArray arrayWithObjects:[NSNumber numberWithInt:400], [NSNumber numberWithInt:402], [NSNumber numberWithInt:404],[NSNumber numberWithInt:500],[NSNumber numberWithInt:401],[NSNumber numberWithInt:409], nil];
     if([errorCodes containsObject:[NSNumber numberWithInteger:[self.response statusCode]]]) {
         self.success = NO;
@@ -180,7 +180,7 @@ static NSString *staticUserAgent = nil;
     else {
         self.success = YES;
     }
-    
+
     [self finished];
 }
 
