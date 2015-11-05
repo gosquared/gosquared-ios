@@ -16,6 +16,6 @@
 
 @interface GoSquared : NSObject
 
-+ (GSTracker *)sharedInstance;
++ (GSTracker *)sharedTracker;
 
 @end

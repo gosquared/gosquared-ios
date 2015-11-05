@@ -112,7 +112,7 @@ static char const * const kGSTrackingTitleViewControllerTag = "kGSTrackingTitleV
             title = trackingTitle;
         }
 
-        [[GoSquared sharedInstance] trackViewController:self withTitle:title];
+        [[GoSquared sharedTracker] trackViewController:self withTitle:title];
     });
 }
 

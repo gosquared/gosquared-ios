@@ -10,14 +10,14 @@
 
 @implementation GoSquared
 
-static GSTracker *sharedTracker = nil;
+static GSTracker *tracker = nil;
 
-+ (GSTracker *)sharedInstance {
-    if(sharedTracker == nil) {
-        sharedTracker = [[GSTracker alloc] init];
++ (GSTracker *)sharedTracker {
+    if(tracker == nil) {
+        tracker = [[GSTracker alloc] init];
     }
 
-    return sharedTracker;
+    return tracker;
 }
 
 @end
