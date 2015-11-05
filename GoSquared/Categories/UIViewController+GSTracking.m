@@ -3,7 +3,7 @@
 //  GoSquared
 //
 //  Created by Giles Williams on 16/10/2014.
-//  Copyright (c) 2014 MCNGoSquaredTester. All rights reserved.
+//  Copyright (c) 2014 Urban Massage. All rights reserved.
 //  Copyright (c) 2015 Go Squared Ltd. All rights reserved.
 //
 
@@ -24,20 +24,20 @@ static char const * const kGSTrackingTitleViewControllerTag = "kGSTrackingTitleV
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         Class class = [self class];
-        
+
         // swizzle viewDidAppear
         SEL originalVDASelector = @selector(viewDidAppear:);
         SEL swizzledVDASelector = @selector(_gs__viewDidAppear:);
 
         Method originalVDAMethod = class_getInstanceMethod(class, originalVDASelector);
         Method swizzledVDAMethod = class_getInstanceMethod(class, swizzledVDASelector);
-        
+
         BOOL didAddVDAMethod =
         class_addMethod(class,
                         originalVDASelector,
                         method_getImplementation(swizzledVDAMethod),
                         method_getTypeEncoding(swizzledVDAMethod));
-        
+
         if (didAddVDAMethod) {
             class_replaceMethod(class,
                                 swizzledVDASelector,
@@ -61,9 +61,9 @@ static char const * const kGSTrackingTitleViewControllerTag = "kGSTrackingTitleV
 - (BOOL)doNotTrack
 {
     NSNumber *number = objc_getAssociatedObject(self, kGSDoNotTrackViewControllerTag);
-    
+
     if(number == nil) return NO;
-    
+
     return [number boolValue];
 }
 
@@ -75,7 +75,7 @@ static char const * const kGSTrackingTitleViewControllerTag = "kGSTrackingTitleV
 - (NSString *)trackingTitle
 {
     NSString *trackingTitle = objc_getAssociatedObject(self, kGSTrackingTitleViewControllerTag);
-    
+
     return trackingTitle;
 }
 
@@ -84,27 +84,27 @@ static char const * const kGSTrackingTitleViewControllerTag = "kGSTrackingTitleV
 
 - (void)_gs__viewDidAppear:(BOOL)animated {
     [self _gs__viewDidAppear:animated];
-    
+
     if([self isKindOfClass:[UINavigationController class]]) {
         // don't track navigation controllers
         return;
     }
-    
+
     if([self isKindOfClass:[UIPageViewController class]]) {
         // don't track page view controllers
         return;
     }
-    
+
     if([[NSString stringWithFormat:@"%@", [self class]] isEqualToString:@"UIInputWindowController"]) {
         // don't track the keyboard
         return;
     }
-    
+
     if([self doNotTrack] == YES) {
         // adhere to the doNotTrack property
         return;
     }
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *title = self.title;
         NSString *trackingTitle = [self trackingTitle];
