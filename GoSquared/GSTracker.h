@@ -11,7 +11,7 @@
 
 @class UIViewController;
 
-@class GSEvent;
+@class GSTrackerEvent;
 @class GSTransaction;
 @class GSDevice;
 
@@ -28,7 +28,7 @@
 - (NSString *)trackingAPIParams;
 
 // event tracking
-- (void)trackEvent:(GSEvent *)event;
+- (void)trackEvent:(GSTrackerEvent *)event;
 
 // page view tracking - only used if not using the UIViewController+GSTracking category
 - (void)trackViewController:(UIViewController *)vc;

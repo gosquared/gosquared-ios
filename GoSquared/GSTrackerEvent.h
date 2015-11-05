@@ -9,12 +9,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GSEvent : NSObject
+@interface GSTrackerEvent : NSObject
 
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSDictionary *properties;
 
-+ (GSEvent *)eventWithName:(NSString *)name;
++ (GSTrackerEvent *)eventWithName:(NSString *)name;
 - (NSDictionary *)serialize;
 
 @end

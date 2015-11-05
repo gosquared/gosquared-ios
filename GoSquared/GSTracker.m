@@ -10,7 +10,7 @@
 #import "GSTracker.h"
 
 #import "GSRequest.h"
-#import "GSEvent.h"
+#import "GSTrackerEvent.h"
 #import "GSTransaction.h"
 
 #import "GSPageViewTracker.h"
@@ -95,7 +95,7 @@ static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.
 
 #pragma mark Public - Event tracking
 
-- (void)trackEvent:(GSEvent *)event {
+- (void)trackEvent:(GSTrackerEvent *)event {
     [self verifyCredsAreSet];
 
     NSString *path = [NSString stringWithFormat: @"/tracking/v1/event?%@", self.trackingAPIParams];

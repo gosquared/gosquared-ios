@@ -11,8 +11,8 @@
 		B7867FF51BEACD3A001E39C2 /* GoSquared.m in Sources */ = {isa = PBXBuildFile; fileRef = B7867FF41BEACD3A001E39C2 /* GoSquared.m */; };
 		B7E1BDCB1BEA334800422FA0 /* GSDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDBF1BEA334800422FA0 /* GSDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7E1BDCC1BEA334800422FA0 /* GSDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC01BEA334800422FA0 /* GSDevice.m */; };
-		B7E1BDCD1BEA334800422FA0 /* GSEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC11BEA334800422FA0 /* GSEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B7E1BDCE1BEA334800422FA0 /* GSEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC21BEA334800422FA0 /* GSEvent.m */; };
+		B7E1BDCD1BEA334800422FA0 /* GSTrackerEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC11BEA334800422FA0 /* GSTrackerEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B7E1BDCE1BEA334800422FA0 /* GSTrackerEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC21BEA334800422FA0 /* GSTrackerEvent.m */; };
 		B7E1BDCF1BEA334800422FA0 /* GSPageViewTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC31BEA334800422FA0 /* GSPageViewTracker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7E1BDD01BEA334800422FA0 /* GSPageViewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC41BEA334800422FA0 /* GSPageViewTracker.m */; };
 		B7E1BDD11BEA334800422FA0 /* GSRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC51BEA334800422FA0 /* GSRequest.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -33,8 +33,8 @@
 		B7E1BDAA1BEA32B600422FA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B7E1BDBF1BEA334800422FA0 /* GSDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSDevice.h; sourceTree = "<group>"; };
 		B7E1BDC01BEA334800422FA0 /* GSDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSDevice.m; sourceTree = "<group>"; };
-		B7E1BDC11BEA334800422FA0 /* GSEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSEvent.h; sourceTree = "<group>"; };
-		B7E1BDC21BEA334800422FA0 /* GSEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSEvent.m; sourceTree = "<group>"; };
+		B7E1BDC11BEA334800422FA0 /* GSTrackerEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSTrackerEvent.h; sourceTree = "<group>"; };
+		B7E1BDC21BEA334800422FA0 /* GSTrackerEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSTrackerEvent.m; sourceTree = "<group>"; };
 		B7E1BDC31BEA334800422FA0 /* GSPageViewTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSPageViewTracker.h; sourceTree = "<group>"; };
 		B7E1BDC41BEA334800422FA0 /* GSPageViewTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSPageViewTracker.m; sourceTree = "<group>"; };
 		B7E1BDC51BEA334800422FA0 /* GSRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSRequest.h; sourceTree = "<group>"; };
@@ -82,8 +82,8 @@
 				B7867FF41BEACD3A001E39C2 /* GoSquared.m */,
 				B7E1BDBF1BEA334800422FA0 /* GSDevice.h */,
 				B7E1BDC01BEA334800422FA0 /* GSDevice.m */,
-				B7E1BDC11BEA334800422FA0 /* GSEvent.h */,
-				B7E1BDC21BEA334800422FA0 /* GSEvent.m */,
+				B7E1BDC11BEA334800422FA0 /* GSTrackerEvent.h */,
+				B7E1BDC21BEA334800422FA0 /* GSTrackerEvent.m */,
 				B7E1BDC31BEA334800422FA0 /* GSPageViewTracker.h */,
 				B7E1BDC41BEA334800422FA0 /* GSPageViewTracker.m */,
 				B7E1BDC51BEA334800422FA0 /* GSRequest.h */,
@@ -112,7 +112,7 @@
 				B7E1BE031BEA5A9A00422FA0 /* GSTransactionItem.h in Headers */,
 				B7E1BDD31BEA334800422FA0 /* GSTracker.h in Headers */,
 				B7E1BE011BEA5A9A00422FA0 /* GSTransaction.h in Headers */,
-				B7E1BDCD1BEA334800422FA0 /* GSEvent.h in Headers */,
+				B7E1BDCD1BEA334800422FA0 /* GSTrackerEvent.h in Headers */,
 				B7E1BDCF1BEA334800422FA0 /* GSPageViewTracker.h in Headers */,
 				B7E1BDD11BEA334800422FA0 /* GSRequest.h in Headers */,
 			);
@@ -187,7 +187,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7E1BDCE1BEA334800422FA0 /* GSEvent.m in Sources */,
+				B7E1BDCE1BEA334800422FA0 /* GSTrackerEvent.m in Sources */,
 				B7867FF51BEACD3A001E39C2 /* GoSquared.m in Sources */,
 				B7E1BDD41BEA334800422FA0 /* GSTracker.m in Sources */,
 				B7E1BDD21BEA334800422FA0 /* GSRequest.m in Sources */,

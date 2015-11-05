@@ -106,14 +106,14 @@ override func viewDidAppear(animated: Bool) {
 **Objective-C:**
 
 ```objc
-GSEvent *event = [GSEvent eventWithName:@"test-event"];
+GSTrackerEvent *event = [GSTrackerEvent eventWithName:@"test-event"];
 [[GoSquared sharedTracker] trackEvent:event];
 ```
 
 **Swift:**
 
 ```swift
-let event = GSEvent(name: "test-event")
+let event = GSTrackerEvent(name: "test-event")
 GoSquared.sharedTracker().trackEvent(event)
 ```
     
@@ -122,7 +122,7 @@ GoSquared.sharedTracker().trackEvent(event)
 **Objective-C:**
 
 ```objc
-GSEvent *event = [GSEvent eventWithName:@"test-event"];
+GSTrackerEvent *event = [GSTrackerEvent eventWithName:@"test-event"];
 event.properties = @{ @"properties": @"are cool" };
 [[GoSquared sharedTracker] trackEvent:event];
 ```
@@ -130,7 +130,7 @@ event.properties = @{ @"properties": @"are cool" };
 **Swift:**
 
 ```swift
-let event = GSEvent(name: "test-event")
+let event = GSTrackerEvent(name: "test-event")
 event.properties = ["properties": "are cool"]
 GoSquared.sharedTracker().trackEvent(event)
 ```

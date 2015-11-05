@@ -11,7 +11,7 @@
 
 #import "GSTransaction.h"
 #import "GSTransactionItem.h"
-#import "GSEvent.h"
+#import "GSTrackerEvent.h"
 #import "GSTracker.h"
 
 @interface GoSquared : NSObject

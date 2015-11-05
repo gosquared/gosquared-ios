@@ -7,17 +7,17 @@
 //  Copyright (c) 2015 Go Squared Ltd. All rights reserved.
 //
 
-#import "GSEvent.h"
+#import "GSTrackerEvent.h"
 
-@implementation GSEvent {
+@implementation GSTrackerEvent {
 
 }
 
 @synthesize name = _name;
 @synthesize properties = _properties;
 
-+ (GSEvent *)eventWithName:(NSString *)name {
-    GSEvent *e = [[GSEvent alloc] init];
++ (GSTrackerEvent *)eventWithName:(NSString *)name {
+    GSTrackerEvent *e = [[GSTrackerEvent alloc] init];
 
     if(e) {
         [e setName:name];
