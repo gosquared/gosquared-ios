@@ -1,6 +1,6 @@
 # GoSquared iOS
 
-**This is an early beta, please open an issue if you find anything not working, or to leave feedback for improvement. You can also get in touch directly: <ed@goquared.com>**
+**This is an early beta, please open an issue if you find anything not working, or to leave feedback for improvement. You can also get in touch directly: <ed@gosquared.com>.**
 
 ## Installation
 
