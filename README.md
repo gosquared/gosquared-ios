@@ -32,9 +32,9 @@ Make sure you initialise the library with your site token before calling any tra
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	[[GoSquared sharedTracker] setSiteToken:@"your-site-token"];
-	[[GoSquared sharedTracker] setApiKey:@"your-api-key"];
-	
+    [[GoSquared sharedTracker] setSiteToken:@"your-site-token"];
+    [[GoSquared sharedTracker] setApiKey:@"your-api-key"];
+
     return YES;
 }
 ```
@@ -63,6 +63,43 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
 Make sure you're using the `GoSquared/Autoload` subspec in your Podfile. Configure your Site Token and API Key as described above, and you're good to go!
 
+If needed, you can disable tracking on indiviual ViewControllers, or set a custom title:
+
+**Objective-C:**
+
+```objc
+#import <GoSquared/GoSquared.h>
+
+// ...
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    // use this to override the title property on a ViewController class
+    self.trackingTitle = @"My Custom Title";
+    // set this to YES to disable tracking for a particular ViewController
+    self.doNotTrack = YES;
+}
+
+```
+
+**Swift:**
+
+```swift
+import GoSquared
+
+// ...
+
+override func viewDidLoad() {
+    super.viewDidLoad()
+
+    // use this to override the title property on a ViewController class
+    self.trackingTitle = "My Custom Title";
+    // set this to true to disable tracking for a particular ViewController
+    self.doNotTrack = true;
+}
+```
+
 ### Manual Page View Tracking
 
 You can use one of the below methods to manually track a UIViewController:
@@ -90,11 +127,11 @@ import GoSquared
 // ...
 
 override func viewDidAppear(animated: Bool) {
-	super.viewDidAppear(animated)
-	
-	GoSquared.sharedTracker().trackViewController(self)
-	GoSquared.sharedTracker().trackViewController(self, withTitle: "Manually set title")
-	GoSquared.sharedTracker().trackViewController(self, withTitle: "Manually set title", urlPath:"/custom-url-path")
+    super.viewDidAppear(animated)
+
+    GoSquared.sharedTracker().trackViewController(self)
+    GoSquared.sharedTracker().trackViewController(self, withTitle: "Manually set title")
+    GoSquared.sharedTracker().trackViewController(self, withTitle: "Manually set title", urlPath:"/custom-url-path")
 }
 
 ```
@@ -116,7 +153,7 @@ GSTrackerEvent *event = [GSTrackerEvent eventWithName:@"test-event"];
 let event = GSTrackerEvent(name: "test-event")
 GoSquared.sharedTracker().trackEvent(event)
 ```
-    
+
 ### Track an event with properties
 
 **Objective-C:**
