@@ -147,6 +147,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
                                                                                 @"visitor_id": self.tracker.anonID,
                                                                                 @"page": page,
                                                                                 @"character_set": @"UTF-8",
+                                                                                @"ip": @"detect",
                                                                                 @"language": device.isoLanguage,
                                                                                 @"user_agent": device.userAgent,
                                                                                 @"returning": self.returning,

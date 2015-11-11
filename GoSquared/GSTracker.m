@@ -114,6 +114,8 @@ static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.
         body[@"person_id"] = self.currentPersonID;
     }
 
+    body[@"ip"] = @"detect";
+
     GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:r];
 }
@@ -133,6 +135,8 @@ static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.
     if(self.currentPersonID != nil) {
         body[@"person_id"] = self.currentPersonID;
     }
+
+    body[@"ip"] = @"detect";
 
     GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:r];
