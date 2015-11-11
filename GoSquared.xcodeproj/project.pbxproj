@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		B7867FD51BEAAD0B001E39C2 /* Categories in Resources */ = {isa = PBXBuildFile; fileRef = B7867FD41BEAAD0B001E39C2 /* Categories */; };
 		B7867FF51BEACD3A001E39C2 /* GoSquared.m in Sources */ = {isa = PBXBuildFile; fileRef = B7867FF41BEACD3A001E39C2 /* GoSquared.m */; };
+		B792A8061BF36808000CB7A3 /* CODE_OF_CONDUCT.md in Sources */ = {isa = PBXBuildFile; fileRef = B792A8021BF36808000CB7A3 /* CODE_OF_CONDUCT.md */; };
+		B792A8071BF36808000CB7A3 /* GoSquared.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B792A8031BF36808000CB7A3 /* GoSquared.podspec */; };
+		B792A8081BF36808000CB7A3 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = B792A8041BF36808000CB7A3 /* LICENSE */; };
+		B792A8091BF36808000CB7A3 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B792A8051BF36808000CB7A3 /* README.md */; };
 		B7E1BDCB1BEA334800422FA0 /* GSDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDBF1BEA334800422FA0 /* GSDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7E1BDCC1BEA334800422FA0 /* GSDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC01BEA334800422FA0 /* GSDevice.m */; };
 		B7E1BDCD1BEA334800422FA0 /* GSTrackerEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC11BEA334800422FA0 /* GSTrackerEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -29,6 +33,10 @@
 /* Begin PBXFileReference section */
 		B7867FD41BEAAD0B001E39C2 /* Categories */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Categories; sourceTree = "<group>"; };
 		B7867FF41BEACD3A001E39C2 /* GoSquared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoSquared.m; sourceTree = "<group>"; };
+		B792A8021BF36808000CB7A3 /* CODE_OF_CONDUCT.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CODE_OF_CONDUCT.md; sourceTree = "<group>"; };
+		B792A8031BF36808000CB7A3 /* GoSquared.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GoSquared.podspec; sourceTree = "<group>"; };
+		B792A8041BF36808000CB7A3 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		B792A8051BF36808000CB7A3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B7E1BDA51BEA32B600422FA0 /* GoSquared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoSquared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7E1BDAA1BEA32B600422FA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B7E1BDBF1BEA334800422FA0 /* GSDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSDevice.h; sourceTree = "<group>"; };
@@ -59,9 +67,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B792A80A1BF3680D000CB7A3 /* Docs */ = {
+			isa = PBXGroup;
+			children = (
+				B792A8051BF36808000CB7A3 /* README.md */,
+				B792A8021BF36808000CB7A3 /* CODE_OF_CONDUCT.md */,
+				B792A8031BF36808000CB7A3 /* GoSquared.podspec */,
+				B792A8041BF36808000CB7A3 /* LICENSE */,
+			);
+			name = Docs;
+			sourceTree = "<group>";
+		};
 		B7E1BD9B1BEA32B600422FA0 = {
 			isa = PBXGroup;
 			children = (
+				B792A80A1BF3680D000CB7A3 /* Docs */,
 				B7E1BDA71BEA32B600422FA0 /* GoSquared */,
 				B7E1BDA61BEA32B600422FA0 /* Products */,
 			);
@@ -176,6 +196,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B792A8081BF36808000CB7A3 /* LICENSE in Resources */,
+				B792A8071BF36808000CB7A3 /* GoSquared.podspec in Resources */,
 				B7867FD51BEAAD0B001E39C2 /* Categories in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,6 +211,8 @@
 			files = (
 				B7E1BDCE1BEA334800422FA0 /* GSTrackerEvent.m in Sources */,
 				B7867FF51BEACD3A001E39C2 /* GoSquared.m in Sources */,
+				B792A8091BF36808000CB7A3 /* README.md in Sources */,
+				B792A8061BF36808000CB7A3 /* CODE_OF_CONDUCT.md in Sources */,
 				B7E1BDD41BEA334800422FA0 /* GSTracker.m in Sources */,
 				B7E1BDD21BEA334800422FA0 /* GSRequest.m in Sources */,
 				B7E1BE021BEA5A9A00422FA0 /* GSTransaction.m in Sources */,
