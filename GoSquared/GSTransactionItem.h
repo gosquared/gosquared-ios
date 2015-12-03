@@ -17,6 +17,8 @@
 @property (strong, nonatomic) NSNumber *quantity;
 @property (strong, nonatomic) NSNumber *price;
 
++ (GSTransactionItem *)transactionItemWithName:(NSString *)name price:(NSNumber *)price quantity:(NSNumber *)quantity;
+
 - (void)setCategory:(NSString *)category;
 
 - (NSDictionary *)serialize;

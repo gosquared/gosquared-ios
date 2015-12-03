@@ -12,12 +12,13 @@
 #import "GSRequest.h"
 #import "GSTrackerEvent.h"
 #import "GSTransaction.h"
+#import "GSTransactionItem.h"
 
 #import "GSPageViewTracker.h"
 
 #import <UIKit/UIKit.h>
 
-static NSString * const kGSTrackerVersion = @"ios-0.0.3";
+static NSString * const kGSTrackerVersion = @"ios-0.0.4";
 
 static NSString * const kGSAnonymousUUIDDefaultsKey = @"com.gosquared.defaults.anonUUID";
 static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.identifiedUUID";
@@ -64,6 +65,28 @@ static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.
 
 #pragma mark Public - Page view tracking
 
+- (void)trackScreen:(NSString *)title {
+    [self trackScreen:title withPath:nil];
+}
+
+- (void)trackScreen:(NSString *)title withPath:(NSString *)path {
+    [self verifyCredsAreSet];
+
+    if (path == nil) {
+        path = [title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    }
+
+    NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
+    NSString *url = [NSString stringWithFormat:@"%@://%@", bundleId, path];
+
+    if (self.pageViewTracker == nil) {
+        self.pageViewTracker = [[GSPageViewTracker alloc] initWithTracker: self];
+    }
+
+    [self.pageViewTracker startWithURLString:url title:title];
+}
+
+
 - (void)trackViewController:(UIViewController *)vc {
     NSString *title = vc.title;
 
@@ -96,24 +119,34 @@ static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.
 #pragma mark Public - Event tracking
 
 - (void)trackEvent:(GSTrackerEvent *)event {
+    [self trackEvent:event.name withProperties:event.properties];
+}
+
+- (void)trackEvent:(NSString *)name withProperties:(NSDictionary *)properties {
     [self verifyCredsAreSet];
+
+    NSMutableDictionary *event = [[NSMutableDictionary alloc] init];
+    event[@"name"] = name;
+
+    if (properties != nil) {
+        event[@"data"] = properties;
+    }
 
     NSString *path = [NSString stringWithFormat: @"/tracking/v1/event?%@", self.trackingAPIParams];
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                 @"visitor_id": self.anonID, // anonymous user ID
-                                                                                @"event": event.serialize // json object for event
+                                                                                @"event": event             // json object for event
                                                                                 }];
 
-    if(self.pageViewTracker != nil) {
-        body[@"page"] = @{
-                          @"index": [self.pageViewTracker pageIndex]
-                          };
+    if (self.pageViewTracker != nil) {
+        body[@"page"] = @{ @"index": [self.pageViewTracker pageIndex] };
     }
 
-    if(self.currentPersonID != nil) {
+    if (self.currentPersonID != nil) {
         body[@"person_id"] = self.currentPersonID;
     }
 
+    // detect location from request IP
     body[@"ip"] = @"detect";
 
     GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
@@ -122,6 +155,17 @@ static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.
 
 
 #pragma mark Public - Ecommerce tracking
+
+- (void)trackTransaction:(NSString *)transactionID items:(NSArray *)items {
+    [self trackTransaction:transactionID items:items properties:nil];
+}
+
+- (void)trackTransaction:(NSString *)transactionID items:(NSArray *)items properties:(NSDictionary *)properties {
+    GSTransaction *tx = [GSTransaction transactionWithID:transactionID properties:properties];
+    [tx addItems:items];
+
+    [self trackTransaction:tx];
+}
 
 - (void)trackTransaction:(GSTransaction *)transaction {
     [self verifyCredsAreSet];
