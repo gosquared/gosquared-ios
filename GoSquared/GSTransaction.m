@@ -8,7 +8,6 @@
 //
 
 #import "GSTransaction.h"
-
 #import "GSTransactionItem.h"
 
 @interface GSTransaction ()
@@ -22,17 +21,25 @@
 - (id)init {
     self = [super init];
 
-    if(self) {
+    if (self) {
         self.items = [[NSMutableArray alloc] init];
     }
 
     return self;
 }
 
++ (GSTransaction *)transaction:(NSString *)transactionId {
+    return [GSTransaction transactionWithID:transactionId properties:nil];
+}
+
++ (GSTransaction *)transactionWithID:(NSString *)transactionID {
+    return [GSTransaction transactionWithID:transactionID properties:nil];
+}
+
 + (GSTransaction *)transactionWithID:(NSString *)transactionID properties:(NSDictionary *)properties {
     GSTransaction *t = [[GSTransaction alloc] init];
 
-    if(t) {
+    if (t) {
         t.transactionID = transactionID;
         t.properties = properties;
     }
@@ -40,16 +47,12 @@
     return t;
 }
 
-+ (GSTransaction *)transactionWithID:(NSString *)transactionID {
-    return [GSTransaction transactionWithID:transactionID properties:nil];
-}
-
 - (void)addItem:(GSTransactionItem *)item {
     [self.items addObject:item];
 }
 
 - (void)addItems:(NSArray *)items {
-    for(GSTransactionItem *item in items) {
+    for (GSTransactionItem *item in items) {
         [self.items addObject:item];
     }
 }
@@ -59,12 +62,12 @@
 
     dict[@"id"] = self.transactionID;
 
-    if(self.properties) {
+    if (self.properties) {
         dict[@"opts"] = self.properties;
     }
 
     // make sure we don't attempt to serialize a nil items array
-    if(self.items == nil) self.items = [[NSMutableArray alloc] init];
+    if (self.items == nil) self.items = [[NSMutableArray alloc] init];
 
     // serialize items
     NSMutableArray *items = [[NSMutableArray alloc] init];

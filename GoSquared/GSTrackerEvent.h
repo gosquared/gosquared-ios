@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
+__attribute__((deprecated))
 @interface GSTrackerEvent : NSObject
 
 @property (nonatomic) NSString *name;

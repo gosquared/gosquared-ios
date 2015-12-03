@@ -16,8 +16,9 @@
 @property (strong, nonatomic) NSString *transactionID;
 @property (strong, nonatomic) NSDictionary *properties;
 
-+ (GSTransaction *)transactionWithID:(NSString *)transactionID properties:(NSDictionary *)properties;
++ (GSTransaction *)transaction:(NSString *)transactionID;
 + (GSTransaction *)transactionWithID:(NSString *)transactionID;
++ (GSTransaction *)transactionWithID:(NSString *)transactionID properties:(NSDictionary *)properties;
 
 - (void)addItem:(GSTransactionItem *)item;
 - (void)addItems:(NSArray *)items;

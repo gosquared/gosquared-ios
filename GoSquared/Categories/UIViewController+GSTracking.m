@@ -58,6 +58,7 @@ static char const * const kGSTrackingTitleViewControllerTag = "kGSTrackingTitleV
     NSNumber *number = [NSNumber numberWithBool:doNotTrack];
     objc_setAssociatedObject(self, kGSDoNotTrackViewControllerTag, number, OBJC_ASSOCIATION_RETAIN);
 }
+
 - (BOOL)doNotTrack
 {
     NSNumber *number = objc_getAssociatedObject(self, kGSDoNotTrackViewControllerTag);
@@ -112,7 +113,7 @@ static char const * const kGSTrackingTitleViewControllerTag = "kGSTrackingTitleV
             title = trackingTitle;
         }
 
-        [[GoSquared sharedTracker] trackViewController:self withTitle:title];
+        [[GoSquared sharedTracker] trackScreen:self.title];
     });
 }
 

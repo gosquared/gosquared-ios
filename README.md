@@ -6,18 +6,12 @@
 
 ### Installing with CocoaPods (Recommended)
 
-1. Install CocoaPods using `gem install cocoapods`.
+1. Install [CocoaPods](https://cocoapods.org) using `gem install cocoapods`.
 2. Create a new Podfile using `pod init`.
 3. There are two options for adding GoSquared to your Podfile:
  - If you want automatic tracking of your views, add `pod 'GoSquared/Autoload'`
  - If you dont not want this, add `pod 'GoSquared'` to your Podfile.
 4. Run `pod install` to install. This will generate a new Xcode workspace for you to open and use.
-
-### Installing with Carthage
-
-> **Note**: By using carthage you will be unable to use the `UIViewController` category to automatically implement GoSquared pageview tracking. If you want this, please use CocoaPods, or install manually.
-
-**[Read the instructions provided by Carthage](https://github.com/Carthage/Carthage)**
 
 ## Configuration
 
@@ -113,9 +107,8 @@ You can use one of the below methods to manually track a UIViewController:
 
 - (void)viewDidAppear
 {
-    [[GoSquared sharedTracker] trackViewController:self];
-    [[GoSquared sharedTracker] trackViewController:self withTitle:@"Manually set title"];
-    [[GoSquared sharedTracker] trackViewController:self withTitle:@"Manually set title" urlPath:@"/custom-url-path"];
+    [[GoSquared sharedTracker] trackScreen:self.title];
+    [[GoSquared sharedTracker] trackScreen:self.title url:@"/custom-url-path"];
 }
 ```
 
@@ -129,9 +122,8 @@ import GoSquared
 override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
 
-    GoSquared.sharedTracker().trackViewController(self)
-    GoSquared.sharedTracker().trackViewController(self, withTitle: "Manually set title")
-    GoSquared.sharedTracker().trackViewController(self, withTitle: "Manually set title", urlPath:"/custom-url-path")
+    GoSquared.sharedTracker().trackScreen(self.title)
+    GoSquared.sharedTracker().trackScreen(self.title, url:"/custom-url-path")
 }
 
 ```
@@ -143,15 +135,13 @@ override func viewDidAppear(animated: Bool) {
 **Objective-C:**
 
 ```objc
-GSTrackerEvent *event = [GSTrackerEvent eventWithName:@"test-event"];
-[[GoSquared sharedTracker] trackEvent:event];
+[[GoSquared sharedTracker] trackEvent:"event name"];
 ```
 
 **Swift:**
 
 ```swift
-let event = GSTrackerEvent(name: "test-event")
-GoSquared.sharedTracker().trackEvent(event)
+GoSquared.sharedTracker().trackEvent("event name")
 ```
 
 ### Track an event with properties
@@ -159,17 +149,13 @@ GoSquared.sharedTracker().trackEvent(event)
 **Objective-C:**
 
 ```objc
-GSTrackerEvent *event = [GSTrackerEvent eventWithName:@"test-event"];
-event.properties = @{ @"properties": @"are cool" };
-[[GoSquared sharedTracker] trackEvent:event];
+[[GoSquared sharedTracker] trackEvent:@"test-event" properties @{ @"properties": @"are cool" }];
 ```
 
 **Swift:**
 
 ```swift
-let event = GSTrackerEvent(name: "test-event")
-event.properties = ["properties": "are cool"]
-GoSquared.sharedTracker().trackEvent(event)
+GoSquared.sharedTracker().trackEvent("test-event", properties: ["properties": "are cool"])
 ```
 
 ## People
@@ -210,31 +196,19 @@ GoSquared.sharedTracker().unidentify();
 **Objective-C:**
 
 ```objc
-GSTransactionItem *item = [[GSTransactionItem alloc] init];
-item.price = [NSNumber numberWithFloat:20.0f];
-item.quantity = [NSNumber numberWithInt:2];
-item.revenue = [NSNumber numberWithFloat:40.0f]; // auto calculated as price * quantity if not set
-item.name = @"here's an item!";
+GSTransactionItem *coke = [GSTransactionItem transactionItemWithName:@"Coca Cola"
+                                                               price:@0.99
+                                                            quantity:@6];
 
-GSTransaction *tx = [GSTransaction transactionWithID:@"my-transaction"];
-[tx addItem:item];
-
-[[GoSquared sharedTracker] trackTransaction:tx];
+[[GoSquared sharedTracker] trackTransaction:@"unique-id" items: @[ coke ]];
 ```
 
 **Swift:**
 
 ```swift
-let item = GSTransactionItem()
-item.price = 20.0
-item.quantity = 2
-item.revenue = 40.0 // auto calculated as price * quantity if not set
-item.name = "here's an item!"
+let coke = GSTransactionItem(name: "Coca Cola", price: 0.99, quantity: 6)
 
-let tx = GSTransaction(ID: "my-transaction")
-tx.addItem(item)
-
-GoSquared.sharedTracker().trackTransaction(tx)
+GoSquared.sharedTracker().trackTransaction("unique-id", items: [coke])
 ```
 
 ## Code of Conduct

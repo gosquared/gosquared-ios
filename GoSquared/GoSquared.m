@@ -13,7 +13,7 @@
 static GSTracker *tracker = nil;
 
 + (GSTracker *)sharedTracker {
-    if(tracker == nil) {
+    if (tracker == nil) {
         tracker = [[GSTracker alloc] init];
     }
 

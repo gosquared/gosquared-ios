@@ -13,6 +13,7 @@
 
 @class GSTrackerEvent;
 @class GSTransaction;
+@class GSTransactionItem;
 @class GSDevice;
 
 @interface GSTracker : NSObject
@@ -28,12 +29,17 @@
 - (NSString *)trackingAPIParams;
 
 // event tracking
-- (void)trackEvent:(GSTrackerEvent *)event;
+- (void)trackEvent:(GSTrackerEvent *)event __attribute__((deprecated("Use trackEvent:withProperties: instead")));
+
+- (void)trackEvent:(NSString *)name withProperties:(NSDictionary *)properties;
 
 // page view tracking - only used if not using the UIViewController+GSTracking category
-- (void)trackViewController:(UIViewController *)vc;
-- (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title;
-- (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title urlPath:(NSString *)urlPath;
+- (void)trackViewController:(UIViewController *)vc __attribute__((deprecated("Use trackScreen: instead")));
+- (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title __attribute__((deprecated("Use trackScreen: instead")));
+- (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title urlPath:(NSString *)urlPath __attribute__((deprecated("Use trackScreen:withPath: instead")));
+
+- (void)trackScreen:(NSString *)title;
+- (void)trackScreen:(NSString *)title withPath:(NSString *)path;
 
 // people
 - (void)identify:(NSString *)userID;
@@ -43,5 +49,7 @@
 
 // ecommerce
 - (void)trackTransaction:(GSTransaction *)transaction;
+- (void)trackTransaction:(NSString *)transactionID items:(NSArray *)items;
+- (void)trackTransaction:(NSString *)transactionID items:(NSArray *)items properties:(NSDictionary *)properties;
 
 @end

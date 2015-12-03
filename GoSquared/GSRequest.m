@@ -69,14 +69,10 @@ static NSString *staticUserAgent = nil;
     switch(self.method) {
         case GSRequestMethodPUT:
             return @"PUT";
-            break;
         case GSRequestMethodPOST:
             return @"POST";
-            break;
         case GSRequestMethodDELETE:
             return @"DELETE";
-            break;
-
         default:
             return @"GET";
     }
