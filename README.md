@@ -149,7 +149,7 @@ GoSquared.sharedTracker().trackEvent("event name")
 **Objective-C:**
 
 ```objc
-[[GoSquared sharedTracker] trackEvent:@"test-event" properties @{ @"properties": @"are cool" }];
+[[GoSquared sharedTracker] trackEvent:@"test-event" properties:@{ @"properties": @"are cool" }];
 ```
 
 **Swift:**
