@@ -1,5 +1,10 @@
 # GoSquared iOS Change Log
 
+## 2015-12-09, [v0.0.5]
+
+- Fix issue where unique visitors for a time period were not being tracked correctly
+- Rename files, classes, variables, methods to use "pageview" as one word
+
 ## 2015-12-03, [v0.0.4]
 
 - Deprecated `GSTrackerEvent`. Use `trackEvent:withProperties:` method instead
@@ -24,6 +29,7 @@
 - Rename `sharedInstance` to `sharedTracker`
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
+[v0.0.5]: https://github.com/gosquared/gosquared-ios/compare/v0.0.4...v0.0.5
 [v0.0.4]: https://github.com/gosquared/gosquared-ios/compare/v0.0.3...v0.0.4
 [v0.0.3]: https://github.com/gosquared/gosquared-ios/compare/v0.0.2...v0.0.3
 [v0.0.2]: https://github.com/gosquared/gosquared-ios/compare/v0.0.1...v0.0.2
