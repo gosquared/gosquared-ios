@@ -19,7 +19,7 @@
 + (GSTrackerEvent *)eventWithName:(NSString *)name {
     GSTrackerEvent *e = [[GSTrackerEvent alloc] init];
 
-    if(e) {
+    if (e) {
         [e setName:name];
     }
 
@@ -45,10 +45,10 @@
 - (NSDictionary *)serialize {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
 
-    if(self.name != nil && [self.name isKindOfClass:[NSString class]]) {
+    if (self.name != nil && [self.name isKindOfClass:[NSString class]]) {
         dict[@"name"] = self.name;
     }
-    if(self.properties) {
+    if (self.properties) {
         dict[@"data"] = self.properties;
     }
 

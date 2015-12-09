@@ -35,14 +35,14 @@ static NSString *staticUserAgent = nil;
 }
 
 + (void)addRequestRetain:(GSRequest *)req {
-    if(!GSRequestsInProgress) {
+    if (!GSRequestsInProgress) {
         GSRequestsInProgress = [[NSMutableArray alloc] init];
     }
 
     [GSRequestsInProgress addObject:req];
 }
 + (void)clearRequestRetain:(GSRequest *)req {
-    if(GSRequestsInProgress) {
+    if (GSRequestsInProgress) {
         [GSRequestsInProgress removeObject:req];
     }
 }
@@ -50,7 +50,7 @@ static NSString *staticUserAgent = nil;
 + (GSRequest *)requestWithMethod:(enum GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body {
     GSRequest *r = [[GSRequest alloc] init];
 
-    if(r) {
+    if (r) {
         r.method = method;
         r.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kGSAPIBase, path]];
         r.body = body;
@@ -66,7 +66,7 @@ static NSString *staticUserAgent = nil;
 }
 
 - (NSString *)methodString {
-    switch(self.method) {
+    switch (self.method) {
         case GSRequestMethodPUT:
             return @"PUT";
         case GSRequestMethodPOST:
@@ -84,7 +84,7 @@ static NSString *staticUserAgent = nil;
 
     [request setValue:[GSDevice currentDevice].userAgent forHTTPHeaderField:@"User-Agent"];
 
-    if(self.body) {
+    if (self.body) {
         NSError *error;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.body
                                                            options:kNilOptions
@@ -140,7 +140,7 @@ static NSString *staticUserAgent = nil;
 - (void)finished {
     [GSRequest clearRequestRetain:self];
 
-    if(_requestCB == nil) return;
+    if (_requestCB == nil) return;
 
     _requestCB(self.success, self);
 }
@@ -170,10 +170,9 @@ static NSString *staticUserAgent = nil;
 #endif
 
     NSArray *errorCodes = [NSArray arrayWithObjects:[NSNumber numberWithInt:400], [NSNumber numberWithInt:402], [NSNumber numberWithInt:404],[NSNumber numberWithInt:500],[NSNumber numberWithInt:401],[NSNumber numberWithInt:409], nil];
-    if([errorCodes containsObject:[NSNumber numberWithInteger:[self.response statusCode]]]) {
+    if ([errorCodes containsObject:[NSNumber numberWithInteger:[self.response statusCode]]]) {
         self.success = NO;
-    }
-    else {
+    } else {
         self.success = YES;
     }
 

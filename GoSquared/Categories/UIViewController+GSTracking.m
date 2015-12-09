@@ -63,7 +63,7 @@ static char const * const kGSTrackingTitleViewControllerTag = "kGSTrackingTitleV
 {
     NSNumber *number = objc_getAssociatedObject(self, kGSDoNotTrackViewControllerTag);
 
-    if(number == nil) return NO;
+    if (number == nil) return NO;
 
     return [number boolValue];
 }
@@ -86,22 +86,22 @@ static char const * const kGSTrackingTitleViewControllerTag = "kGSTrackingTitleV
 - (void)_gs__viewDidAppear:(BOOL)animated {
     [self _gs__viewDidAppear:animated];
 
-    if([self isKindOfClass:[UINavigationController class]]) {
+    if ([self isKindOfClass:[UINavigationController class]]) {
         // don't track navigation controllers
         return;
     }
 
-    if([self isKindOfClass:[UIPageViewController class]]) {
+    if ([self isKindOfClass:[UIPageViewController class]]) {
         // don't track page view controllers
         return;
     }
 
-    if([[NSString stringWithFormat:@"%@", [self class]] isEqualToString:@"UIInputWindowController"]) {
+    if ([[NSString stringWithFormat:@"%@", [self class]] isEqualToString:@"UIInputWindowController"]) {
         // don't track the keyboard
         return;
     }
 
-    if([self doNotTrack] == YES) {
+    if ([self doNotTrack] == YES) {
         // adhere to the doNotTrack property
         return;
     }
@@ -109,7 +109,7 @@ static char const * const kGSTrackingTitleViewControllerTag = "kGSTrackingTitleV
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *title = self.title;
         NSString *trackingTitle = [self trackingTitle];
-        if(trackingTitle != nil) {
+        if (trackingTitle != nil) {
             title = trackingTitle;
         }
 

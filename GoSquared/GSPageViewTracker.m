@@ -53,13 +53,13 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
 - (id)initWithTracker:(GSTracker *)tracker {
     self = [super init];
 
-    if(self) {
+    if (self) {
         currentPageIndex = 0;
 
         self.tracker = tracker;
         self.returning = [[NSUserDefaults standardUserDefaults] objectForKey:kGSPageViewTrackerReturningDefaultsKey];
 
-        if(!self.returning) {
+        if (!self.returning) {
             self.returning = @0;
         }
 
@@ -85,7 +85,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
 }
 
 - (void)appEnteredForeground {
-    if(self.title != nil && self.urlString != nil) {
+    if (self.title != nil && self.urlString != nil) {
         [self startWithURLString:self.urlString title:self.title];
     }
 }
@@ -96,7 +96,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
     self.title = title;
     self.urlString = urlString;
 
-    if(self.title == nil) {
+    if (self.title == nil) {
         self.title = @"";
     }
 
@@ -114,7 +114,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
 - (void)invalidate {
     self.valid = NO;
 
-    if(self.timer) {
+    if (self.timer) {
         [self.timer invalidate];
         self.timer = nil;
     }
@@ -135,10 +135,9 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
                                                                                 @"title": [NSString stringWithFormat:@"iOS: %@", self.title]
                                                                                 }];
 
-    if(isForPing) {
+    if (isForPing) {
         page[@"index"] = [self pageIndex];
-    }
-    else {
+    } else {
         page[@"previous"] = [self pageIndex];
     }
 
@@ -176,7 +175,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
                                                                                 @"tracker_version": self.tracker.trackerVersion
                                                                                 }];
 
-    if(self.tracker.currentPersonID != nil) {
+    if (self.tracker.currentPersonID != nil) {
         body[@"person_id"] = self.tracker.currentPersonID;
     }
 
@@ -184,7 +183,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
 }
 
 - (void)track {
-    if(!self.isValid) return;
+    if (!self.isValid) return;
 
     // use GCD barrier to force queuing of requests
     dispatch_barrier_async(GSPageViewTrackerQueue(), ^{
@@ -199,10 +198,10 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
             NSError *localError;
             NSDictionary *parsedResponse = [NSJSONSerialization JSONObjectWithData:req.responseData options:0 error:&localError];
 
-            if(parsedResponse != nil) {
+            if (parsedResponse != nil) {
                 NSNumber *index = parsedResponse[@"index"];
 
-                if(index != nil && ![index isKindOfClass:[NSNull class]]) {
+                if (index != nil && ![index isKindOfClass:[NSNull class]]) {
                     [self setPageIndex:[index longLongValue]];
                 }
             }
@@ -212,7 +211,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
         }
     });
 
-    if([self.returning intValue] == 0) {
+    if ([self.returning intValue] == 0) {
         self.returning = @1;
         [[NSUserDefaults standardUserDefaults] setObject:self.returning forKey:kGSPageViewTrackerReturningDefaultsKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -223,7 +222,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
 #pragma mark Pinger methods (keeps page view alive)
 
 - (void)ping {
-    if(!self.isValid) return;
+    if (!self.isValid) return;
 
     NSDictionary *body = [self generateBodyForPing:YES];
 

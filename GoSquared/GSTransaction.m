@@ -71,8 +71,8 @@
 
     // serialize items
     NSMutableArray *items = [[NSMutableArray alloc] init];
-    for(GSTransactionItem *item in self.items) {
-        if([item isKindOfClass:[GSTransactionItem class]]) {
+    for (GSTransactionItem *item in self.items) {
+        if ([item isKindOfClass:[GSTransactionItem class]]) {
             [items addObject:item.serialize];
         }
     }

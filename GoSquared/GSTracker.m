@@ -44,13 +44,13 @@ static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.
 - (GSTracker *)init {
     self = [super init];
 
-    if(self) {
+    if (self) {
         // grab a saved anon UDID or generate on if it doesn't exist
         self.anonID = [self generateUUID:NO];
 
         // grab a saved People Analytics user ID if one is saved
         NSString *identifiedPersonID = [[NSUserDefaults standardUserDefaults] objectForKey:kGSIdentifiedUUIDDefaultsKey];
-        if(identifiedPersonID) {
+        if (identifiedPersonID) {
             self.currentPersonID = identifiedPersonID;
         }
     }
@@ -90,11 +90,10 @@ static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.
 - (void)trackViewController:(UIViewController *)vc {
     NSString *title = vc.title;
 
-    if(title == nil) {
+    if (title == nil) {
         if(vc.navigationItem.title != nil) {
             title = vc.navigationItem.title;
-        }
-        else if(vc.navigationController.title != nil) {
+        } else if (vc.navigationController.title != nil) {
             title = vc.navigationController.title;
         }
     }
@@ -176,7 +175,7 @@ static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.
         @"transaction": transaction.serialize
     }];
 
-    if(self.currentPersonID != nil) {
+    if (self.currentPersonID != nil) {
         body[@"person_id"] = self.currentPersonID;
     }
 
@@ -203,10 +202,10 @@ static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.
                                                                                 @"person_id": self.currentPersonID
                                                                                 }];
 
-    if(properties != nil) {
+    if (properties != nil) {
         body[@"properties"] = properties;
     }
-    if(self.anonID != nil) {
+    if (self.anonID != nil) {
         body[@"visitor_id"] = self.anonID; // anonymous user ID for stiching
     }
 
@@ -250,7 +249,7 @@ static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.
     // set forceRegenerate to NO to simply pick up the existing UUID
     NSString *uuid = [[NSUserDefaults standardUserDefaults] objectForKey:kGSAnonymousUUIDDefaultsKey];
 
-    if(forceRegenerate || uuid == nil) {
+    if (forceRegenerate || uuid == nil) {
         // need to generate a UUID
         CFUUIDRef theUUID = CFUUIDCreate(NULL);
         CFStringRef string = CFUUIDCreateString(NULL, theUUID);

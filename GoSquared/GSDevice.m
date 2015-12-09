@@ -18,7 +18,7 @@ static GSDevice *currentGSDevice = nil;
 @implementation GSDevice
 
 + (GSDevice *)currentDevice {
-    if(currentGSDevice == nil) {
+    if (currentGSDevice == nil) {
         currentGSDevice = [[GSDevice alloc] init];
     }
 
@@ -28,7 +28,7 @@ static GSDevice *currentGSDevice = nil;
 - (GSDevice *)init {
     self = [super init];
 
-    if(self) {
+    if (self) {
         // screen
         CGRect screenRect = [[UIScreen mainScreen] bounds];
         self.screenHeight = [NSNumber numberWithFloat:screenRect.size.height];
@@ -75,7 +75,7 @@ static GSDevice *currentGSDevice = nil;
 - (NSString *)deviceIdentifier {
     NSString *deviceIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:kGSUDIDDefaultsKey];
 
-    if(deviceIdentifier == nil) {
+    if (deviceIdentifier == nil) {
         deviceIdentifier = [self createUUID];
 
         [[NSUserDefaults standardUserDefaults] setObject:deviceIdentifier forKey:kGSUDIDDefaultsKey];
