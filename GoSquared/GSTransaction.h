@@ -23,6 +23,6 @@
 - (void)addItem:(GSTransactionItem *)item;
 - (void)addItems:(NSArray *)items;
 
-- (NSDictionary *)serialize;
+- (NSDictionary *)serializeWithLastTimestamp:(NSNumber *)timestamp;
 
 @end

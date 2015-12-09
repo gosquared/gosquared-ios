@@ -25,9 +25,10 @@ dispatch_queue_t GSPageViewTrackerQueue() {
 }
 
 
-
 const float kGSPageViewTrackerDefaultPingInterval = 20.0f;
+
 static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared.pageviewtracker.returning";
+static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last";
 
 @interface GSPageViewTracker()
 
@@ -41,6 +42,7 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
 @property (retain) NSString *title;
 
 @property (retain) NSNumber *returning;
+@property (retain) NSNumber *lastPageview;
 
 @property __weak UIViewController *currentlyTrackedViewController;
 
@@ -58,9 +60,14 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
 
         self.tracker = tracker;
         self.returning = [[NSUserDefaults standardUserDefaults] objectForKey:kGSPageViewTrackerReturningDefaultsKey];
+        self.lastPageview = [[NSUserDefaults standardUserDefaults] objectForKey:kGSPageviewLastTimestamp];
 
         if (!self.returning) {
             self.returning = @0;
+        }
+
+        if (!self.lastPageview) {
+            self.lastPageview = @0;
         }
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnteredBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -175,9 +182,16 @@ static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared
                                                                                 @"tracker_version": self.tracker.trackerVersion
                                                                                 }];
 
+    if (!isForPing) {
+        body[@"last_pageview"] = self.lastPageview;
+    }
+
     if (self.tracker.currentPersonID != nil) {
         body[@"person_id"] = self.tracker.currentPersonID;
     }
+
+    self.lastPageview = [NSNumber numberWithLong:(long)[NSDate new].timeIntervalSince1970];
+    [[NSUserDefaults standardUserDefaults] setObject:self.lastPageview forKey:kGSPageviewLastTimestamp];
 
     return [NSDictionary dictionaryWithDictionary:body];
 }

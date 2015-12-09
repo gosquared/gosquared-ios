@@ -23,12 +23,16 @@ static NSString * const kGSTrackerVersion = @"ios-0.0.4";
 static NSString * const kGSAnonymousUUIDDefaultsKey = @"com.gosquared.defaults.anonUUID";
 static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.identifiedUUID";
 
+static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transaction.last";
+
 @interface GSTracker()
 
 @property (strong, nonatomic) GSPageViewTracker *pageViewTracker;
 
 @property (strong, nonatomic) NSString *currentPersonID;
 @property (strong, nonatomic) NSString *anonID;
+
+@property (retain) NSNumber *lastTransaction;
 
 @end
 
@@ -52,6 +56,11 @@ static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.
         NSString *identifiedPersonID = [[NSUserDefaults standardUserDefaults] objectForKey:kGSIdentifiedUUIDDefaultsKey];
         if (identifiedPersonID) {
             self.currentPersonID = identifiedPersonID;
+        }
+
+        self.lastTransaction = [[NSUserDefaults standardUserDefaults] objectForKey:kGSTransactionLastTimestamp];
+        if (!self.lastTransaction) {
+            self.lastTransaction = @0;
         }
     }
 
@@ -169,10 +178,14 @@ static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.
 - (void)trackTransaction:(GSTransaction *)transaction {
     [self verifyCredsAreSet];
 
+    NSDictionary *tx = [transaction serializeWithLastTimestamp:self.lastTransaction];
+
+    NSLog(@"%@", tx);
+
     NSString *path = [NSString stringWithFormat: @"/tracking/v1/transaction?%@", self.trackingAPIParams];
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
         @"visitor_id": self.anonID, // anonymous UDID
-        @"transaction": transaction.serialize
+        @"transaction": tx
     }];
 
     if (self.currentPersonID != nil) {
@@ -180,6 +193,9 @@ static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.
     }
 
     body[@"ip"] = @"detect";
+
+    self.lastTransaction = [NSNumber numberWithLong:(long)[NSDate new].timeIntervalSince1970];
+    [[NSUserDefaults standardUserDefaults] setObject:self.lastTransaction forKey:kGSTransactionLastTimestamp];
 
     GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:r];

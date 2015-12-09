@@ -57,7 +57,7 @@
     }
 }
 
-- (NSDictionary *)serialize {
+- (NSDictionary *)serializeWithLastTimestamp:(NSNumber *)timestamp {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
 
     dict[@"id"] = self.transactionID;
@@ -77,6 +77,9 @@
         }
     }
     dict[@"items"] = [NSArray arrayWithArray:items];
+
+    if (!timestamp) timestamp = @0;
+    dict[@"previous_transaction_timestamp"] = timestamp;
 
     return [NSDictionary dictionaryWithDictionary:dict];
 }
