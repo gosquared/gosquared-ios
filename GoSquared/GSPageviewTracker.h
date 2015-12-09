@@ -1,5 +1,5 @@
 //
-//  GSPageViewTracker.h
+//  GSPageviewTracker.h
 //  GoSquared
 //
 //  Created by Giles Williams on 15/10/2014.
@@ -13,7 +13,7 @@
 
 @class UIViewController;
 
-@interface GSPageViewTracker : NSObject
+@interface GSPageviewTracker : NSObject
 
 - (id)initWithTracker:(GSTracker *)tracker;
 - (void)startWithURLString:(NSString *)urlString title:(NSString *)title;

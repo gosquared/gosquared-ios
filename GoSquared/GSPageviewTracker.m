@@ -1,5 +1,5 @@
 //
-//  GSPageViewTracker.m
+//  GSPageviewTracker.m
 //  GoSquared
 //
 //  Created by Giles Williams on 15/10/2014.
@@ -9,13 +9,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "GSPageViewTracker.h"
+#import "GSPageviewTracker.h"
 #import "GSTracker.h"
 #import "GSDevice.h"
 
 #import "GSRequest.h"
 
-dispatch_queue_t GSPageViewTrackerQueue() {
+dispatch_queue_t GSPageviewTrackerQueue() {
     static dispatch_once_t queueCreationGuard;
     static dispatch_queue_t queue;
     dispatch_once(&queueCreationGuard, ^{
@@ -25,12 +25,12 @@ dispatch_queue_t GSPageViewTrackerQueue() {
 }
 
 
-const float kGSPageViewTrackerDefaultPingInterval = 20.0f;
+const float kGSPageviewTrackerDefaultPingInterval = 20.0f;
 
-static NSString * const kGSPageViewTrackerReturningDefaultsKey = @"com.gosquared.pageviewtracker.returning";
+static NSString * const kGSPageviewTrackerReturningDefaultsKey = @"com.gosquared.pageviewtracker.returning";
 static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last";
 
-@interface GSPageViewTracker()
+@interface GSPageviewTracker()
 
 @property BOOL valid;
 
@@ -48,7 +48,7 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
 
 @end
 
-@implementation GSPageViewTracker {
+@implementation GSPageviewTracker {
     long long currentPageIndex;
 }
 
@@ -59,7 +59,7 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
         currentPageIndex = 0;
 
         self.tracker = tracker;
-        self.returning = [[NSUserDefaults standardUserDefaults] objectForKey:kGSPageViewTrackerReturningDefaultsKey];
+        self.returning = [[NSUserDefaults standardUserDefaults] objectForKey:kGSPageviewTrackerReturningDefaultsKey];
         self.lastPageview = [[NSUserDefaults standardUserDefaults] objectForKey:kGSPageviewLastTimestamp];
 
         if (!self.returning) {
@@ -114,7 +114,7 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
 }
 
 - (void)startTimer {
-    self.timer = [NSTimer timerWithTimeInterval:kGSPageViewTrackerDefaultPingInterval target:self selector:@selector(ping) userInfo:nil repeats:YES];
+    self.timer = [NSTimer timerWithTimeInterval:kGSPageviewTrackerDefaultPingInterval target:self selector:@selector(ping) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
 }
 
@@ -200,7 +200,7 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
     if (!self.isValid) return;
 
     // use GCD barrier to force queuing of requests
-    dispatch_barrier_async(GSPageViewTrackerQueue(), ^{
+    dispatch_barrier_async(GSPageviewTrackerQueue(), ^{
 
         NSDictionary *body = [self generateBodyForPing:NO];
 
@@ -227,7 +227,7 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
 
     if ([self.returning intValue] == 0) {
         self.returning = @1;
-        [[NSUserDefaults standardUserDefaults] setObject:self.returning forKey:kGSPageViewTrackerReturningDefaultsKey];
+        [[NSUserDefaults standardUserDefaults] setObject:self.returning forKey:kGSPageviewTrackerReturningDefaultsKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }

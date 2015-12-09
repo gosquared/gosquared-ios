@@ -14,7 +14,7 @@
 #import "GSTransaction.h"
 #import "GSTransactionItem.h"
 
-#import "GSPageViewTracker.h"
+#import "GSPageviewTracker.h"
 
 #import <UIKit/UIKit.h>
 
@@ -27,7 +27,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 @interface GSTracker()
 
-@property (strong, nonatomic) GSPageViewTracker *pageViewTracker;
+@property (strong, nonatomic) GSPageviewTracker *pageviewTracker;
 
 @property (strong, nonatomic) NSString *currentPersonID;
 @property (strong, nonatomic) NSString *anonID;
@@ -88,11 +88,11 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
     NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
     NSString *url = [NSString stringWithFormat:@"%@://%@", bundleId, path];
 
-    if (self.pageViewTracker == nil) {
-        self.pageViewTracker = [[GSPageViewTracker alloc] initWithTracker: self];
+    if (self.pageviewTracker == nil) {
+        self.pageviewTracker = [[GSPageviewTracker alloc] initWithTracker: self];
     }
 
-    [self.pageViewTracker startWithURLString:url title:title];
+    [self.pageviewTracker startWithURLString:url title:title];
 }
 
 
@@ -116,11 +116,11 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 }
 
 - (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title urlPath:(NSString *)urlPath {
-    if(self.pageViewTracker == nil) {
-        self.pageViewTracker = [[GSPageViewTracker alloc] initWithTracker: self];
+    if(self.pageviewTracker == nil) {
+        self.pageviewTracker = [[GSPageviewTracker alloc] initWithTracker: self];
     }
 
-    [self.pageViewTracker startWithURLString:urlPath title:title];
+    [self.pageviewTracker startWithURLString:urlPath title:title];
 }
 
 
@@ -146,8 +146,8 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
                                                                                 @"event": event             // json object for event
                                                                                 }];
 
-    if (self.pageViewTracker != nil) {
-        body[@"page"] = @{ @"index": [self.pageViewTracker pageIndex] };
+    if (self.pageviewTracker != nil) {
+        body[@"page"] = @{ @"index": [self.pageviewTracker pageIndex] };
     }
 
     if (self.currentPersonID != nil) {
