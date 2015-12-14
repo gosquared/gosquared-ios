@@ -220,3 +220,7 @@ Please see [CODE\_OF\_CONDUCT.md](https://github.com/gosquared/gosquared-ios/blo
 ## License
 
 The MIT License (MIT)
+
+## Credits
+
+Thanks to Giles Williams of [Urban Massage](http://urbanmassage.com) for building the initial version of this library and allowing us to take it over.
