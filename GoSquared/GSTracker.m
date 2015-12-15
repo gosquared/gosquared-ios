@@ -84,8 +84,10 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 - (void)trackScreen:(NSString *)title withPath:(NSString *)path {
     [self verifyCredsAreSet];
 
-    if (path == nil) {
+    if (path == nil && title != nil) {
         path = [title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    } else if (path == nil && title == nil) {
+        path = @"/";
     }
 
     NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
