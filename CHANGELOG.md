@@ -1,5 +1,9 @@
 # GoSquared iOS Change Log
 
+## 2015-12-15, [v0.0.7]
+
+- Fixed issue where `GSRequest.h` was not public (adds support for manual and carhtage installation)
+
 ## 2015-12-15, [v0.0.6]
 
 - Added ability to set the amount of request information logged. Set `logLevel` on `GoSquared.sharedTracker()` to one of `Debug`, `Quiet` or `Silent`. `Quiet` by default.
@@ -33,6 +37,7 @@
 - Rename `sharedInstance` to `sharedTracker`
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
+[v0.0.7]: https://github.com/gosquared/gosquared-ios/compare/v0.0.6...v0.0.7
 [v0.0.6]: https://github.com/gosquared/gosquared-ios/compare/v0.0.5...v0.0.6
 [v0.0.5]: https://github.com/gosquared/gosquared-ios/compare/v0.0.4...v0.0.5
 [v0.0.4]: https://github.com/gosquared/gosquared-ios/compare/v0.0.3...v0.0.4

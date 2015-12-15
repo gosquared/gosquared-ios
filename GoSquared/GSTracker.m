@@ -18,7 +18,7 @@
 
 #import <UIKit/UIKit.h>
 
-static NSString * const kGSTrackerVersion = @"ios-0.0.6";
+static NSString * const kGSTrackerVersion = @"ios-0.0.7";
 
 static NSString * const kGSAnonymousUUIDDefaultsKey = @"com.gosquared.defaults.anonUUID";
 static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.identifiedUUID";
