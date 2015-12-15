@@ -17,7 +17,7 @@
 		B7E1BDCE1BEA334800422FA0 /* GSTrackerEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC21BEA334800422FA0 /* GSTrackerEvent.m */; };
 		B7E1BDCF1BEA334800422FA0 /* GSPageviewTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC31BEA334800422FA0 /* GSPageviewTracker.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		B7E1BDD01BEA334800422FA0 /* GSPageviewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC41BEA334800422FA0 /* GSPageviewTracker.m */; };
-		B7E1BDD11BEA334800422FA0 /* GSRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC51BEA334800422FA0 /* GSRequest.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		B7E1BDD11BEA334800422FA0 /* GSRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC51BEA334800422FA0 /* GSRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7E1BDD21BEA334800422FA0 /* GSRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC61BEA334800422FA0 /* GSRequest.m */; };
 		B7E1BDD31BEA334800422FA0 /* GSTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC71BEA334800422FA0 /* GSTracker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7E1BDD41BEA334800422FA0 /* GSTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC81BEA334800422FA0 /* GSTracker.m */; };
