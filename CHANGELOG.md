@@ -2,7 +2,7 @@
 
 ## 2015-12-15, [v0.0.7]
 
-- Fixed issue where `GSRequest.h` was not public (adds support for manual and carhtage installation)
+- Fixed issue where `GSRequest.h` was not public (adds support for manual and Carthage installation)
 
 ## 2015-12-15, [v0.0.6]
 
