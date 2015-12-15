@@ -9,12 +9,19 @@
 
 #import <Foundation/Foundation.h>
 
-enum GSRequestMethod {
+typedef NS_ENUM(NSInteger, GSRequestMethod) {
     GSRequestMethodGET,
     GSRequestMethodPUT,
     GSRequestMethodPOST,
     GSRequestMethodDELETE
 };
+
+typedef NS_ENUM(NSInteger, GSRequestLogLevel) {
+    GSRequestLogLevelSilent,
+    GSRequestLogLevelQuiet,
+    GSRequestLogLevelDebug
+};
+
 
 @class GSRequest;
 typedef void (^GSRequestBlock)(bool success, GSRequest *req);
@@ -24,9 +31,10 @@ typedef void (^GSRequestBlock)(bool success, GSRequest *req);
 @property (strong, nonatomic) NSHTTPURLResponse *response;
 @property (strong, nonatomic) NSMutableData *responseData;
 
+@property GSRequestLogLevel logLevel;
 @property BOOL success;
 
-+ (GSRequest *)requestWithMethod:(enum GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body;
++ (GSRequest *)requestWithMethod:(GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body;
 
 - (void)sendWithCompletionHandler:(GSRequestBlock)cb;
 - (void)send;

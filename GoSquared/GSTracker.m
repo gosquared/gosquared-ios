@@ -52,6 +52,9 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
         // grab a saved anon UDID or generate on if it doesn't exist
         self.anonID = [self generateUUID:NO];
 
+        // set default log level
+        self.logLevel = GSRequestLogLevelQuiet;
+
         // grab a saved People Analytics user ID if one is saved
         NSString *identifiedPersonID = [[NSUserDefaults standardUserDefaults] objectForKey:kGSIdentifiedUUIDDefaultsKey];
         if (identifiedPersonID) {
@@ -180,8 +183,6 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
     NSDictionary *tx = [transaction serializeWithLastTimestamp:self.lastTransaction];
 
-    NSLog(@"%@", tx);
-
     NSString *path = [NSString stringWithFormat: @"/tracking/v1/transaction?%@", self.trackingAPIParams];
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
         @"visitor_id": self.anonID, // anonymous UDID
@@ -287,11 +288,18 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 }
 
 
-#pragma mark Private - HTTP Request methods
+#pragma mark Public - HTTP Request methods
 
 - (void)scheduleRequest:(GSRequest *)request {
-    // NOTE - this is where we'll make the requests durable later to enable offline event sync
+    // NOTE - this is where we'll make the requests durable later to enable offline event sync - not currently working.
+
+    [request setLogLevel:self.logLevel];
     [request send];
+}
+
+- (void)sendRequestSync:(GSRequest *)request {
+    [request setLogLevel:self.logLevel];
+    [request sendSync];
 }
 
 

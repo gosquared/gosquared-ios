@@ -206,7 +206,7 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
 
         NSString *path = [NSString stringWithFormat:@"/tracking/v1/pageview?%@", self.tracker.trackingAPIParams];
         GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
-        [req sendSync];
+        [self.tracker sendRequestSync:req];
 
         @try {
             NSError *localError;
@@ -242,7 +242,8 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
 
     NSString *path = [NSString stringWithFormat:@"/tracking/v1/ping?%@", self.tracker.trackingAPIParams];
     GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
-    [req send];
+
+    [self.tracker scheduleRequest:req];
 }
 
 @end

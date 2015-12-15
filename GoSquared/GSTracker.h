@@ -8,6 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GSRequest.h"
 
 @class UIViewController;
 
@@ -24,9 +25,14 @@
 @property (strong, readonly) NSString *currentPersonID;
 @property (strong, readonly) NSString *anonID;
 
+@property GSRequestLogLevel logLevel;
+
 - (NSString *)trackerVersion;
 
 - (NSString *)trackingAPIParams;
+
+- (void)scheduleRequest:(GSRequest *)request;
+- (void)sendRequestSync:(GSRequest *)request;
 
 // event tracking
 - (void)trackEvent:(GSTrackerEvent *)event __attribute__((deprecated("Use trackEvent:withProperties: instead")));
