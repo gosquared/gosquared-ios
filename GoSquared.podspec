@@ -11,7 +11,8 @@ Pod::Spec.new do |s|
   s.author           = { "Giles Williams" => "giles.williams@gmail.com",
                          "Ed Wellbrook"   => "edwellbrook@gmail.com" }
 
-  s.platform         = :ios, "6.0"
+  s.ios.deployment_target = '6.0'
+  s.tvos.deployment_target = '9.0'
   s.requires_arc     = true
   s.source           = { :git => "https://github.com/gosquared/gosquared-ios.git", :tag => "v#{s.version}" }
   s.default_subspec  = "GoSquared"
