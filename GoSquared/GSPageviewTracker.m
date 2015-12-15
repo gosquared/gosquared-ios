@@ -139,7 +139,7 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
 
     NSString *os = @"iOS";
     
-    #ifdef TARGET_OS_TV
+    #if TARGET_OS_TV
         os = @"tvOS";
     #endif
     
