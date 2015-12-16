@@ -13,6 +13,12 @@
  - If you dont not want this, add `pod 'GoSquared'` to your Podfile.
 4. Run `pod install` to install. This will generate a new Xcode workspace for you to open and use.
 
+### Installing with Carthage
+
+Installation with [Carthage](https://github.com/Carthage/Carthage) is supported, however automatic view tracking will not be available. As such, you'll need to call `trackScreen:` on each of your ViewControllers.
+
+For instructions using Carthage, [please read their documentation](https://github.com/Carthage/Carthage).
+
 ## Configuration
 
 Make sure you initialise the library with your site token before calling any tracking / people methods otherwise the library will throw an exception. It is recommended to add the below line to your UIApplication's `didFinishLaunchingWithOptions` method.
