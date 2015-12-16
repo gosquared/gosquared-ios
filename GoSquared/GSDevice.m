@@ -21,13 +21,13 @@ static GSDevice *currentGSDevice = nil;
     if (currentGSDevice == nil) {
         currentGSDevice = [[GSDevice alloc] init];
     }
-    
+
     return currentGSDevice;
 }
 
 - (GSDevice *)init {
     self = [super init];
-    
+
     if (self) {
         // screen
         CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -35,58 +35,58 @@ static GSDevice *currentGSDevice = nil;
         self.screenWidth = [NSNumber numberWithFloat:screenRect.size.width];
         self.screenPixelRatio = [NSNumber numberWithFloat:[UIScreen mainScreen].scale];
         self.colorDepth = @24;
-        
+
         // device ID
         self.udid = [self deviceIdentifier];
-        
+
         // timezone
         NSDate *date = [NSDate new];
         NSTimeZone *currentTimeZone = [NSTimeZone localTimeZone];
         NSTimeZone *utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
-        
+
         NSInteger currentGMTOffset = [currentTimeZone secondsFromGMTForDate:date];
         NSInteger gmtOffset = [utcTimeZone secondsFromGMTForDate:date];
         NSTimeInterval gmtInterval = currentGMTOffset - gmtOffset;
         self.timezoneOffset = [NSNumber numberWithLongLong:(gmtInterval / 60)*-1];
-        
+
         NSLocale *l = [NSLocale currentLocale];
-        
+
         // language
         self.isoLanguage = [[[l objectForKey:NSLocaleIdentifier] lowercaseString] stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
-        
+
         // user agent
         NSArray *versionComponents = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
-        
+
         NSBundle *bundle = [NSBundle mainBundle];
         NSDictionary *info = [bundle infoDictionary];
-        
+
         NSString *appNameStr = [info objectForKey:@"CFBundleName"];
         NSString *appVersionStr = [info objectForKey:@"CFBundleShortVersionString"];
-        
+
         NSString *iOSVersionStr = [versionComponents componentsJoinedByString:@"_"];
-        
+
         #if TARGET_OS_TV
             NSString *deviceType = @"Apple TV";
         #else
             NSString *deviceType = [[UIDevice currentDevice].model componentsSeparatedByString:@" "][0];
         #endif
-        
+
         self.userAgent = [NSString stringWithFormat:@"%@/%@ (%@; CPU OS %@ like Mac OS X)", appNameStr, appVersionStr, deviceType, iOSVersionStr];
     }
-    
+
     return self;
 }
 
 - (NSString *)deviceIdentifier {
     NSString *deviceIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:kGSUDIDDefaultsKey];
-    
+
     if (deviceIdentifier == nil) {
         deviceIdentifier = [self createUUID];
-        
+
         [[NSUserDefaults standardUserDefaults] setObject:deviceIdentifier forKey:kGSUDIDDefaultsKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    
+
     return deviceIdentifier;
 }
 

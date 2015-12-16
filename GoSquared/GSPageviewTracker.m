@@ -138,11 +138,11 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
     GSDevice *device = [GSDevice currentDevice];
 
     NSString *os = @"iOS";
-    
+
     #if TARGET_OS_TV
         os = @"tvOS";
     #endif
-    
+
     NSMutableDictionary *page = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                 @"url": self.urlString,
                                                                                 @"title": [NSString stringWithFormat:@"%@: %@", os, self.title]
