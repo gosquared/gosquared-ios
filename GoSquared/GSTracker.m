@@ -19,6 +19,8 @@
 #import <UIKit/UIKit.h>
 
 static NSString * const kGSTrackerVersion = @"ios-0.0.7";
+static NSString * const kGSTrackerDefaultTitle = @"Unknown";
+static NSString * const kGSTrackerDefaultPath = @"";
 
 static NSString * const kGSAnonymousUUIDDefaultsKey = @"com.gosquared.defaults.anonUUID";
 static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.identifiedUUID";
@@ -84,14 +86,26 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 - (void)trackScreen:(NSString *)title withPath:(NSString *)path {
     [self verifyCredsAreSet];
 
-    if (path == nil && title != nil) {
-        path = [title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    } else if (path == nil && title == nil) {
-        path = @"/";
+    // set default title if missing or empty
+    if (title == nil || [title isEqual: @""]) {
+        title = kGSTrackerDefaultTitle;
     }
 
+    // set default path if missing or empty
+    if (path == nil || [path isEqual:@""]) {
+        path = [title isEqual:kGSTrackerDefaultTitle] ? kGSTrackerDefaultPath : title;
+    }
+
+    path = [path stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+
+    NSString *os = @"ios";
+
+    #if TARGET_OS_TV
+        os = @"tvos";
+    #endif
+
     NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
-    NSString *url = [NSString stringWithFormat:@"%@://%@", bundleId, path];
+    NSString *url = [NSString stringWithFormat:@"%@://%@/%@", os, bundleId, path];
 
     if (self.pageviewTracker == nil) {
         self.pageviewTracker = [[GSPageviewTracker alloc] initWithTracker: self];

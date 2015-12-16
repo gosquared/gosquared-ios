@@ -103,10 +103,6 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
     self.title = title;
     self.urlString = urlString;
 
-    if (self.title == nil) {
-        self.title = @"Unknown";
-    }
-
     self.valid = YES;
 
     [self startTimer];
