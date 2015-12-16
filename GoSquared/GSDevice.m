@@ -63,10 +63,15 @@ static GSDevice *currentGSDevice = nil;
         NSString *appNameStr = [info objectForKey:@"CFBundleName"];
         NSString *appVersionStr = [info objectForKey:@"CFBundleShortVersionString"];
 
-        NSString *iOSVersionStr = [versionComponents componentsJoinedByString:@"_"];
-        NSString *deviceType = [[UIDevice currentDevice].model componentsSeparatedByString:@" "][0];
+        NSString *osVersionStr = [versionComponents componentsJoinedByString:@"_"];
 
-        self.userAgent = [NSString stringWithFormat:@"%@/%@ (%@; CPU OS %@ like Mac OS X)", appNameStr, appVersionStr, deviceType, iOSVersionStr];
+        #if TARGET_OS_TV
+            NSString *deviceType = @"Apple TV";
+        #else
+            NSString *deviceType = [[UIDevice currentDevice].model componentsSeparatedByString:@" "][0];
+        #endif
+
+        self.userAgent = [NSString stringWithFormat:@"%@/%@ (%@; CPU OS %@ like Mac OS X)", appNameStr, appVersionStr, deviceType, osVersionStr];
     }
 
     return self;

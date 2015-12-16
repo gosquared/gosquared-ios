@@ -104,7 +104,7 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
     self.urlString = urlString;
 
     if (self.title == nil) {
-        self.title = @"";
+        self.title = @"Unknown";
     }
 
     self.valid = YES;
@@ -137,9 +137,15 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
 - (NSDictionary *)generateBodyForPing:(BOOL)isForPing {
     GSDevice *device = [GSDevice currentDevice];
 
+    NSString *os = @"iOS";
+
+    #if TARGET_OS_TV
+        os = @"tvOS";
+    #endif
+
     NSMutableDictionary *page = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                 @"url": self.urlString,
-                                                                                @"title": [NSString stringWithFormat:@"iOS: %@", self.title]
+                                                                                @"title": [NSString stringWithFormat:@"%@: %@", os, self.title]
                                                                                 }];
 
     if (isForPing) {
