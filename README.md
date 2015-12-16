@@ -120,7 +120,7 @@ You can use one of the below methods to manually track a UIViewController:
 - (void)viewDidAppear
 {
     [[GoSquared sharedTracker] trackScreen:self.title];
-    [[GoSquared sharedTracker] trackScreen:self.title url:@"/custom-url-path"];
+    [[GoSquared sharedTracker] trackScreen:self.title withPath:@"/custom-url-path"];
 }
 ```
 
@@ -135,7 +135,7 @@ override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
 
     GoSquared.sharedTracker().trackScreen(self.title)
-    GoSquared.sharedTracker().trackScreen(self.title, url:"/custom-url-path")
+    GoSquared.sharedTracker().trackScreen(self.title, withPath:"/custom-url-path")
 }
 
 ```
