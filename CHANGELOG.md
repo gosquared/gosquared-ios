@@ -1,5 +1,11 @@
 # GoSquared iOS Change Log
 
+## 2015-12-18, [v0.0.9]
+
+### Changed
+
+- Improved swizzling/automatic tracking (thanks to @DanielTomlinson for the heads up)
+
 ## 2015-12-16, [v0.0.8]
 
 ### Added
@@ -74,6 +80,7 @@
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
 
+[v0.0.9]: https://github.com/gosquared/gosquared-ios/compare/v0.0.8...v0.0.9
 [v0.0.8]: https://github.com/gosquared/gosquared-ios/compare/v0.0.7...v0.0.8
 [v0.0.7]: https://github.com/gosquared/gosquared-ios/compare/v0.0.6...v0.0.7
 [v0.0.6]: https://github.com/gosquared/gosquared-ios/compare/v0.0.5...v0.0.6
