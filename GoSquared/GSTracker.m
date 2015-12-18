@@ -34,14 +34,12 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 @property (strong, nonatomic) NSString *currentPersonID;
 @property (strong, nonatomic) NSString *anonID;
 
-@property (retain) NSNumber *lastTransaction;
-
 @end
 
 @implementation GSTracker {
     BOOL identified;
 
-    NSDictionary *deviceMetrics;
+    NSNumber *lastTransaction;
 }
 
 
@@ -64,9 +62,9 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
             identified = true;
         }
 
-        self.lastTransaction = [[NSUserDefaults standardUserDefaults] objectForKey:kGSTransactionLastTimestamp];
-        if (!self.lastTransaction) {
-            self.lastTransaction = @0;
+        lastTransaction = [[NSUserDefaults standardUserDefaults] objectForKey:kGSTransactionLastTimestamp];
+        if (!lastTransaction) {
+            lastTransaction = @0;
         }
     }
 
@@ -198,7 +196,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 - (void)trackTransaction:(GSTransaction *)transaction {
     [self verifyCredsAreSet];
 
-    NSDictionary *tx = [transaction serializeWithLastTimestamp:self.lastTransaction];
+    NSDictionary *tx = [transaction serializeWithLastTimestamp:lastTransaction];
 
     NSString *path = [NSString stringWithFormat: @"/tracking/v1/transaction?%@", self.trackingAPIParams];
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
@@ -212,8 +210,8 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
     body[@"ip"] = @"detect";
 
-    self.lastTransaction = [NSNumber numberWithLong:(long)[NSDate new].timeIntervalSince1970];
-    [[NSUserDefaults standardUserDefaults] setObject:self.lastTransaction forKey:kGSTransactionLastTimestamp];
+    lastTransaction = [NSNumber numberWithLong:(long)[NSDate new].timeIntervalSince1970];
+    [[NSUserDefaults standardUserDefaults] setObject:lastTransaction forKey:kGSTransactionLastTimestamp];
 
     GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:r];
