@@ -61,6 +61,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
         NSString *identifiedPersonID = [[NSUserDefaults standardUserDefaults] objectForKey:kGSIdentifiedUUIDDefaultsKey];
         if (identifiedPersonID) {
             self.currentPersonID = identifiedPersonID;
+            identified = true;
         }
 
         self.lastTransaction = [[NSUserDefaults standardUserDefaults] objectForKey:kGSTransactionLastTimestamp];
@@ -245,6 +246,8 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
     GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:r];
 
+    identified = true;
+
     // save the identified People user id for later app launches
     [[NSUserDefaults standardUserDefaults] setObject:self.currentPersonID forKey:kGSIdentifiedUUIDDefaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -258,6 +261,8 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
     // wipe the current people ID
     self.currentPersonID = nil;
+
+    identified = false;
 
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kGSIdentifiedUUIDDefaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
