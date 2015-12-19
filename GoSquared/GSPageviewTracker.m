@@ -184,6 +184,13 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
                                                                                 @"tracker_version": self.tracker.trackerVersion
                                                                                 }];
 
+    if (self.tracker.referrer != nil) {
+        body[@"referrer"] = self.tracker.referrer;
+
+        // reset referrer so its not sent on every pageview
+        self.tracker.referrer = nil;
+    }
+
     if (!isForPing) {
         body[@"last_pageview"] = self.lastPageview;
     }

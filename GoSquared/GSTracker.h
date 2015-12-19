@@ -21,6 +21,7 @@
 
 @property (strong, nonatomic) NSString *siteToken;
 @property (strong, nonatomic) NSString *apiKey;
+@property (strong, nonatomic) NSString *referrer;
 
 @property (strong, readonly) NSString *currentPersonID;
 @property (strong, readonly) NSString *anonID;
