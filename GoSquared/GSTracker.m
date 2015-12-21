@@ -18,7 +18,7 @@
 
 #import <UIKit/UIKit.h>
 
-static NSString * const kGSTrackerVersion = @"ios-0.0.9";
+static NSString * const kGSTrackerVersion = @"ios-0.0.10";
 static NSString * const kGSTrackerDefaultTitle = @"Unknown";
 static NSString * const kGSTrackerDefaultPath = @"";
 

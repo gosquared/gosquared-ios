@@ -1,5 +1,11 @@
 # GoSquared iOS Change Log
 
+## 2015-12-21, [v0.0.10]
+
+### Fixed
+
+- Fix `identified` always returning false
+
 ## 2015-12-18, [v0.0.9]
 
 ### Changed
@@ -80,6 +86,7 @@
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
 
+[v0.0.10]: https://github.com/gosquared/gosquared-ios/compare/v0.0.9...v0.0.10
 [v0.0.9]: https://github.com/gosquared/gosquared-ios/compare/v0.0.8...v0.0.9
 [v0.0.8]: https://github.com/gosquared/gosquared-ios/compare/v0.0.7...v0.0.8
 [v0.0.7]: https://github.com/gosquared/gosquared-ios/compare/v0.0.6...v0.0.7
