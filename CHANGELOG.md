@@ -1,5 +1,15 @@
 # GoSquared iOS Change Log
 
+## 2016-03-16, [v0.1.0]
+
+### Added
+
+- Added nullablity annotations so usage in swift is a little nicer
+
+### Changed
+
+- Categories folder was renamed to Autoload to match the naming elsewhere
+
 ## 2015-12-21, [v0.0.10]
 
 ### Fixed
@@ -86,6 +96,7 @@
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
 
+[v0.1.0]: https://github.com/gosquared/gosquared-ios/compare/v0.0.10...v0.1.0
 [v0.0.10]: https://github.com/gosquared/gosquared-ios/compare/v0.0.9...v0.0.10
 [v0.0.9]: https://github.com/gosquared/gosquared-ios/compare/v0.0.8...v0.0.9
 [v0.0.8]: https://github.com/gosquared/gosquared-ios/compare/v0.0.7...v0.0.8

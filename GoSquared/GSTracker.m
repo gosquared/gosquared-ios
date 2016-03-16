@@ -16,7 +16,7 @@
 #import "GSTransactionItem.h"
 #import "GSPageviewTracker.h"
 
-static NSString * const kGSTrackerVersion      = @"ios-0.0.10";
+static NSString * const kGSTrackerVersion      = @"ios-0.1.0";
 static NSString * const kGSTrackerDefaultTitle = @"Unknown";
 static NSString * const kGSTrackerDefaultPath  = @"";
 
