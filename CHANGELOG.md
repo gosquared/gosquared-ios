@@ -9,6 +9,8 @@
 ### Changed
 
 - Categories folder was renamed to Autoload to match the naming elsewhere
+- `siteToken` renamed to just `token`
+- `apiKey` renamed to just `key`
 
 ## 2015-12-21, [v0.0.10]
 
