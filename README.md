@@ -32,11 +32,11 @@ Make sure you initialise the library with your site token before calling any tra
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[GoSquared sharedTracker] setSiteToken:@"your-site-token"];
-    [[GoSquared sharedTracker] setApiKey:@"your-api-key"];
-    
+    [GoSquared sharedTracker].token = @"your-site-token";
+    [GoSquared sharedTracker].key   = @"your-api-key";
+
     // optionally set logging level: Debug, Quiet (Default), Silent
-    [[GoSquared sharedTracker] setLogLevel:GSRequestLogLevelDebug];
+    [GoSquared sharedTracker].logLevel = GSRequestLogLevelDebug;
 
     return YES;
 }
@@ -51,8 +51,8 @@ import GoSquared
 
 func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-    GoSquared.sharedTracker().siteToken = "your-site-token"
-    GoSquared.sharedTracker().apiKey    = "your-api-key"
+    GoSquared.sharedTracker().token = "your-site-token"
+    GoSquared.sharedTracker().key   = "your-api-key"
 
     // optionally set logging level: Debug, Quiet (Default), Silent
     GoSquared.sharedTracker().logLevel = .Debug
