@@ -1,5 +1,11 @@
 # GoSquared iOS Change Log
 
+## 2016-03-16, [v0.1.1]
+
+### Removed
+
+- Removed `secret` property on tracker, which was accidently left in, but never used.
+
 ## 2016-03-16, [v0.1.0]
 
 ### Added
@@ -98,6 +104,7 @@
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
 
+[v0.1.1]: https://github.com/gosquared/gosquared-ios/compare/v0.1.0...v0.1.1
 [v0.1.0]: https://github.com/gosquared/gosquared-ios/compare/v0.0.10...v0.1.0
 [v0.0.10]: https://github.com/gosquared/gosquared-ios/compare/v0.0.9...v0.0.10
 [v0.0.9]: https://github.com/gosquared/gosquared-ios/compare/v0.0.8...v0.0.9
