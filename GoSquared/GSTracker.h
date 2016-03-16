@@ -21,7 +21,6 @@
 
 @property (nonnull) NSString *token;
 @property (nonnull) NSString *key;
-@property (nullable) NSString *secret;
 
 @property (readonly, nonnull) NSString *anonID;
 @property (readonly, nullable) NSString *currentPersonID;
