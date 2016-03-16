@@ -4,35 +4,34 @@
 //
 //  Created by Giles Williams on 12/10/2014.
 //  Copyright (c) 2014 Urban Massage. All rights reserved.
-//  Copyright (c) 2015 Go Squared Ltd. All rights reserved.
+//  Copyright (c) 2015-2016 Go Squared Ltd. All rights reserved.
 //
 
-#import "GSTracker.h"
+#import <UIKit/UIKit.h>
 
+#import "GSTracker.h"
 #import "GSRequest.h"
 #import "GSTrackerEvent.h"
 #import "GSTransaction.h"
 #import "GSTransactionItem.h"
-
 #import "GSPageviewTracker.h"
 
-#import <UIKit/UIKit.h>
-
-static NSString * const kGSTrackerVersion = @"ios-0.0.10";
+static NSString * const kGSTrackerVersion      = @"ios-0.0.10";
 static NSString * const kGSTrackerDefaultTitle = @"Unknown";
-static NSString * const kGSTrackerDefaultPath = @"";
+static NSString * const kGSTrackerDefaultPath  = @"";
 
-static NSString * const kGSAnonymousUUIDDefaultsKey = @"com.gosquared.defaults.anonUUID";
+static NSString * const kGSAnonymousUUIDDefaultsKey  = @"com.gosquared.defaults.anonUUID";
 static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.identifiedUUID";
 
 static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transaction.last";
 
 @interface GSTracker()
 
-@property (strong, nonatomic) GSPageviewTracker *pageviewTracker;
+#warning Investigate possible cyclic reference
+@property (strong) GSPageviewTracker *pageviewTracker;
 
-@property (strong, nonatomic) NSString *currentPersonID;
-@property (strong, nonatomic) NSString *anonID;
+@property NSString *currentPersonID;
+@property NSString *anonID;
 
 @end
 
@@ -238,10 +237,13 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
         body[@"properties"] = properties;
     }
     if (self.anonID != nil) {
-        body[@"visitor_id"] = self.anonID; // anonymous user ID for stiching
+        body[@"visitor_id"] = self.anonID; // anonymous user ID for stitching
     }
 
     GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
+
+    NSLog(@"%@ %@", path, body);
+
     [self scheduleRequest:r];
 
     identified = true;
@@ -274,8 +276,8 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 #pragma mark Private - Assertion methods
 
 - (void)verifyCredsAreSet {
-    NSAssert((self.siteToken != nil), @"You must call setSiteToken: before any tracking methods");
-    NSAssert((self.apiKey != nil), @"You must call setApiKey: before any tracking methods");
+    NSAssert((self.token != nil), @"You must call setSiteToken: before any tracking methods");
+    NSAssert((self.key != nil), @"You must call setApiKey: before any tracking methods");
 }
 
 
@@ -303,7 +305,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 #pragma mark Public - URL path builder methods
 
 - (NSString *)trackingAPIParams {
-    return [NSString stringWithFormat:@"site_token=%@&api_key=%@", self.siteToken, self.apiKey];
+    return [NSString stringWithFormat:@"site_token=%@&api_key=%@", self.token, self.key];
 }
 
 

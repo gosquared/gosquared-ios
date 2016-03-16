@@ -44,8 +44,6 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
 @property (retain) NSNumber *returning;
 @property (retain) NSNumber *lastPageview;
 
-@property __weak UIViewController *currentlyTrackedViewController;
-
 @end
 
 @implementation GSPageviewTracker {

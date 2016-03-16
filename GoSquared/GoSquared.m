@@ -3,7 +3,7 @@
 //  GoSquared
 //
 //  Created by Edward Wellbrook on 04/11/2015.
-//  Copyright (c) 2015 Go Squared Ltd. All rights reserved.
+//  Copyright (c) 2015-2016 Go Squared Ltd. All rights reserved.
 //
 
 #import "GoSquared.h"
