@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B7867FD51BEAAD0B001E39C2 /* Categories in Resources */ = {isa = PBXBuildFile; fileRef = B7867FD41BEAAD0B001E39C2 /* Categories */; };
 		B7867FF51BEACD3A001E39C2 /* GoSquared.m in Sources */ = {isa = PBXBuildFile; fileRef = B7867FF41BEACD3A001E39C2 /* GoSquared.m */; };
 		B792A8071BF36808000CB7A3 /* GoSquared.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B792A8031BF36808000CB7A3 /* GoSquared.podspec */; };
 		B792A8081BF36808000CB7A3 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = B792A8041BF36808000CB7A3 /* LICENSE */; };
@@ -26,10 +25,10 @@
 		B7E1BE021BEA5A9A00422FA0 /* GSTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDFE1BEA5A9A00422FA0 /* GSTransaction.m */; };
 		B7E1BE031BEA5A9A00422FA0 /* GSTransactionItem.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDFF1BEA5A9A00422FA0 /* GSTransactionItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7E1BE041BEA5A9A00422FA0 /* GSTransactionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BE001BEA5A9A00422FA0 /* GSTransactionItem.m */; };
+		B7E6AAE71C99C4770063F703 /* Autoload in Resources */ = {isa = PBXBuildFile; fileRef = B7E6AAE61C99C4770063F703 /* Autoload */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B7867FD41BEAAD0B001E39C2 /* Categories */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Categories; sourceTree = "<group>"; };
 		B7867FF41BEACD3A001E39C2 /* GoSquared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoSquared.m; sourceTree = "<group>"; };
 		B792A8021BF36808000CB7A3 /* CODE_OF_CONDUCT.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CODE_OF_CONDUCT.md; sourceTree = "<group>"; };
 		B792A8031BF36808000CB7A3 /* GoSquared.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GoSquared.podspec; sourceTree = "<group>"; };
@@ -52,6 +51,7 @@
 		B7E1BDFE1BEA5A9A00422FA0 /* GSTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSTransaction.m; sourceTree = "<group>"; };
 		B7E1BDFF1BEA5A9A00422FA0 /* GSTransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSTransactionItem.h; sourceTree = "<group>"; };
 		B7E1BE001BEA5A9A00422FA0 /* GSTransactionItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSTransactionItem.m; sourceTree = "<group>"; };
+		B7E6AAE61C99C4770063F703 /* Autoload */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Autoload; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +112,7 @@
 				B7E1BDFE1BEA5A9A00422FA0 /* GSTransaction.m */,
 				B7E1BDFF1BEA5A9A00422FA0 /* GSTransactionItem.h */,
 				B7E1BE001BEA5A9A00422FA0 /* GSTransactionItem.m */,
-				B7867FD41BEAAD0B001E39C2 /* Categories */,
+				B7E6AAE61C99C4770063F703 /* Autoload */,
 				B7E1BDAA1BEA32B600422FA0 /* Info.plist */,
 			);
 			path = GoSquared;
@@ -195,8 +195,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B792A8081BF36808000CB7A3 /* LICENSE in Resources */,
+				B7E6AAE71C99C4770063F703 /* Autoload in Resources */,
 				B792A8071BF36808000CB7A3 /* GoSquared.podspec in Resources */,
-				B7867FD51BEAAD0B001E39C2 /* Categories in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

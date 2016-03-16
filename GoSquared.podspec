@@ -1,30 +1,31 @@
 Pod::Spec.new do |s|
 
-  s.name             = "GoSquared"
-  s.version          = "0.0.10"
-  s.summary          = "Tracking SDK for integrating GoSquared in your iOS app."
+  s.name             = 'GoSquared'
+  s.version          = '0.0.10'
+  s.summary          = 'Tracking SDK for integrating GoSquared in your iOS app.'
 
-  s.homepage         = "https://gosquared.com/"
-  s.social_media_url = "https://twitter.com/gosquared"
+  s.homepage         = 'https://gosquared.com/'
+  s.social_media_url = 'https://twitter.com/gosquared'
 
-  s.license          = { :type => "MIT", :file => "LICENSE" }
-  s.author           = { "Giles Williams" => "giles.williams@gmail.com",
-                         "Ed Wellbrook"   => "edwellbrook@gmail.com" }
+  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  s.author           = { 'Giles Williams' => 'giles.williams@gmail.com',
+                         'Ed Wellbrook'   => 'edwellbrook@gmail.com' }
 
   s.ios.deployment_target  = '6.0'
   s.tvos.deployment_target = '9.0'
 
   s.requires_arc     = true
-  s.source           = { :git => "https://github.com/gosquared/gosquared-ios.git", :tag => "v#{s.version}" }
-  s.default_subspec  = "GoSquared"
+  s.source           = { :git => 'https://github.com/gosquared/gosquared-ios.git', :tag => "v#{s.version}" }
+  s.default_subspec  = 'Core'
 
-  s.subspec "GoSquared" do |ss|
-    ss.source_files  = "GoSquared/*.{m,h}"
+  s.subspec 'Core' do |ss|
+    ss.source_files  = 'GoSquared/*.{h,m}'
   end
 
   # include swizzling to automatically track view controllers
-  s.subspec "Autoload" do |ss|
-    ss.source_files  = "GoSquared/**/*.{m,h}"
+  s.subspec 'Autoload' do |ss|
+    ss.source_files = 'GoSquared/Autoload/*.{h,m}'
+    ss.dependency     'GoSquared/Core'
   end
 
 end
