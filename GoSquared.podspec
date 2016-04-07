@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name             = 'GoSquared'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'Tracking SDK for integrating GoSquared in your iOS app.'
 
   s.homepage         = 'https://gosquared.com/'
