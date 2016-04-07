@@ -242,8 +242,6 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
     GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
 
-    NSLog(@"%@ %@", path, body);
-
     [self scheduleRequest:r];
 
     identified = true;
