@@ -173,18 +173,30 @@ GoSquared.sharedTracker().trackEvent("test-event", properties: ["properties": "a
 ## People
 
 ### Identify your user
-*Note the library caches your identified user ID and uses it again on the next launch. If you do not want this behavior, call unidentify after `setSiteToken` on each launch.*
+To identify a user you will need to provide a `person_id`. This will create a new profile in [GoSquared People](https://www.gosquared.com/customer/en/portal/articles/2170492-an-introduction-to-gosquared-people) where all of the user's session data, events and custom properties will be tracked.
+
+The `person_id` can be set to an email address by using the prefix `email:` (see example below).
+
+*Note the library caches your identified person_id and uses it again on the next launch. If you do not want this behavior, call `unidentify` after setting the `token` on each launch.*
 
 **Objective-C:**
 
 ```objc
-[[GoSquared sharedTracker] identify:@"test-user-id" properties:@{ @"name": @"Test User" }];
+// identify with id
+[[GoSquared sharedTracker] identify:@"test-person_id" properties:@{ @"name": @"Test User" }];
+
+// identify with email
+[[GoSquared sharedTracker] identify:@"email:user@example.com" properties:@{ @"name": @"Test User" }];
 ```
 
 **Swift:**
 
 ```swift
-GoSquared.sharedTracker().identify("test-user-id", properties: ["name" : "Test User"])
+// idenitfy with id
+GoSquared.sharedTracker().identify("test-person_id", properties: ["name" : "Test User"])
+
+// identify with email
+GoSquared.sharedTracker().identify("email:user@example.com", properties: ["name": "Test User"]);
 ```
 
 ### Unidentify (e.g. on logout)
