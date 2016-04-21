@@ -179,7 +179,7 @@ The `person_id` can be set to an email address by using the prefix `email:`
 
 eg. `person_id: "email:user@example.com"`
 
-*Note the library caches your identified user ID and uses it again on the next launch. If you do not want this behavior, call unidentify after `setSiteToken` on each launch.*
+*Note the library caches your identified person_id and uses it again on the next launch. If you do not want this behavior, call unidentify after `setSiteToken` on each launch.*
 
 **Objective-C:**
 
