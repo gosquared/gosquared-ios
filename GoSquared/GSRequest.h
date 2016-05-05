@@ -34,7 +34,7 @@ typedef void (^GSRequestBlock)(bool success, GSRequest *req);
 @property GSRequestLogLevel logLevel;
 @property BOOL success;
 
-+ (GSRequest *)requestWithMethod:(GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body;
++ (instancetype)requestWithMethod:(GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body;
 
 - (void)sendWithCompletionHandler:(GSRequestBlock)cb;
 - (void)send;

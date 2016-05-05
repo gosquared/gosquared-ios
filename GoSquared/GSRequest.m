@@ -24,13 +24,13 @@ static NSString *staticUserAgent = nil;
 @property (nonatomic, copy) GSRequestBlock requestCB;
 
 @property GSRequestMethod method;
-@property (strong, nonatomic) NSURL *url;
-@property (strong, nonatomic) NSDictionary *body;
+@property NSURL *url;
+@property NSDictionary *body;
+@property NSMutableURLRequest *request;
 
 @end
 
 @implementation GSRequest {
-    NSMutableURLRequest *request;
     NSURLConnection *connection;
 }
 
@@ -48,18 +48,18 @@ static NSString *staticUserAgent = nil;
     }
 }
 
-+ (GSRequest *)requestWithMethod:(GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body {
-    GSRequest *r = [[GSRequest alloc] init];
++ (instancetype)requestWithMethod:(GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body {
+    GSRequest *request = [[GSRequest alloc] init];
 
-    if (r) {
-        r.logLevel = GSRequestLogLevelQuiet;
+    if (request) {
+        request.logLevel = GSRequestLogLevelQuiet;
 
-        r.method = method;
-        r.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kGSAPIBase, path]];
-        r.body = body;
+        request.method = method;
+        request.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kGSAPIBase, path]];
+        request.body = body;
     }
 
-    return r;
+    return request;
 }
 
 - (NSString *)description {
@@ -82,10 +82,12 @@ static NSString *staticUserAgent = nil;
 }
 
 - (void)prepareRequest {
-    request = [NSMutableURLRequest requestWithURL:self.url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kGSRequestDefaultTimeout];
-    [request setHTTPMethod:[self methodString]];
+    self.request = [NSMutableURLRequest requestWithURL:self.url
+                                           cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                       timeoutInterval:kGSRequestDefaultTimeout];
 
-    [request setValue:[GSDevice currentDevice].userAgent forHTTPHeaderField:@"User-Agent"];
+    [self.request setValue:[GSDevice currentDevice].userAgent forHTTPHeaderField:@"User-Agent"];
+    [self.request setHTTPMethod:[self methodString]];
 
     if (self.body) {
         NSError *error;
@@ -93,7 +95,7 @@ static NSString *staticUserAgent = nil;
                                                            options:kNilOptions
                                                              error:&error];
 
-        if (!jsonData) {
+        if (error != nil || !jsonData) {
             NSLog(@"GSRequest - error serialising body params to json: %@", error);
         } else {
 
@@ -102,13 +104,13 @@ static NSString *staticUserAgent = nil;
                 NSLog(@"GSRequest body - %@", jsonStr);
             }
 
-            [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-            [request setHTTPBody:jsonData];
+            [self.request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            [self.request setHTTPBody:jsonData];
         }
     }
 }
 
-- (void)sendWithCompletionHandler:(GSRequestBlock)cb {
+- (void)sendWithCompletionHandler:(GSRequestBlock)completionHandler {
 
     if (self.logLevel == GSRequestLogLevelDebug) {
         NSLog(@"GSRequest::send - %@", self);
@@ -118,10 +120,10 @@ static NSString *staticUserAgent = nil;
 
     [self prepareRequest];
 
-    _requestCB = cb;
+    _requestCB = completionHandler;
 
     [GSRequest addRequestRetain:self];
-    connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    connection = [[NSURLConnection alloc] initWithRequest:self.request delegate:self];
 }
 
 - (void)send {
@@ -134,7 +136,7 @@ static NSString *staticUserAgent = nil;
 
     NSError *error;
     NSURLResponse *response;
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:self.request returningResponse:&response error:&error];
     self.responseData = [NSMutableData dataWithData:responseData];
     self.response = (NSHTTPURLResponse *)response;
 

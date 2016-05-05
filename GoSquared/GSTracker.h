@@ -9,13 +9,11 @@
 
 #import <Foundation/Foundation.h>
 #import "GSRequest.h"
+#import "GSTransaction.h"
 
 @class UIViewController;
 
 @class GSTrackerEvent;
-@class GSTransaction;
-@class GSTransactionItem;
-@class GSDevice;
 
 @interface GSTracker : NSObject
 
