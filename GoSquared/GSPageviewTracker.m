@@ -150,7 +150,7 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
 
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                 @"timestamp": [NSNumber numberWithLong:(long)[NSDate new].timeIntervalSince1970],
-                                                                                @"visitor_id": self.tracker.anonID,
+                                                                                @"visitor_id": self.tracker.visitorId,
                                                                                 @"page": page,
                                                                                 @"character_set": @"UTF-8",
                                                                                 @"ip": @"detect",
@@ -186,8 +186,8 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
         body[@"last_pageview"] = self.lastPageview;
     }
 
-    if (self.tracker.currentPersonID != nil) {
-        body[@"person_id"] = self.tracker.currentPersonID;
+    if (self.tracker.personId != nil) {
+        body[@"person_id"] = self.tracker.personId;
     }
 
     self.lastPageview = [NSNumber numberWithLong:(long)[NSDate new].timeIntervalSince1970];

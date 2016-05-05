@@ -30,14 +30,14 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 #warning Investigate possible cyclic reference
 @property (strong) GSPageviewTracker *pageviewTracker;
 
-@property NSString *currentPersonID;
-@property NSString *anonID;
+@property NSString *personId;
+@property NSString *visitorId;
+
+@property (readwrite) BOOL identified;
 
 @end
 
 @implementation GSTracker {
-    BOOL identified;
-
     NSNumber *lastTransaction;
 }
 
@@ -49,7 +49,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
     if (self) {
         // grab a saved anon UDID or generate on if it doesn't exist
-        self.anonID = [self generateUUID:NO];
+        self.visitorId = [self generateUUID:NO];
 
         // set default log level
         self.logLevel = GSRequestLogLevelQuiet;
@@ -57,8 +57,8 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
         // grab a saved People Analytics user ID if one is saved
         NSString *identifiedPersonID = [[NSUserDefaults standardUserDefaults] objectForKey:kGSIdentifiedUUIDDefaultsKey];
         if (identifiedPersonID) {
-            self.currentPersonID = identifiedPersonID;
-            identified = true;
+            self.personId = identifiedPersonID;
+            self.identified = true;
         }
 
         lastTransaction = [[NSUserDefaults standardUserDefaults] objectForKey:kGSTransactionLastTimestamp];
@@ -159,7 +159,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
     NSString *path = [NSString stringWithFormat: @"/tracking/v1/event?%@", self.trackingAPIParams];
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
-                                                                                @"visitor_id": self.anonID, // anonymous user ID
+                                                                                @"visitor_id": self.visitorId, // anonymous user ID
                                                                                 @"event": event             // json object for event
                                                                                 }];
 
@@ -167,8 +167,8 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
         body[@"page"] = @{ @"index": [self.pageviewTracker pageIndex] };
     }
 
-    if (self.currentPersonID != nil) {
-        body[@"person_id"] = self.currentPersonID;
+    if (self.personId != nil) {
+        body[@"person_id"] = self.personId;
     }
 
     // detect location from request IP
@@ -199,12 +199,12 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
     NSString *path = [NSString stringWithFormat: @"/tracking/v1/transaction?%@", self.trackingAPIParams];
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
-        @"visitor_id": self.anonID, // anonymous UDID
+        @"visitor_id": self.visitorId, // anonymous UDID
         @"transaction": tx
     }];
 
-    if (self.currentPersonID != nil) {
-        body[@"person_id"] = self.currentPersonID;
+    if (self.personId != nil) {
+        body[@"person_id"] = self.personId;
     }
 
     body[@"ip"] = @"detect";
@@ -226,28 +226,28 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 - (void)identify:(NSString *)userID properties:(NSDictionary *)properties {
     [self verifyCredsAreSet];
 
-    self.currentPersonID = userID;
+    self.personId = userID;
 
     NSString *path = [NSString stringWithFormat: @"/tracking/v1/identify?%@", self.trackingAPIParams];
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
-                                                                                @"person_id": self.currentPersonID
+                                                                                @"person_id": self.personId
                                                                                 }];
 
     if (properties != nil) {
         body[@"properties"] = properties;
     }
-    if (self.anonID != nil) {
-        body[@"visitor_id"] = self.anonID; // anonymous user ID for stitching
+    if (self.visitorId != nil) {
+        body[@"visitor_id"] = self.visitorId; // anonymous user ID for stitching
     }
 
     GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
 
     [self scheduleRequest:r];
 
-    identified = true;
+    self.identified = true;
 
     // save the identified People user id for later app launches
-    [[NSUserDefaults standardUserDefaults] setObject:self.currentPersonID forKey:kGSIdentifiedUUIDDefaultsKey];
+    [[NSUserDefaults standardUserDefaults] setObject:self.personId forKey:kGSIdentifiedUUIDDefaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -255,21 +255,16 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
     [self verifyCredsAreSet];
 
     // wipe the current anon ID
-    self.anonID = [self generateUUID:YES];
+    self.visitorId = [self generateUUID:YES];
 
     // wipe the current people ID
-    self.currentPersonID = nil;
+    self.personId = nil;
 
-    identified = false;
+    self.identified = false;
 
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kGSIdentifiedUUIDDefaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
-
-- (BOOL)identified {
-    return identified;
-}
-
 
 #pragma mark Private - Assertion methods
 

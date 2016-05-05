@@ -22,8 +22,9 @@
 @property (nonnull) NSString *token;
 @property (nonnull) NSString *key;
 
-@property (readonly, nonnull) NSString *anonID;
-@property (readonly, nullable) NSString *currentPersonID;
+@property (readonly, nonnull) NSString *visitorId;
+@property (readonly, nullable) NSString *personId;
+@property (readonly) BOOL identified;
 
 @property GSRequestLogLevel logLevel;
 
@@ -38,11 +39,7 @@
 - (void)trackEvent:(GSTrackerEvent * _Null_unspecified)event __attribute__((deprecated("Use trackEvent:withProperties: instead")));
 - (void)trackEvent:(nonnull NSString *)name withProperties:(nullable NSDictionary *)properties;
 
-// page view tracking - only used if not using the UIViewController+GSTracking category
-- (void)trackViewController:(UIViewController * _Null_unspecified)vc __attribute__((deprecated("Use trackScreen: instead")));
-- (void)trackViewController:(UIViewController * _Null_unspecified)vc withTitle:(NSString * _Null_unspecified)title __attribute__((deprecated("Use trackScreen: instead")));
-- (void)trackViewController:(UIViewController * _Null_unspecified)vc withTitle:(NSString * _Null_unspecified)title urlPath:(NSString * _Null_unspecified)urlPath __attribute__((deprecated("Use trackScreen:withPath: instead")));
-
+// pageview tracking - only used if not using the UIViewController+GSTracking category
 - (void)trackScreen:(nullable NSString *)title;
 - (void)trackScreen:(nullable NSString *)title withPath:(nullable NSString *)path;
 
@@ -50,7 +47,6 @@
 - (void)identify:(nonnull NSString *)userID;
 - (void)identify:(nonnull NSString *)userID properties:(nullable NSDictionary *)properties;
 - (void)unidentify;
-- (BOOL)identified;
 
 // ecommerce
 - (void)trackTransaction:(nonnull GSTransaction *)transaction;
