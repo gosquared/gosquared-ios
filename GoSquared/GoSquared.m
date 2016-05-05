@@ -10,14 +10,14 @@
 
 @implementation GoSquared
 
-static GSTracker *tracker = nil;
-
 + (GSTracker *)sharedTracker {
-    if (tracker == nil) {
-        tracker = [[GSTracker alloc] init];
-    }
+    static GSTracker *sharedTracker = nil;
+    static dispatch_once_t onceToken;
 
-    return tracker;
+    dispatch_once(&onceToken, ^{
+        sharedTracker = [[GSTracker alloc] init];
+    });
+    return sharedTracker;
 }
 
 @end
