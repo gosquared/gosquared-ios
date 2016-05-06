@@ -160,7 +160,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
     NSString *path = [NSString stringWithFormat: @"/tracking/v1/event?%@", self.trackingAPIParams];
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                 @"visitor_id": self.visitorId, // anonymous user ID
-                                                                                @"event": event             // json object for event
+                                                                                @"event": event                // json object for event
                                                                                 }];
 
     if (self.pageviewTracker != nil) {
@@ -314,6 +314,27 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 - (void)sendRequestSync:(GSRequest *)request {
     [request setLogLevel:self.logLevel];
     [request sendSync];
+}
+
+- (void)sendRequest:(GSRequest *)request completionHandler:(void (^)(NSDictionary *data, NSError *error))completionHandler {
+    [request setLogLevel:self.logLevel];
+    [request sendWithCompletionHandler:^(BOOL success, GSRequest *req) {
+
+        NSError *error = nil;
+        NSDictionary *data = nil;
+
+        if (req.responseData) {
+            data = [NSJSONSerialization JSONObjectWithData:req.responseData options:NSJSONReadingAllowFragments error:&error];
+        }
+
+        if (error != nil) {
+            return completionHandler(nil, error);
+        } else if (success) {
+            return completionHandler(data, nil);
+        } else {
+            return completionHandler(nil, [NSError errorWithDomain:@"com.gosquared" code:-1 userInfo:data]);
+        }
+    }];
 }
 
 

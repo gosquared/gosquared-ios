@@ -24,7 +24,7 @@ typedef NS_ENUM(NSInteger, GSRequestLogLevel) {
 
 
 @class GSRequest;
-typedef void (^GSRequestBlock)(bool success, GSRequest *req);
+typedef void (^GSRequestBlock)(BOOL success, GSRequest *req);
 
 @interface GSRequest : NSObject
 

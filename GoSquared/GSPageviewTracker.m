@@ -243,7 +243,12 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
     NSString *path = [NSString stringWithFormat:@"/tracking/v1/ping?%@", self.tracker.trackingAPIParams];
     GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
 
-    [self.tracker scheduleRequest:req];
+    [self.tracker sendRequest:req completionHandler:^(NSDictionary *data, NSError *error) {
+        if (error && [error.userInfo[@"code"] isEqualToString:@"visitor_not_online"]) {
+            [self track];
+        }
+    }];
+
 }
 
 @end

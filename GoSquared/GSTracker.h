@@ -28,10 +28,13 @@
 
 @property (readonly, nonnull) NSString *trackerVersion;
 
+typedef void (^GSRequestCompletionBlock)(NSDictionary  * _Nullable data, NSError * _Nullable error);
+
 - (nonnull NSString *)trackingAPIParams;
 
 - (void)scheduleRequest:(nonnull GSRequest *)request;
 - (void)sendRequestSync:(nonnull GSRequest *)request;
+- (void)sendRequest:(nonnull GSRequest *)request completionHandler:(nonnull GSRequestCompletionBlock)completionHandler;
 
 // event tracking
 - (void)trackEvent:(GSTrackerEvent * _Null_unspecified)event __attribute__((deprecated("Use trackEvent:withProperties: instead")));
