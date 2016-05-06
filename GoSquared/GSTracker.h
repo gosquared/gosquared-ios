@@ -11,10 +11,6 @@
 #import "GSRequest.h"
 #import "GSTransaction.h"
 
-@class UIViewController;
-
-@class GSTrackerEvent;
-
 @interface GSTracker : NSObject
 
 @property (nonnull) NSString *token;
@@ -34,7 +30,6 @@
 - (void)sendRequest:(nonnull GSRequest *)request completionHandler:(nonnull GSRequestCompletionBlock)completionHandler;
 
 // event tracking
-- (void)trackEvent:(GSTrackerEvent * _Null_unspecified)event __attribute__((deprecated("Use trackEvent:withProperties: instead")));
 - (void)trackEvent:(nonnull NSString *)name withProperties:(nullable NSDictionary *)properties;
 
 // pageview tracking - only used if not using the UIViewController+GSTracking category
