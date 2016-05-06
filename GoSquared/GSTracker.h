@@ -22,7 +22,7 @@
 
 @property (readonly, nonnull) NSString *visitorId;
 @property (readonly, nullable) NSString *personId;
-@property (readonly) BOOL identified;
+@property (readonly, getter=isIdentified) BOOL identified;
 
 @property GSRequestLogLevel logLevel;
 
