@@ -109,20 +109,19 @@ static NSString *staticUserAgent = nil;
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 
-        self.responseData = [NSMutableData dataWithData:data];
-        self.response = (NSHTTPURLResponse *)response;
+        NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
 
         if (completionHandler == nil) {
             return;
         }
 
         if (error || !data) {
-            return completionHandler(NO, self);
+            return completionHandler(NO, data);
         }
 
-        BOOL success = self.response.statusCode == 200;
+        BOOL success = (HTTPResponse.statusCode > 200 && HTTPResponse.statusCode < 400);
 
-        completionHandler(success, self);
+        completionHandler(success, data);
     }];
 
     if (self.logLevel == GSRequestLogLevelDebug) {

@@ -23,16 +23,11 @@ typedef NS_ENUM(NSInteger, GSRequestLogLevel) {
 };
 
 
-@class GSRequest;
-typedef void (^GSRequestBlock)(BOOL success, GSRequest * _Nonnull req);
+typedef void (^GSRequestBlock)(BOOL success, NSData * _Nullable data);
 
 @interface GSRequest : NSObject
 
-@property (nullable) NSHTTPURLResponse *response;
-@property (nullable) NSMutableData *responseData;
-
 @property GSRequestLogLevel logLevel;
-@property BOOL success;
 
 + (nonnull instancetype)requestWithMethod:(GSRequestMethod)method path:(nonnull NSString *)path body:(nullable NSDictionary *)body;
 
