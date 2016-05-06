@@ -28,8 +28,6 @@
 
 @property (readonly, nonnull) NSString *trackerVersion;
 
-typedef void (^GSRequestCompletionBlock)(NSDictionary  * _Nullable data, NSError * _Nullable error);
-
 - (nonnull NSString *)trackingAPIParams;
 
 - (void)scheduleRequest:(nonnull GSRequest *)request;

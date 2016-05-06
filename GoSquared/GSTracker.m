@@ -312,23 +312,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 - (void)sendRequest:(GSRequest *)request completionHandler:(void (^)(NSDictionary *data, NSError *error))completionHandler {
     [request setLogLevel:self.logLevel];
-    [request sendWithCompletionHandler:^(BOOL success, NSData *data) {
-
-        NSError *error = nil;
-        NSDictionary *json = nil;
-
-        if (data) {
-            json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-        }
-
-        if (error != nil) {
-            return completionHandler(nil, error);
-        } else if (success) {
-            return completionHandler(json, nil);
-        } else {
-            return completionHandler(nil, [NSError errorWithDomain:@"com.gosquared" code:-1 userInfo:json]);
-        }
-    }];
+    [request sendWithCompletionHandler:completionHandler];
 }
 
 

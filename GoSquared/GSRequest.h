@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger, GSRequestLogLevel) {
 };
 
 
-typedef void (^GSRequestBlock)(BOOL success, NSData * _Nullable data);
+typedef void (^GSRequestCompletionBlock)(NSDictionary  * _Nullable data, NSError * _Nullable error);
 
 @interface GSRequest : NSObject
 
@@ -32,6 +32,6 @@ typedef void (^GSRequestBlock)(BOOL success, NSData * _Nullable data);
 + (nonnull instancetype)requestWithMethod:(GSRequestMethod)method path:(nonnull NSString *)path body:(nullable NSDictionary *)body;
 
 - (void)send;
-- (void)sendWithCompletionHandler:(nullable GSRequestBlock)completionHandler;
+- (void)sendWithCompletionHandler:(nullable GSRequestCompletionBlock)completionHandler;
 
 @end

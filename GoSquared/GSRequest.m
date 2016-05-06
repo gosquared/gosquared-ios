@@ -102,14 +102,12 @@ static NSString *staticUserAgent = nil;
     [self sendWithCompletionHandler:nil];
 }
 
-- (void)sendWithCompletionHandler:(GSRequestBlock)completionHandler
+- (void)sendWithCompletionHandler:(GSRequestCompletionBlock)completionHandler
 {
     NSURLRequest *request = [self URLRequest];
 
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-
-        NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
 
         if (completionHandler == nil) {
             return;
@@ -119,9 +117,17 @@ static NSString *staticUserAgent = nil;
             return completionHandler(NO, data);
         }
 
+        NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
         BOOL success = (HTTPResponse.statusCode > 200 && HTTPResponse.statusCode < 400);
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
 
-        completionHandler(success, data);
+        if (error != nil) {
+            return completionHandler(nil, error);
+        } else if (success) {
+            return completionHandler(json, nil);
+        } else {
+            return completionHandler(nil, [NSError errorWithDomain:@"com.gosquared" code:-1 userInfo:json]);
+        }
     }];
 
     if (self.logLevel == GSRequestLogLevelDebug) {
