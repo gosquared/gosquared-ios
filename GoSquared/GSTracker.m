@@ -27,7 +27,6 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 @interface GSTracker()
 
-#warning Investigate possible cyclic reference
 @property (strong) GSPageviewTracker *pageviewTracker;
 
 @property NSString *personId;
@@ -54,7 +53,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
         // set default log level
         self.logLevel = GSRequestLogLevelQuiet;
 
-        // grab a saved People Analytics user ID if one is saved
+        // grab a saved People user ID if one is saved
         NSString *identifiedPersonID = [[NSUserDefaults standardUserDefaults] objectForKey:kGSIdentifiedUUIDDefaultsKey];
         if (identifiedPersonID) {
             self.personId = identifiedPersonID;
@@ -309,11 +308,6 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
     [request setLogLevel:self.logLevel];
     [request send];
-}
-
-- (void)sendRequestSync:(GSRequest *)request {
-    [request setLogLevel:self.logLevel];
-    [request sendSync];
 }
 
 - (void)sendRequest:(GSRequest *)request completionHandler:(void (^)(NSDictionary *data, NSError *error))completionHandler {

@@ -33,7 +33,6 @@ typedef void (^GSRequestCompletionBlock)(NSDictionary  * _Nullable data, NSError
 - (nonnull NSString *)trackingAPIParams;
 
 - (void)scheduleRequest:(nonnull GSRequest *)request;
-- (void)sendRequestSync:(nonnull GSRequest *)request;
 - (void)sendRequest:(nonnull GSRequest *)request completionHandler:(nonnull GSRequestCompletionBlock)completionHandler;
 
 // event tracking

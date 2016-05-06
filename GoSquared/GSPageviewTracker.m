@@ -34,7 +34,7 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
 
 @property BOOL valid;
 
-@property (retain) GSTracker *tracker;
+@property GSTracker *tracker;
 
 @property (retain) NSTimer *timer;
 
@@ -201,28 +201,21 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
 
     // use GCD barrier to force queuing of requests
     dispatch_barrier_async(GSPageviewTrackerQueue(), ^{
-
+        
         NSDictionary *body = [self generateBodyForPing:NO];
-
         NSString *path = [NSString stringWithFormat:@"/tracking/v1/pageview?%@", self.tracker.trackingAPIParams];
+
         GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
-        [self.tracker sendRequestSync:req];
 
-        @try {
-            NSError *localError;
-            NSDictionary *parsedResponse = [NSJSONSerialization JSONObjectWithData:req.responseData options:0 error:&localError];
-
-            if (parsedResponse != nil) {
-                NSNumber *index = parsedResponse[@"index"];
+        [self.tracker sendRequest:req completionHandler:^(NSDictionary *data, NSError *error) {
+            if (data != nil) {
+                NSNumber *index = data[@"index"];
 
                 if (index != nil && ![index isKindOfClass:[NSNull class]]) {
                     [self setPageIndex:[index longLongValue]];
                 }
             }
-        }
-        @catch(NSException *e) {
-
-        }
+        }];
     });
 
     if ([self.returning intValue] == 0) {
@@ -244,11 +237,16 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
     GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
 
     [self.tracker sendRequest:req completionHandler:^(NSDictionary *data, NSError *error) {
-        if (error && [error.userInfo[@"code"] isEqualToString:@"visitor_not_online"]) {
+        if (!error) return;
+
+        if ([error.userInfo[@"code"] isEqualToString:@"visitor_not_online"]) {
+            [self track];
+        } else if ([error.userInfo[@"code"] isEqualToString:@"max_inactive_time"]) {
+            [self track];
+        } else if ([error.userInfo[@"code"] isEqualToString:@"max_session_time"]) {
             [self track];
         }
     }];
-
 }
 
 @end
