@@ -17,14 +17,12 @@ static NSMutableArray *GSRequestsInProgress;
 const float kGSRequestDefaultTimeout = 20.0f;
 static NSString * const kGSAPIBase = @"https://api.gosquared.com";
 
-static NSString *staticUserAgent = nil;
 
 @interface GSRequest()
 
 @property GSRequestMethod method;
 @property NSURL *url;
 @property NSDictionary *body;
-@property NSMutableURLRequest *request;
 
 @end
 

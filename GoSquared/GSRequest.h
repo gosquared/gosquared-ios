@@ -22,8 +22,8 @@ typedef NS_ENUM(NSInteger, GSRequestLogLevel) {
     GSRequestLogLevelDebug
 };
 
-
 typedef void (^GSRequestCompletionBlock)(NSDictionary  * _Nullable data, NSError * _Nullable error);
+
 
 @interface GSRequest : NSObject
 
