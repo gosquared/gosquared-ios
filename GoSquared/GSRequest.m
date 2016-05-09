@@ -88,6 +88,10 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
     [request setHTTPMethod:[self methodString]];
 
     if (self.body) {
+        if (![NSJSONSerialization isValidJSONObject:self.body]) {
+            return nil;
+        }
+
         NSError *error;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.body options:kNilOptions error:&error];
 
@@ -110,6 +114,14 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
 - (void)sendWithCompletionHandler:(GSRequestCompletionBlock)completionHandler
 {
     NSURLRequest *request = [self URLRequest];
+
+    if (request == nil) {
+        if (completionHandler == nil) {
+            return;
+        } else {
+            completionHandler(nil, [NSError errorWithDomain:@"com.gosquared" code:-1 userInfo:nil]);
+        }
+    }
 
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
