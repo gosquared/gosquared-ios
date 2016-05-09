@@ -31,7 +31,8 @@
 - (void)sendRequest:(nonnull GSRequest *)request completionHandler:(nonnull GSRequestCompletionBlock)completionHandler;
 
 // event tracking
-- (void)trackEvent:(nonnull NSString *)name withProperties:(nullable NSDictionary *)properties;
+- (void)trackEvent:(nonnull NSString *)name;
+- (void)trackEvent:(nonnull NSString *)name properties:(nullable NSDictionary *)properties;
 
 // pageview tracking - only used if not using the UIViewController+GSTracking category
 - (void)trackScreen:(nullable NSString *)title;
