@@ -19,6 +19,7 @@
 @property (nonnull) NSNumber *timezoneOffset;
 @property (nonnull) NSString *isoLanguage;
 @property (nonnull) NSString *userAgent;
+@property (nonnull) NSString *os;
 
 + (nonnull instancetype)currentDevice;
 

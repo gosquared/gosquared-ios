@@ -131,19 +131,15 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
 }
 
 
-    NSString *os = @"iOS";
-
-    #if TARGET_OS_TV
-        os = @"tvOS";
-    #endif
-
 #pragma mark Track methods (tracks initial page view)
 
 - (NSDictionary *)generateBodyForPing:(BOOL)isForPing
 {
+    GSDevice *device = [GSDevice currentDevice];
+
     NSMutableDictionary *page = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                 @"url": self.urlString,
-                                                                                @"title": [NSString stringWithFormat:@"%@: %@", os, self.title]
+                                                                                @"title": [NSString stringWithFormat:@"%@: %@", device.os, self.title]
                                                                                 }];
 
     if (isForPing) {

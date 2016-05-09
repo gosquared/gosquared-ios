@@ -9,6 +9,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "GSDevice.h"
 #import "GSTracker.h"
 #import "GSRequest.h"
 #import "GSTrackerEvent.h"
@@ -98,12 +99,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
     path = [path stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
 
-    NSString *os = @"ios";
-
-    #if TARGET_OS_TV
-        os = @"tvos";
-    #endif
-
+    NSString *os = [GSDevice currentDevice].os;
     NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
     NSString *url = [NSString stringWithFormat:@"%@://%@/%@", os, bundleId, path];
 
