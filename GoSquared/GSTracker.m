@@ -113,10 +113,6 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 #pragma mark Public - Event tracking
 
-- (void)trackEvent:(GSTrackerEvent *)event {
-    [self trackEvent:event.name withProperties:event.properties];
-}
-
 - (void)trackEvent:(NSString *)name withProperties:(NSDictionary *)properties {
     [self verifyCredsAreSet];
 
