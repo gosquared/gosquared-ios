@@ -36,7 +36,11 @@ Make sure you initialise the library with your site token before calling any tra
     [GoSquared sharedTracker].key   = @"your-api-key";
 
     // optionally set logging level: Debug, Quiet (Default), Silent
-    [GoSquared sharedTracker].logLevel = GSRequestLogLevelDebug;
+    [GoSquared sharedTracker].logLevel = GSLogLevelDebug;
+    
+    // if your app primarily runs in the background and you want visitors to show in
+    // your Now dashboard, you should set the following to `YES` (default: NO) 
+    [GoSquared sharedTracker].shouldTrackInBackground = YES;
 
     return YES;
 }
@@ -56,6 +60,10 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
     // optionally set logging level: Debug, Quiet (Default), Silent
     GoSquared.sharedTracker().logLevel = .Debug
+    
+    // if your app primarily runs in the background and you want visitors to show in
+    // your Now dashboard, you should set the following to `true` (default: false) 
+    GoSquared.sharedTracker().shouldTrackInBackground = true
 
     return true
 }
@@ -161,13 +169,13 @@ GoSquared.sharedTracker().trackEvent("event name")
 **Objective-C:**
 
 ```objc
-[[GoSquared sharedTracker] trackEvent:@"test-event" properties:@{ @"properties": @"are cool" }];
+[[GoSquared sharedTracker] trackEvent:@"event name" properties:@{ @"properties": @"are cool" }];
 ```
 
 **Swift:**
 
 ```swift
-GoSquared.sharedTracker().trackEvent("test-event", properties: ["properties": "are cool"])
+GoSquared.sharedTracker().trackEvent("event name", properties: ["properties": "are cool"])
 ```
 
 ## People
