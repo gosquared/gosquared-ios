@@ -51,7 +51,7 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
     long long currentPageIndex;
 }
 
-- (id)initWithTracker:(GSTracker *)tracker
+- (instancetype)initWithTracker:(GSTracker *)tracker
 {
     self = [super init];
 
