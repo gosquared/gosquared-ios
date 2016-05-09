@@ -1,5 +1,29 @@
 # GoSquared iOS Change Log
 
+## 2016-05-09, [v0.2.0]
+
+### Added
+
+- Added option to continue pinging when app enters background (only needed for apps that continually run in the background)
+- Added ability to track events without properties parameter (was incorrectly docuemtned as being possible, sorry!)
+
+### Changed
+
+- Networking now uses `NSURLSession` instead of the deprecated `NSURLConnection`
+- Improved singleton implementation for `sharedTracker` and `currentDevice`
+- Retry pageview if pinging times out (more reliable online visitor count and pinging)
+- Rename `GSRequestLogLevel` to `GSLogLevel`
+- General refactoring and bringing code up to modern Obj-C practices
+- `anonID` renamed to `visitorId`
+- `currentPersonId` renamed to `personId`
+- `identified` method is now available as `isIdentified` property
+
+### Removed
+
+- Removed tracking events with `GSTrackerEvent`
+- Removed tracking by `UIViewController`
+
+
 ## 2016-04-07, [v0.1.2]
 
 ### Changed
@@ -110,6 +134,7 @@
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
 
+[v0.2.0]: https://github.com/gosquared/gosquared-ios/compare/v0.1.2...v0.2.0
 [v0.1.2]: https://github.com/gosquared/gosquared-ios/compare/v0.1.1...v0.1.2
 [v0.1.1]: https://github.com/gosquared/gosquared-ios/compare/v0.1.0...v0.1.1
 [v0.1.0]: https://github.com/gosquared/gosquared-ios/compare/v0.0.10...v0.1.0
