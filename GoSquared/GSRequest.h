@@ -22,22 +22,16 @@ typedef NS_ENUM(NSInteger, GSRequestLogLevel) {
     GSRequestLogLevelDebug
 };
 
+typedef void (^GSRequestCompletionBlock)(NSDictionary  * _Nullable data, NSError * _Nullable error);
 
-@class GSRequest;
-typedef void (^GSRequestBlock)(bool success, GSRequest *req);
 
 @interface GSRequest : NSObject
 
-@property (strong, nonatomic) NSHTTPURLResponse *response;
-@property (strong, nonatomic) NSMutableData *responseData;
-
 @property GSRequestLogLevel logLevel;
-@property BOOL success;
 
-+ (GSRequest *)requestWithMethod:(GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body;
++ (nonnull instancetype)requestWithMethod:(GSRequestMethod)method path:(nonnull NSString *)path body:(nullable NSDictionary *)body;
 
-- (void)sendWithCompletionHandler:(GSRequestBlock)cb;
 - (void)send;
-- (void)sendSync;
+- (void)sendWithCompletionHandler:(nullable GSRequestCompletionBlock)completionHandler;
 
 @end

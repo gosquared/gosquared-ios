@@ -17,22 +17,16 @@ static NSMutableArray *GSRequestsInProgress;
 const float kGSRequestDefaultTimeout = 20.0f;
 static NSString * const kGSAPIBase = @"https://api.gosquared.com";
 
-static NSString *staticUserAgent = nil;
 
-@interface GSRequest () <NSURLConnectionDelegate>
-
-@property (nonatomic, copy) GSRequestBlock requestCB;
+@interface GSRequest()
 
 @property GSRequestMethod method;
-@property (strong, nonatomic) NSURL *url;
-@property (strong, nonatomic) NSDictionary *body;
+@property NSURL *url;
+@property NSDictionary *body;
 
 @end
 
-@implementation GSRequest {
-    NSMutableURLRequest *request;
-    NSURLConnection *connection;
-}
+@implementation GSRequest
 
 + (void)addRequestRetain:(GSRequest *)req {
     if (!GSRequestsInProgress) {
@@ -48,18 +42,16 @@ static NSString *staticUserAgent = nil;
     }
 }
 
-+ (GSRequest *)requestWithMethod:(GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body {
-    GSRequest *r = [[GSRequest alloc] init];
++ (instancetype)requestWithMethod:(GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body {
+    GSRequest *request = [[GSRequest alloc] init];
 
-    if (r) {
-        r.logLevel = GSRequestLogLevelQuiet;
-
-        r.method = method;
-        r.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kGSAPIBase, path]];
-        r.body = body;
+    if (request) {
+        request.logLevel = GSRequestLogLevelQuiet;
+        request.method = method;
+        request.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kGSAPIBase, path]];
+        request.body = body;
     }
-
-    return r;
+    return request;
 }
 
 - (NSString *)description {
@@ -81,34 +73,64 @@ static NSString *staticUserAgent = nil;
     }
 }
 
-- (void)prepareRequest {
-    request = [NSMutableURLRequest requestWithURL:self.url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kGSRequestDefaultTimeout];
-    [request setHTTPMethod:[self methodString]];
+- (NSURLRequest *)URLRequest {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.url
+                                                           cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                       timeoutInterval:kGSRequestDefaultTimeout];
 
     [request setValue:[GSDevice currentDevice].userAgent forHTTPHeaderField:@"User-Agent"];
+    [request setHTTPMethod:[self methodString]];
 
     if (self.body) {
         NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.body
-                                                           options:kNilOptions
-                                                             error:&error];
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.body options:kNilOptions error:&error];
 
-        if (!jsonData) {
-            NSLog(@"GSRequest - error serialising body params to json: %@", error);
-        } else {
-
-            if (self.logLevel == GSRequestLogLevelDebug) {
-                NSString *jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-                NSLog(@"GSRequest body - %@", jsonStr);
-            }
-
-            [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-            [request setHTTPBody:jsonData];
+        if (error != nil || !jsonData) {
+            [NSException raise:@"Failed to encode request body" format: @"Failed to encode request body"];
         }
+
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [request setHTTPBody:jsonData];
     }
+
+    return request;
 }
 
-- (void)sendWithCompletionHandler:(GSRequestBlock)cb {
+- (void)send {
+    [self sendWithCompletionHandler:nil];
+}
+
+- (void)sendWithCompletionHandler:(GSRequestCompletionBlock)completionHandler
+{
+    NSURLRequest *request = [self URLRequest];
+
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+
+        if (completionHandler == nil) {
+            return;
+        }
+
+        if (error) {
+            return completionHandler(nil, error);
+        }
+
+        if (!data) {
+            return completionHandler(nil, [NSError errorWithDomain:@"com.gosquared" code:-1 userInfo:nil]);
+        }
+
+        NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
+        BOOL success = (HTTPResponse.statusCode > 200 && HTTPResponse.statusCode < 400);
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+
+        if (error != nil) {
+            return completionHandler(nil, error);
+        } else if (success) {
+            return completionHandler(json, nil);
+        } else {
+            return completionHandler(nil, [NSError errorWithDomain:@"com.gosquared" code:-1 userInfo:json]);
+        }
+    }];
 
     if (self.logLevel == GSRequestLogLevelDebug) {
         NSLog(@"GSRequest::send - %@", self);
@@ -116,79 +138,7 @@ static NSString *staticUserAgent = nil;
         NSLog(@"GSRequest sending data");
     }
 
-    [self prepareRequest];
-
-    _requestCB = cb;
-
-    [GSRequest addRequestRetain:self];
-    connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-}
-
-- (void)send {
-    [self sendWithCompletionHandler:nil];
-}
-
-
-- (void)sendSync {
-    [self prepareRequest];
-
-    NSError *error;
-    NSURLResponse *response;
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    self.responseData = [NSMutableData dataWithData:responseData];
-    self.response = (NSHTTPURLResponse *)response;
-
-    if (self.logLevel == GSRequestLogLevelDebug) {
-        NSString *responseStr = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-        NSLog(@"GSRequest::sendSync response - %@", responseStr);
-    } else if (self.logLevel == GSRequestLogLevelQuiet) {
-        NSLog(@"GSRequest data sent");
-    }
-
-    return;
-}
-
-- (void)finished {
-    [GSRequest clearRequestRetain:self];
-
-    if (_requestCB == nil) return;
-
-    _requestCB(self.success, self);
-}
-
-
-#pragma mark NSURLConnectionDelegate methods
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    self.response = (NSHTTPURLResponse *)response;
-
-    self.responseData = [[NSMutableData alloc] init];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    [self.responseData appendData:data];
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"GSRequest::didFailWithError - %@", error);
-
-    [self finished];
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    if (self.logLevel == GSRequestLogLevelDebug) {
-        NSString *string = [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding];
-        NSLog(@"GSRequest received responseData: \n%@", string);
-    } else if (self.logLevel == GSRequestLogLevelQuiet) {
-        NSLog(@"GSRequest data sent");
-    }
-
-    // ignore for now
-
-    NSArray *errorCodes = [NSArray arrayWithObjects:@400, @401, @402, @404, @409, @500, nil];
-    self.success = ![errorCodes containsObject:[NSNumber numberWithInteger:[self.response statusCode]]];
-
-    [self finished];
+    [task resume];
 }
 
 @end

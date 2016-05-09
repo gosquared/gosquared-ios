@@ -13,16 +13,16 @@
 
 static NSString * const kGSUDIDDefaultsKey = @"com.gosquared.defaults.device.UDID";
 
-static GSDevice *currentGSDevice = nil;
-
 @implementation GSDevice
 
 + (GSDevice *)currentDevice {
-    if (currentGSDevice == nil) {
-        currentGSDevice = [[GSDevice alloc] init];
-    }
+    static GSDevice *currentDevice = nil;
+    static dispatch_once_t onceToken;
 
-    return currentGSDevice;
+    dispatch_once(&onceToken, ^{
+        currentDevice = [[GSDevice alloc] init];
+    });
+    return currentDevice;
 }
 
 - (GSDevice *)init {
