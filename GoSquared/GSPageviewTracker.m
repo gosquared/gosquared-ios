@@ -12,8 +12,8 @@
 #import "GSPageviewTracker.h"
 #import "GSTracker.h"
 #import "GSDevice.h"
-
 #import "GSRequest.h"
+
 
 dispatch_queue_t GSPageviewTrackerQueue() {
     static dispatch_once_t queueCreationGuard;
@@ -30,19 +30,20 @@ const float kGSPageviewTrackerDefaultPingInterval = 20.0f;
 static NSString * const kGSPageviewTrackerReturningDefaultsKey = @"com.gosquared.pageviewtracker.returning";
 static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last";
 
+
 @interface GSPageviewTracker()
 
-@property BOOL valid;
+@property (getter=isValid) BOOL valid;
 
-@property GSTracker *tracker;
+@property (weak) GSTracker *tracker;
 
-@property (retain) NSTimer *timer;
+@property NSTimer *timer;
 
-@property (retain) NSString *urlString;
-@property (retain) NSString *title;
+@property NSString *urlString;
+@property NSString *title;
 
-@property (retain) NSNumber *returning;
-@property (retain) NSNumber *lastPageview;
+@property NSNumber *returning;
+@property NSNumber *lastPageview;
 
 @end
 
@@ -50,7 +51,8 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
     long long currentPageIndex;
 }
 
-- (id)initWithTracker:(GSTracker *)tracker {
+- (id)initWithTracker:(GSTracker *)tracker
+{
     self = [super init];
 
     if (self) {
@@ -75,27 +77,32 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
     return self;
 }
 
-- (void)setPageIndex:(long long)index {
+- (void)setPageIndex:(long long)index
+{
     currentPageIndex = index;
 }
 
-- (NSNumber *)pageIndex {
+- (NSNumber *)pageIndex
+{
     return [NSNumber numberWithLongLong:currentPageIndex];
 }
 
 #pragma mark Lifecycle methods
 
-- (void)appEnteredBackground {
+- (void)appEnteredBackground
+{
     [self invalidate];
 }
 
-- (void)appEnteredForeground {
+- (void)appEnteredForeground
+{
     if (self.title != nil && self.urlString != nil) {
         [self startWithURLString:self.urlString title:self.title];
     }
 }
 
-- (void)startWithURLString:(NSString *)urlString title:(NSString *)title {
+- (void)startWithURLString:(NSString *)urlString title:(NSString *)title
+{
     [self invalidate];
 
     self.title = title;
@@ -107,12 +114,14 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
     [self track];
 }
 
-- (void)startTimer {
+- (void)startTimer
+{
     self.timer = [NSTimer timerWithTimeInterval:kGSPageviewTrackerDefaultPingInterval target:self selector:@selector(ping) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
 }
 
-- (void)invalidate {
+- (void)invalidate
+{
     self.valid = NO;
 
     if (self.timer) {
@@ -121,15 +130,6 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
     }
 }
 
-- (BOOL)isValid {
-    return self.valid;
-}
-
-
-#pragma mark Track methods (tracks initial page view)
-
-- (NSDictionary *)generateBodyForPing:(BOOL)isForPing {
-    GSDevice *device = [GSDevice currentDevice];
 
     NSString *os = @"iOS";
 
@@ -137,6 +137,10 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
         os = @"tvOS";
     #endif
 
+#pragma mark Track methods (tracks initial page view)
+
+- (NSDictionary *)generateBodyForPing:(BOOL)isForPing
+{
     NSMutableDictionary *page = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                 @"url": self.urlString,
                                                                                 @"title": [NSString stringWithFormat:@"%@: %@", os, self.title]
@@ -196,7 +200,8 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
     return [NSDictionary dictionaryWithDictionary:body];
 }
 
-- (void)track {
+- (void)track
+{
     if (!self.isValid) return;
 
     // use GCD barrier to force queuing of requests
@@ -228,7 +233,8 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
 
 #pragma mark Pinger methods (keeps page view alive)
 
-- (void)ping {
+- (void)ping
+{
     if (!self.isValid) return;
 
     NSDictionary *body = [self generateBodyForPing:YES];

@@ -8,17 +8,17 @@
 //
 
 #import "GSTransaction.h"
-#import "GSTransactionItem.h"
 
 @interface GSTransaction ()
 
-@property (strong, nonatomic) NSMutableArray *items;
+@property NSMutableArray *items;
 
 @end
 
 @implementation GSTransaction
 
-- (id)init {
+- (instancetype)init
+{
     self = [super init];
 
     if (self) {
@@ -28,15 +28,18 @@
     return self;
 }
 
-+ (GSTransaction *)transaction:(NSString *)transactionId {
++ (instancetype)transaction:(NSString *)transactionId
+{
     return [GSTransaction transactionWithID:transactionId properties:nil];
 }
 
-+ (GSTransaction *)transactionWithID:(NSString *)transactionID {
++ (instancetype)transactionWithID:(NSString *)transactionID
+{
     return [GSTransaction transactionWithID:transactionID properties:nil];
 }
 
-+ (GSTransaction *)transactionWithID:(NSString *)transactionID properties:(NSDictionary *)properties {
++ (instancetype)transactionWithID:(NSString *)transactionID properties:(NSDictionary *)properties
+{
     GSTransaction *t = [[GSTransaction alloc] init];
 
     if (t) {
@@ -47,17 +50,20 @@
     return t;
 }
 
-- (void)addItem:(GSTransactionItem *)item {
+- (void)addItem:(GSTransactionItem *)item
+{
     [self.items addObject:item];
 }
 
-- (void)addItems:(NSArray *)items {
+- (void)addItems:(NSArray *)items
+{
     for (GSTransactionItem *item in items) {
         [self.items addObject:item];
     }
 }
 
-- (NSDictionary *)serializeWithLastTimestamp:(NSNumber *)timestamp {
+- (NSDictionary *)serializeWithLastTimestamp:(NSNumber *)timestamp
+{
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
 
     dict[@"id"] = self.transactionID;

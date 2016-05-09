@@ -8,17 +8,16 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class GSTransactionItem;
+#import "GSTransactionItem.h"
 
 @interface GSTransaction : NSObject
 
-@property (strong, nonatomic) NSString *transactionID;
-@property (strong, nonatomic) NSDictionary *properties;
+@property NSString *transactionID;
+@property NSDictionary *properties;
 
-+ (GSTransaction *)transaction:(NSString *)transactionID;
-+ (GSTransaction *)transactionWithID:(NSString *)transactionID;
-+ (GSTransaction *)transactionWithID:(NSString *)transactionID properties:(NSDictionary *)properties;
++ (instancetype)transaction:(NSString *)transactionID;
++ (instancetype)transactionWithID:(NSString *)transactionID;
++ (instancetype)transactionWithID:(NSString *)transactionID properties:(NSDictionary *)properties;
 
 - (void)addItem:(GSTransactionItem *)item;
 - (void)addItems:(NSArray *)items;

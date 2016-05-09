@@ -10,7 +10,8 @@
 
 @implementation GoSquared
 
-+ (GSTracker *)sharedTracker {
++ (GSTracker *)sharedTracker
+{
     static GSTracker *sharedTracker = nil;
     static dispatch_once_t onceToken;
 

@@ -15,7 +15,8 @@ static NSString * const kGSUDIDDefaultsKey = @"com.gosquared.defaults.device.UDI
 
 @implementation GSDevice
 
-+ (GSDevice *)currentDevice {
++ (instancetype)currentDevice
+{
     static GSDevice *currentDevice = nil;
     static dispatch_once_t onceToken;
 
@@ -25,7 +26,8 @@ static NSString * const kGSUDIDDefaultsKey = @"com.gosquared.defaults.device.UDI
     return currentDevice;
 }
 
-- (GSDevice *)init {
+- (instancetype)init
+{
     self = [super init];
 
     if (self) {
@@ -77,7 +79,8 @@ static NSString * const kGSUDIDDefaultsKey = @"com.gosquared.defaults.device.UDI
     return self;
 }
 
-- (NSString *)deviceIdentifier {
+- (NSString *)deviceIdentifier
+{
     NSString *deviceIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:kGSUDIDDefaultsKey];
 
     if (deviceIdentifier == nil) {
@@ -90,7 +93,8 @@ static NSString * const kGSUDIDDefaultsKey = @"com.gosquared.defaults.device.UDI
     return deviceIdentifier;
 }
 
-- (NSString *)createUUID {
+- (NSString *)createUUID
+{
     CFUUIDRef theUUID = CFUUIDCreate(NULL);
     CFStringRef string = CFUUIDCreateString(NULL, theUUID);
     CFRelease(theUUID);

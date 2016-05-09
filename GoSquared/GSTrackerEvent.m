@@ -9,14 +9,10 @@
 
 #import "GSTrackerEvent.h"
 
-@implementation GSTrackerEvent {
+@implementation GSTrackerEvent
 
-}
-
-@synthesize name = _name;
-@synthesize properties = _properties;
-
-+ (GSTrackerEvent *)eventWithName:(NSString *)name {
++ (GSTrackerEvent *)eventWithName:(NSString *)name
+{
     GSTrackerEvent *e = [[GSTrackerEvent alloc] init];
 
     if (e) {
@@ -26,23 +22,8 @@
     return e;
 }
 
-- (void)setName:(NSString *)name {
-    _name = name;
-}
-
-- (NSString *)name {
-    return _name;
-}
-
-- (void)setProperties:(NSDictionary *)properties {
-    _properties = properties;
-}
-
-- (NSDictionary *)properties {
-    return _properties;
-}
-
-- (NSDictionary *)serialize {
+- (NSDictionary *)serialize
+{
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
 
     if (self.name != nil && [self.name isKindOfClass:[NSString class]]) {

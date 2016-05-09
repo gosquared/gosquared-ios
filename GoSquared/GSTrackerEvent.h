@@ -12,8 +12,8 @@
 __attribute__((deprecated))
 @interface GSTrackerEvent : NSObject
 
-@property (nonatomic) NSString *name;
-@property (nonatomic) NSDictionary *properties;
+@property NSString *name;
+@property NSDictionary *properties;
 
 + (GSTrackerEvent *)eventWithName:(NSString *)name;
 - (NSDictionary *)serialize;

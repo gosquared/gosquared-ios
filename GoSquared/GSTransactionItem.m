@@ -11,7 +11,8 @@
 
 @implementation GSTransactionItem
 
-- (id)init {
+- (instancetype)init
+{
     self = [super init];
 
     if (self) {
@@ -21,7 +22,8 @@
     return self;
 }
 
-+ (GSTransactionItem *)transactionItemWithName:(NSString *)name price:(NSNumber *)price quantity:(NSNumber *)quantity {
++ (GSTransactionItem *)transactionItemWithName:(NSString *)name price:(NSNumber *)price quantity:(NSNumber *)quantity
+{
     GSTransactionItem *item = [[GSTransactionItem alloc] init];
     item.name = name;
     item.price = price;
@@ -30,11 +32,13 @@
     return item;
 }
 
-- (void)setCategory:(NSString *)category {
+- (void)setCategory:(NSString *)category
+{
     self.categories = [NSMutableArray arrayWithObject:category];
 }
 
-- (NSDictionary *)serialize {
+- (NSDictionary *)serialize
+{
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
 
     if (self.name != nil) dict[@"name"] = self.name;

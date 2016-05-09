@@ -27,7 +27,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 @interface GSTracker()
 
-@property (strong) GSPageviewTracker *pageviewTracker;
+@property GSPageviewTracker *pageviewTracker;
 
 @property NSString *personId;
 @property NSString *visitorId;
@@ -42,7 +42,8 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 #pragma mark Public methods
 
-- (GSTracker *)init {
+- (GSTracker *)init
+{
     self = [super init];
 
     if (self) {
@@ -68,18 +69,21 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
     return self;
 }
 
-- (NSString *)trackerVersion {
+- (NSString *)trackerVersion
+{
     return kGSTrackerVersion;
 }
 
 
 #pragma mark Public - Page view tracking
 
-- (void)trackScreen:(NSString *)title {
+- (void)trackScreen:(NSString *)title
+{
     [self trackScreen:title withPath:nil];
 }
 
-- (void)trackScreen:(NSString *)title withPath:(NSString *)path {
+- (void)trackScreen:(NSString *)title withPath:(NSString *)path
+{
     [self verifyCredsAreSet];
 
     // set default title if missing or empty
@@ -113,7 +117,8 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 #pragma mark Public - Event tracking
 
-- (void)trackEvent:(NSString *)name withProperties:(NSDictionary *)properties {
+- (void)trackEvent:(NSString *)name withProperties:(NSDictionary *)properties
+{
     [self verifyCredsAreSet];
 
     NSMutableDictionary *event = [[NSMutableDictionary alloc] init];
@@ -147,18 +152,21 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 #pragma mark Public - Ecommerce tracking
 
-- (void)trackTransaction:(NSString *)transactionID items:(NSArray *)items {
+- (void)trackTransaction:(NSString *)transactionID items:(NSArray *)items
+{
     [self trackTransaction:transactionID items:items properties:nil];
 }
 
-- (void)trackTransaction:(NSString *)transactionID items:(NSArray *)items properties:(NSDictionary *)properties {
+- (void)trackTransaction:(NSString *)transactionID items:(NSArray *)items properties:(NSDictionary *)properties
+{
     GSTransaction *tx = [GSTransaction transactionWithID:transactionID properties:properties];
     [tx addItems:items];
 
     [self trackTransaction:tx];
 }
 
-- (void)trackTransaction:(GSTransaction *)transaction {
+- (void)trackTransaction:(GSTransaction *)transaction
+{
     [self verifyCredsAreSet];
 
     NSDictionary *tx = [transaction serializeWithLastTimestamp:self.lastTransaction];
@@ -185,11 +193,13 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 #pragma mark Public - People Analytics
 
-- (void)identify:(NSString *)userID {
+- (void)identify:(NSString *)userID
+{
     [self identify:userID properties:nil];
 }
 
-- (void)identify:(NSString *)userID properties:(NSDictionary *)properties {
+- (void)identify:(NSString *)userID properties:(NSDictionary *)properties
+{
     [self verifyCredsAreSet];
 
     self.personId = userID;
@@ -217,7 +227,8 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void)unidentify {
+- (void)unidentify
+{
     [self verifyCredsAreSet];
 
     // wipe the current anon ID
@@ -234,7 +245,8 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 #pragma mark Private - Assertion methods
 
-- (void)verifyCredsAreSet {
+- (void)verifyCredsAreSet
+{
     NSAssert((self.token != nil), @"You must call setSiteToken: before any tracking methods");
     NSAssert((self.key != nil), @"You must call setApiKey: before any tracking methods");
 }
@@ -242,7 +254,8 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 #pragma mark Private - UUID methods
 
-- (NSString *)generateUUID:(BOOL)forceRegenerate {
+- (NSString *)generateUUID:(BOOL)forceRegenerate
+{
     // set forceRegenerate to NO to simply pick up the existing UUID
     NSString *uuid = [[NSUserDefaults standardUserDefaults] objectForKey:kGSAnonymousUUIDDefaultsKey];
 
@@ -263,21 +276,24 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 #pragma mark Public - URL path builder methods
 
-- (NSString *)trackingAPIParams {
+- (NSString *)trackingAPIParams
+{
     return [NSString stringWithFormat:@"site_token=%@&api_key=%@", self.token, self.key];
 }
 
 
 #pragma mark Public - HTTP Request methods
 
-- (void)scheduleRequest:(GSRequest *)request {
+- (void)scheduleRequest:(GSRequest *)request
+{
     // NOTE - this is where we'll make the requests durable later to enable offline event sync - not currently working.
 
     [request setLogLevel:self.logLevel];
     [request send];
 }
 
-- (void)sendRequest:(GSRequest *)request completionHandler:(GSRequestCompletionBlock)completionHandler {
+- (void)sendRequest:(GSRequest *)request completionHandler:(GSRequestCompletionBlock)completionHandler
+{
     [request setLogLevel:self.logLevel];
     [request sendWithCompletionHandler:completionHandler];
 }

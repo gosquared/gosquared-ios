@@ -11,13 +11,13 @@
 
 @interface GSTransactionItem : NSObject
 
-@property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSMutableArray *categories;
-@property (strong, nonatomic) NSNumber *revenue;
-@property (strong, nonatomic) NSNumber *quantity;
-@property (strong, nonatomic) NSNumber *price;
+@property NSString *name;
+@property NSMutableArray *categories;
+@property NSNumber *revenue;
+@property NSNumber *quantity;
+@property NSNumber *price;
 
-+ (GSTransactionItem *)transactionItemWithName:(NSString *)name price:(NSNumber *)price quantity:(NSNumber *)quantity;
++ (instancetype)transactionItemWithName:(NSString *)name price:(NSNumber *)price quantity:(NSNumber *)quantity;
 
 - (void)setCategory:(NSString *)category;
 

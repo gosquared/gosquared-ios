@@ -11,15 +11,15 @@
 
 @interface GSDevice : NSObject
 
-@property NSString *udid;
-@property NSNumber *screenHeight;
-@property NSNumber *screenWidth;
-@property NSNumber *screenPixelRatio;
-@property NSNumber *colorDepth;
-@property NSNumber *timezoneOffset;
-@property NSString *isoLanguage;
-@property NSString *userAgent;
+@property (nonnull) NSString *udid;
+@property (nonnull) NSNumber *screenHeight;
+@property (nonnull) NSNumber *screenWidth;
+@property (nonnull) NSNumber *screenPixelRatio;
+@property (nonnull) NSNumber *colorDepth;
+@property (nonnull) NSNumber *timezoneOffset;
+@property (nonnull) NSString *isoLanguage;
+@property (nonnull) NSString *userAgent;
 
-+ (GSDevice *)currentDevice;
++ (nonnull instancetype)currentDevice;
 
 @end

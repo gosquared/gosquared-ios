@@ -28,7 +28,8 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
 
 @implementation GSRequest
 
-+ (void)addRequestRetain:(GSRequest *)req {
++ (void)addRequestRetain:(GSRequest *)req
+{
     if (!GSRequestsInProgress) {
         GSRequestsInProgress = [[NSMutableArray alloc] init];
     }
@@ -36,13 +37,15 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
     [GSRequestsInProgress addObject:req];
 }
 
-+ (void)clearRequestRetain:(GSRequest *)req {
++ (void)clearRequestRetain:(GSRequest *)req
+{
     if (GSRequestsInProgress) {
         [GSRequestsInProgress removeObject:req];
     }
 }
 
-+ (instancetype)requestWithMethod:(GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body {
++ (instancetype)requestWithMethod:(GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body
+{
     GSRequest *request = [[GSRequest alloc] init];
 
     if (request) {
@@ -54,13 +57,15 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
     return request;
 }
 
-- (NSString *)description {
+- (NSString *)description
+{
     NSString *methodStr = [self methodString];
 
     return [NSString stringWithFormat:@"GSRequest: %p\nMethod: %@\nURL: %@\nBody: %@", self, methodStr, self.url, self.body];
 }
 
-- (NSString *)methodString {
+- (NSString *)methodString
+{
     switch (self.method) {
         case GSRequestMethodPUT:
             return @"PUT";
@@ -73,7 +78,8 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
     }
 }
 
-- (NSURLRequest *)URLRequest {
+- (NSURLRequest *)URLRequest
+{
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.url
                                                            cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                                        timeoutInterval:kGSRequestDefaultTimeout];
@@ -96,7 +102,8 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
     return request;
 }
 
-- (void)send {
+- (void)send
+{
     [self sendWithCompletionHandler:nil];
 }
 
