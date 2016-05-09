@@ -34,12 +34,11 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 @property (readwrite) BOOL identified;
 
+@property NSNumber *lastTransaction;
+
 @end
 
-@implementation GSTracker {
-    NSNumber *lastTransaction;
-}
-
+@implementation GSTracker
 
 #pragma mark Public methods
 
@@ -60,9 +59,9 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
             self.identified = true;
         }
 
-        lastTransaction = [[NSUserDefaults standardUserDefaults] objectForKey:kGSTransactionLastTimestamp];
-        if (!lastTransaction) {
-            lastTransaction = @0;
+        self.lastTransaction = [[NSUserDefaults standardUserDefaults] objectForKey:kGSTransactionLastTimestamp];
+        if (!self.lastTransaction) {
+            self.lastTransaction = @0;
         }
     }
 
@@ -194,7 +193,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 - (void)trackTransaction:(GSTransaction *)transaction {
     [self verifyCredsAreSet];
 
-    NSDictionary *tx = [transaction serializeWithLastTimestamp:lastTransaction];
+    NSDictionary *tx = [transaction serializeWithLastTimestamp:self.lastTransaction];
 
     NSString *path = [NSString stringWithFormat: @"/tracking/v1/transaction?%@", self.trackingAPIParams];
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
@@ -208,11 +207,11 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
     body[@"ip"] = @"detect";
 
-    lastTransaction = [NSNumber numberWithLong:(long)[NSDate new].timeIntervalSince1970];
-    [[NSUserDefaults standardUserDefaults] setObject:lastTransaction forKey:kGSTransactionLastTimestamp];
+    self.lastTransaction = [NSNumber numberWithLong:(long)[NSDate new].timeIntervalSince1970];
+    [[NSUserDefaults standardUserDefaults] setObject:self.lastTransaction forKey:kGSTransactionLastTimestamp];
 
-    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
-    [self scheduleRequest:r];
+    GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
+    [self scheduleRequest:req];
 }
 
 
@@ -310,7 +309,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
     [request send];
 }
 
-- (void)sendRequest:(GSRequest *)request completionHandler:(void (^)(NSDictionary *data, NSError *error))completionHandler {
+- (void)sendRequest:(GSRequest *)request completionHandler:(GSRequestCompletionBlock)completionHandler {
     [request setLogLevel:self.logLevel];
     [request sendWithCompletionHandler:completionHandler];
 }
