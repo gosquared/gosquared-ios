@@ -111,8 +111,12 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
             return;
         }
 
-        if (error || !data) {
-            return completionHandler(NO, data);
+        if (error) {
+            return completionHandler(nil, error);
+        }
+
+        if (!data) {
+            return completionHandler(nil, [NSError errorWithDomain:@"com.gosquared" code:-1 userInfo:nil]);
         }
 
         NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
