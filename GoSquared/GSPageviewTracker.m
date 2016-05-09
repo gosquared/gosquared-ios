@@ -118,8 +118,9 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
 
 - (void)startTimer
 {
-    self.timer = [NSTimer timerWithTimeInterval:kGSPageviewTrackerDefaultPingInterval target:self selector:@selector(ping) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:kGSPageviewTrackerDefaultPingInterval target:self selector:@selector(ping) userInfo:nil repeats:YES];
+    });
 }
 
 - (void)invalidate
