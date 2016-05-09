@@ -201,7 +201,7 @@ static NSString * const kGSPageviewLastTimestamp = @"com.gosquared.pageview.last
 
     // use GCD barrier to force queuing of requests
     dispatch_barrier_async(GSPageviewTrackerQueue(), ^{
-        
+
         NSDictionary *body = [self generateBodyForPing:NO];
         NSString *path = [NSString stringWithFormat:@"/tracking/v1/pageview?%@", self.tracker.trackingAPIParams];
 
