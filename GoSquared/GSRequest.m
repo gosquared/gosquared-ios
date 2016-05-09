@@ -127,7 +127,7 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
         }
 
         NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
-        BOOL success = (HTTPResponse.statusCode > 200 && HTTPResponse.statusCode < 400);
+        BOOL success = (HTTPResponse.statusCode >= 200 && HTTPResponse.statusCode < 400);
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
 
         if (error != nil) {
