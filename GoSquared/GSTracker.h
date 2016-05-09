@@ -16,11 +16,12 @@
 @property (nonnull) NSString *token;
 @property (nonnull) NSString *key;
 
+@property BOOL shouldTrackInBackground;
+@property GSLogLevel logLevel;
+
 @property (readonly, nonnull) NSString *visitorId;
 @property (readonly, nullable) NSString *personId;
 @property (readonly, getter=isIdentified) BOOL identified;
-
-@property GSLogLevel logLevel;
 
 @property (readonly, nonnull) NSString *trackerVersion;
 

@@ -131,7 +131,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
                                                                                 }];
 
     if (self.pageviewTracker != nil) {
-        body[@"page"] = @{ @"index": [self.pageviewTracker pageIndex] };
+        body[@"page"] = @{ @"index": self.pageviewTracker.pageIndex };
     }
 
     if (self.personId != nil) {
