@@ -7,13 +7,11 @@
 //  Copyright (c) 2015-2016 Go Squared Ltd. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 #import "GSTransaction.h"
 #import "GSTransactionItem.h"
-#import "GSTrackerEvent.h"
 #import "GSTracker.h"
-#import "GSRequest.h"
 
 @interface GoSquared : NSObject
 

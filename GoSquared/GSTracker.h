@@ -20,7 +20,7 @@
 @property (readonly, nullable) NSString *personId;
 @property (readonly, getter=isIdentified) BOOL identified;
 
-@property GSRequestLogLevel logLevel;
+@property GSLogLevel logLevel;
 
 @property (readonly, nonnull) NSString *trackerVersion;
 

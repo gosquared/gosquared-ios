@@ -52,7 +52,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
         self.visitorId = [self generateUUID:NO];
 
         // set default log level
-        self.logLevel = GSRequestLogLevelQuiet;
+        self.logLevel = GSLogLevelQuiet;
 
         // grab a saved People user ID if one is saved
         NSString *identifiedPersonID = [[NSUserDefaults standardUserDefaults] objectForKey:kGSIdentifiedUUIDDefaultsKey];

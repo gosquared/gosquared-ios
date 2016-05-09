@@ -9,6 +9,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GSLogLevel.h"
+
 typedef NS_ENUM(NSInteger, GSRequestMethod) {
     GSRequestMethodGET,
     GSRequestMethodPUT,
@@ -16,18 +18,12 @@ typedef NS_ENUM(NSInteger, GSRequestMethod) {
     GSRequestMethodDELETE
 };
 
-typedef NS_ENUM(NSInteger, GSRequestLogLevel) {
-    GSRequestLogLevelSilent,
-    GSRequestLogLevelQuiet,
-    GSRequestLogLevelDebug
-};
-
 typedef void (^GSRequestCompletionBlock)(NSDictionary  * _Nullable data, NSError * _Nullable error);
 
 
 @interface GSRequest : NSObject
 
-@property GSRequestLogLevel logLevel;
+@property GSLogLevel logLevel;
 
 + (nonnull instancetype)requestWithMethod:(GSRequestMethod)method path:(nonnull NSString *)path body:(nullable NSDictionary *)body;
 

@@ -49,7 +49,7 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
     GSRequest *request = [[GSRequest alloc] init];
 
     if (request) {
-        request.logLevel = GSRequestLogLevelQuiet;
+        request.logLevel = GSLogLevelQuiet;
         request.method = method;
         request.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kGSAPIBase, path]];
         request.body = body;
@@ -139,9 +139,9 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
         }
     }];
 
-    if (self.logLevel == GSRequestLogLevelDebug) {
+    if (self.logLevel == GSLogLevelDebug) {
         NSLog(@"GSRequest::send - %@", self);
-    } else if (self.logLevel == GSRequestLogLevelQuiet) {
+    } else if (self.logLevel == GSLogLevelQuiet) {
         NSLog(@"GSRequest sending data");
     }
 
