@@ -111,34 +111,6 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 }
 
 
-- (void)trackViewController:(UIViewController *)vc {
-    NSString *title = vc.title;
-
-    if (title == nil) {
-        if(vc.navigationItem.title != nil) {
-            title = vc.navigationItem.title;
-        } else if (vc.navigationController.title != nil) {
-            title = vc.navigationController.title;
-        }
-    }
-
-    [self trackViewController:vc withTitle:title];
-}
-
-- (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title {
-    NSString *fakeURL = [NSString stringWithFormat:@"%@://%@", [[NSBundle mainBundle] bundleIdentifier], [title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    [self trackViewController:vc withTitle:title urlPath:fakeURL];
-}
-
-- (void)trackViewController:(UIViewController *)vc withTitle:(NSString *)title urlPath:(NSString *)urlPath {
-    if(self.pageviewTracker == nil) {
-        self.pageviewTracker = [[GSPageviewTracker alloc] initWithTracker: self];
-    }
-
-    [self.pageviewTracker startWithURLString:urlPath title:title];
-}
-
-
 #pragma mark Public - Event tracking
 
 - (void)trackEvent:(GSTrackerEvent *)event {
