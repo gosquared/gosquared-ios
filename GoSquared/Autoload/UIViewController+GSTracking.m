@@ -21,11 +21,10 @@ static char const * const kGSTrackingTitleViewControllerTag = "kGSTrackingTitleV
 
 static IMP viewDidAppear_Imp;
 
-void _gs__viewDidAppear(id self, SEL _cmd, bool animated) {
-
+void _gs__viewDidAppear(id self, SEL _cmd, bool animated)
+{
     // call original viewDidAppear:
     ((void(*)(id,SEL,bool))viewDidAppear_Imp)(self, _cmd, animated);
-
 
     // don't track navigation controllers
     if ([self isKindOfClass:[UINavigationController class]]) return;
@@ -38,7 +37,7 @@ void _gs__viewDidAppear(id self, SEL _cmd, bool animated) {
 
     // adhere to the doNotTrack property
     if ([self doNotTrack] == YES) return;
-    
+
 
     NSString *title = ((UIViewController *)self).title;
     NSString *trackingTitle = [self trackingTitle];
@@ -47,13 +46,14 @@ void _gs__viewDidAppear(id self, SEL _cmd, bool animated) {
         title = trackingTitle;
     }
 
-    [[GoSquared sharedTracker] trackScreen: title];
+    [[GoSquared sharedTracker] trackScreen:title];
 }
 
 
 @implementation UIViewController (GSTracking)
 
-+ (void)load {
++ (void)load
+{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         Method original = class_getInstanceMethod([self class], @selector(viewDidAppear:));
@@ -65,12 +65,14 @@ void _gs__viewDidAppear(id self, SEL _cmd, bool animated) {
 #pragma mark - Associated objects
 
 // allows you to not track a particular ViewController
-- (void)setDoNotTrack:(BOOL)doNotTrack {
+- (void)setDoNotTrack:(BOOL)doNotTrack
+{
     NSNumber *number = [NSNumber numberWithBool:doNotTrack];
     objc_setAssociatedObject(self, kGSDoNotTrackViewControllerTag, number, OBJC_ASSOCIATION_RETAIN);
 }
 
-- (BOOL)doNotTrack {
+- (BOOL)doNotTrack
+{
     NSNumber *number = objc_getAssociatedObject(self, kGSDoNotTrackViewControllerTag);
 
     if (number == nil) return NO;
@@ -79,14 +81,14 @@ void _gs__viewDidAppear(id self, SEL _cmd, bool animated) {
 }
 
 // allows you to override the title in ViewController.title
-- (void)setTrackingTitle:(NSString *)trackingTitle {
+- (void)setTrackingTitle:(NSString *)trackingTitle
+{
     objc_setAssociatedObject(self, kGSTrackingTitleViewControllerTag, trackingTitle, OBJC_ASSOCIATION_RETAIN);
 }
 
-- (NSString *)trackingTitle {
-    NSString *trackingTitle = objc_getAssociatedObject(self, kGSTrackingTitleViewControllerTag);
-
-    return trackingTitle;
+- (NSString *)trackingTitle
+{
+    return objc_getAssociatedObject(self, kGSTrackingTitleViewControllerTag);
 }
 
 @end
