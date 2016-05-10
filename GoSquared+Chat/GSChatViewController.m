@@ -324,10 +324,6 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
 
 - (void)openConnection
 {
-    if (!self.tracker.identified) {
-        return NSLog(@"You must identify a person before calling `openConnnection`");
-    }
-
     [self.chatManager setConfigWithTracker:self.tracker];
 
     [self.chatManager openWebSocket];

@@ -49,8 +49,8 @@
 
 - (void)setConstraints
 {
-    [self.titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.subTitleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.subTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
 
     NSDictionary *metrics = @{ @"v_spacer": @2 };
     NSDictionary *views = @{ @"view": self, @"title": self.titleLabel, @"subtitle": self.subTitleLabel };

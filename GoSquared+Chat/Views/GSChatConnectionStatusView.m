@@ -21,9 +21,10 @@
 {
     if (self = [super initWithFrame:frame]) {
         self.statusLabel = [[UILabel alloc] initWithFrame:self.frame];
-        [self.statusLabel setTextAlignment:NSTextAlignmentCenter];
-        [self.statusLabel setTextColor:[UIColor whiteColor]];
-        [self.statusLabel setFont:[UIFont preferredFontForTextStyle:UIFontTextStyleCallout]];
+        self.statusLabel.textAlignment = NSTextAlignmentCenter;
+        self.statusLabel.textColor = [UIColor whiteColor];
+        self.statusLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCallout];
+        self.statusLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
         [self addSubview:self.statusLabel];
         [self didChageConnectionStatus:GSChatConnectionStatusLoading];

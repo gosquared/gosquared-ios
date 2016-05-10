@@ -43,11 +43,6 @@ pod 'GoSquared/Autoload', :git => 'git@github.com:gosquared/gosquared-ios-chat.g
     
     // this opens the connection for chat, showing the user as online, and 
     // loading messages they missed while the app was closed
-    //
-    // NOTE: this should only be run after a user has been identified with the
-    //       `identify:properties:` method on `sharedTracker`
-    //       you can check that the user is identified using the `identify`
-    //       method on `sharedTracker`
     [[GoSquared sharedChatViewController] openConnection];
 
     return YES;
@@ -79,11 +74,6 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     
     // this opens the connection for chat, showing the user as online, and 
     // loading messages they missed while the app was closed
-    //
-    // NOTE: this should only be run after a user has been identified with the
-    //       `identify:properties:` method on `sharedTracker`
-    //       you can check that the user is identified using the `identify`
-    //       method on `sharedTracker`
     GoSquared.sharedChatViewController().openConnection()
 
     return true
