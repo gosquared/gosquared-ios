@@ -230,6 +230,13 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
     return YES;
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+
+    self.connectionIndicator.frame = CGRectMake(0, self.collectionView.contentInset.top - 38 - 4, self.view.frame.size.width, 38);
+}
+
 - (void)updateTableViewWithBlock:(void (^)())block
 {
     if (self.hasEverBeenOpened) {
