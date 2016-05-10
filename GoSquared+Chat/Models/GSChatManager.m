@@ -117,22 +117,13 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
 
 - (void)didIdentifyPerson
 {
-//    BOOL shouldReopenWebsocket = self.isOpen;
-
     [self identifyChatWithPersonId:self.tracker.personId signature:self.tracker.signature completionHandler:^(NSError *error) {
         if (error != nil) {
             return;
         }
 
-        //    [self closeWebSocket];
-
         self.configPerson = self.tracker.personId;
         self.configSignature = self.tracker.signature;
-
-        //    if (shouldReopenWebsocket) {
-        //        [self openWebSocket];
-        //    }
-
     }];
 }
 
