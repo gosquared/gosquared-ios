@@ -39,7 +39,6 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
 
 // UI / Subviews
 @property (nonatomic, readwrite) UIView *inputAccessoryView;
-@property (nonatomic) GSChatTitleView *titleView;
 @property (nonatomic) GSChatConnectionStatusView *connectionIndicator;
 @property UIActivityIndicatorView *spinner;
 @property (readonly) UIView *iceBreakerView;
@@ -140,8 +139,6 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
     self.collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     self.collectionView.scrollEnabled = YES;
     self.collectionView.alwaysBounceVertical = YES;
-
-    self.navigationItem.titleView = self.titleView;
 }
 
 - (BOOL)shouldAutorotate
@@ -158,19 +155,6 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
         _inputAccessoryView = composeView;
     }
     return _inputAccessoryView;
-}
-
-- (GSChatTitleView *)titleView
-{
-    if (!_titleView) {
-        _titleView = [[GSChatTitleView alloc] initWithFrame:CGRectZero];
-    }
-    return _titleView;
-}
-
-- (void)setTitleColor:(UIColor *)color
-{
-    self.titleView.titleColor = color;
 }
 
 - (UIView *)iceBreakerView
@@ -220,14 +204,16 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
     return message.sender == GSChatSenderClient;
 }
 
-- (void)setTitle:(NSString *)title
-{
-    self.titleView.title = title;
-}
-
 - (BOOL)canBecomeFirstResponder
 {
     return YES;
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+
+    self.connectionIndicator.frame = CGRectMake(0, self.collectionView.contentInset.top - 38 - 4, self.view.frame.size.width, 38);
 }
 
 - (void)updateTableViewWithBlock:(void (^)())block

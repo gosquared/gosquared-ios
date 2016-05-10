@@ -25,6 +25,5 @@ NS_ASSUME_NONNULL_END
 - (void)didRequestContextForMessageCell:(nonnull GSChatBubbleCell *)cell;
 - (void)openConnection;
 - (void)closeConnection;
-- (void)setTitleColor:(nonnull UIColor *)color;
 
 @end
