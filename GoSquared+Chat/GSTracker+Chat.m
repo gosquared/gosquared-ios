@@ -35,10 +35,10 @@ NSString * const userSignature = @"com.gosqured.chat.signature";
 
     if (sig == nil) {
         NSData *secret = [self.secret dataUsingEncoding:NSUTF8StringEncoding];
-        NSData *personId = [self.personId dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *person = [self.personId dataUsingEncoding:NSUTF8StringEncoding];
         NSMutableData* hash = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH];
 
-        CCHmac(kCCHmacAlgSHA256, secret.bytes, secret.length, personId.bytes, personId.length, hash.mutableBytes);
+        CCHmac(kCCHmacAlgSHA256, secret.bytes, secret.length, person.bytes, person.length, hash.mutableBytes);
 
         sig = [GSTracker hexStringWithData:hash];
     }

@@ -22,7 +22,9 @@
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
     navController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 
-    [self presentViewController:navController animated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self presentViewController:navController animated:YES completion:nil];
+    });
 }
 
 @end

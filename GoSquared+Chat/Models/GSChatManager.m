@@ -8,13 +8,25 @@
 
 #import "GSChatManager.h"
 #import "GSChatMessage.h"
+#import "GSTrackerDelegate.h"
+#import "GSRequest.h"
 
 const int kGSChatMessageLimit = 20;
 
 NSString * const kGSChatWebsocketURL             = @"https://api.gosquared.com/chat/v1/stream?site_token=%@&person_id=%@&auth=%@";
+NSString * const kGSChatAnonymousIdURL           = @"/chat/v1/clientAuth?site_token=%@&client_id=%@";
+NSString * const kGSChatAnonymousClaimURL        = @"/chat/v1/clientAuth?site_token=%@&person_id=%@&auth=%@";
 NSString * const kGSChatMessagesURL              = @"https://api.gosquared.com/chat/v1/chats/%@/messages?site_token=%@&person_id=%@&auth=%@&limit=%d";
 NSString * const kGSChatMessagesToTimestampURL   = @"https://api.gosquared.com/chat/v1/chats/%@/messages?site_token=%@&person_id=%@&auth=%@&limit=%d&to=%lu";
 NSString * const kGSChatMessagesFromTimestampURL = @"https://api.gosquared.com/chat/v1/chats/%@/messages?site_token=%@&person_id=%@&auth=%@&limit=%d&from=%lu";
+
+
+@interface GSTracker ()
+
+@property (weak) id<GSTrackerDelegate> delegate;
+
+@end
+
 
 const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj1, GSChatMessage *obj2) {
     if (obj1.timestamp == 0 && obj2.timestamp == 0) {
@@ -28,18 +40,16 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
     }
 };
 
-@interface GSChatManager ()
+@interface GSChatManager () <GSTrackerDelegate>
 
+@property (nonnull) GSTracker *tracker;
 @property (nullable) NSString *configPerson;
-@property (nullable) NSString *configToken;
 @property (nullable) NSString *configSignature;
 
-@property GSLogLevel logLevel;
-
 @property (nullable) SRWebSocket *webSocket;
-@property (nonnull) NSURLSession *URLSession;
-@property (nonnull) NSMutableArray *messages;
-@property (nonnull) NSMutableArray *pendingMessages;
+@property (nonnull)  NSURLSession *URLSession;
+@property (nonnull)  NSMutableArray *messages;
+@property (nonnull)  NSMutableArray *pendingMessages;
 @property (nullable) NSTimer *retryTimer;
 
 @property int nextMessageId;
@@ -87,10 +97,50 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
 
 - (void)setConfigWithTracker:(GSTracker *)tracker
 {
-    self.configToken = tracker.token;
+    self.tracker = tracker;
     self.configPerson = tracker.personId;
-    self.configSignature = [tracker signature];
-    self.logLevel = tracker.logLevel;
+    self.configSignature = tracker.signature;
+
+    self.tracker.delegate = self;
+}
+
+- (BOOL)needsAnonymousId
+{
+    if (self.configPerson == nil) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+# pragma mark GSTrackerDelegate Methods
+
+- (void)didIdentifyPerson
+{
+//    BOOL shouldReopenWebsocket = self.isOpen;
+
+    [self identifyChatWithPersonId:self.tracker.personId signature:self.tracker.signature completionHandler:^(NSError *error) {
+        if (error != nil) {
+            return;
+        }
+
+        //    [self closeWebSocket];
+
+        self.configPerson = self.tracker.personId;
+        self.configSignature = self.tracker.signature;
+
+        //    if (shouldReopenWebsocket) {
+        //        [self openWebSocket];
+        //    }
+
+    }];
+}
+
+- (void)didUnidentifyPerson
+{
+    [self closeWebSocket];
+    self.configPerson = nil;
+    self.configSignature = nil;
 }
 
 
@@ -99,19 +149,34 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
 - (void)openWebSocket
 {
     if (self.webSocket) {
-        if (self.logLevel == GSLogLevelDebug) {
+        if (self.tracker.logLevel == GSLogLevelDebug) {
             NSLog(@"GSChat - WebSocket already open — cancelling");
         }
         return;
     }
 
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:kGSChatWebsocketURL, self.configToken, self.configPerson, self.configSignature]];
+    if (self.needsAnonymousId) {
+        [self registerAnonymousIdWithVisitorId:self.tracker.visitorId completionHandler:^(NSString *signature, NSError *error) {
+            if (error != nil) {
+                return;
+            }
+
+            self.configPerson = self.tracker.visitorId;
+            self.configSignature = signature;
+
+            // open websocket with new config
+            [self openWebSocket];
+        }];
+        return;
+    }
+
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:kGSChatWebsocketURL, self.tracker.token, self.configPerson, self.configSignature]];
 
     NSURLSessionDataTask *webSocketTask = [self.URLSession dataTaskWithURL:URL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
             [self.delegate managerDidFailToConnect];
 
-            if (self.logLevel == GSLogLevelQuiet) {
+            if (self.tracker.logLevel == GSLogLevelQuiet) {
                 NSLog(@"GSChat - Error getting WebSocket URL: %@", error);
             }
             return;
@@ -120,7 +185,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
         if (!data) {
             [self.delegate managerDidFailToConnect];
 
-            if (self.logLevel == GSLogLevelQuiet) {
+            if (self.tracker.logLevel == GSLogLevelQuiet) {
                 NSLog(@"GSChat - Error getting WebSocket URL: Empty response");
             }
             return;
@@ -132,7 +197,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
         if (err) {
             [self.delegate managerDidFailToConnect];
 
-            if (self.logLevel == GSLogLevelQuiet) {
+            if (self.tracker.logLevel == GSLogLevelQuiet) {
                 NSLog(@"GSChat - Error getting WebSocket URL: %@", err);
             }
             return;
@@ -143,7 +208,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
         if (webSocketURL == nil) {
             [self.delegate managerDidFailToConnect];
 
-            if (self.logLevel == GSLogLevelQuiet) {
+            if (self.tracker.logLevel == GSLogLevelQuiet) {
                 NSString *errorMessage = json[@"message"];
                 if (errorMessage == nil) {
                     errorMessage = @"Server didn't return URL";
@@ -158,7 +223,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
         [self openWebSocketWithURL:webSocketURL];
     }];
 
-    if (self.logLevel == GSLogLevelDebug) {
+    if (self.tracker.logLevel == GSLogLevelDebug) {
         NSLog(@"GSChat - Attempting to retreive WebSocket URL from: %@", URL);
     }
 
@@ -168,7 +233,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
 - (void)openWebSocketWithURL:(NSURL *)URL
 {
     if (self.webSocket) {
-        if (self.logLevel == GSLogLevelDebug) {
+        if (self.tracker.logLevel == GSLogLevelDebug) {
             NSLog(@"GSChat - WebSocket already open — cancelling");
         }
         return;
@@ -177,7 +242,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
     self.webSocket = [[SRWebSocket alloc] initWithURL:URL];
     [self.webSocket setDelegate:self];
 
-    if (self.logLevel == GSLogLevelDebug) {
+    if (self.tracker.logLevel == GSLogLevelDebug) {
         NSLog(@"GSChat - Attempting to connect to WebSocket at URL: %@", URL);
     }
 
@@ -192,6 +257,48 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
     self.isConnected = NO;
 }
 
+- (void)registerAnonymousIdWithVisitorId:(NSString *)visitorId completionHandler:(void (^)(NSString *signature, NSError *error))completionHandler
+{
+    GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodGET
+                                             path:[NSString stringWithFormat:kGSChatAnonymousIdURL, self.tracker.token, visitorId]
+                                             body:nil];
+
+    [req sendWithCompletionHandler:^(NSDictionary *data, NSError *error) {
+        if (error != nil) {
+            return completionHandler(nil, error);
+        }
+
+        if (data == nil) {
+            return completionHandler(nil, [NSError errorWithDomain:@"com.gosquared" code:-1 userInfo:nil]);
+        }
+
+        NSString *signature = data[@"token"];
+        if (signature == nil) {
+            return completionHandler(nil, [NSError errorWithDomain:@"com.gosquared" code:-1 userInfo:data]);
+        }
+
+        return completionHandler(signature, nil);
+    }];
+}
+
+- (void)identifyChatWithPersonId:(NSString *)personId signature:(NSString *)signature completionHandler:(void (^)(NSError *error))completionHandler
+{
+    GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST
+                                             path:[NSString stringWithFormat:kGSChatAnonymousClaimURL, self.tracker.token, personId, signature]
+                                             body:@{
+                                                    @"client_id": self.configPerson,
+                                                    @"token": self.configSignature
+                                                    }];
+
+    [req sendWithCompletionHandler:^(NSDictionary *data, NSError *error) {
+        if (error != nil) {
+            return completionHandler(error);
+        }
+
+        completionHandler(nil);
+    }];
+}
+
 - (void)loadMessageHistory
 {
     if (self.isLoadingMessages) return;
@@ -199,10 +306,10 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
     NSString *URLString;
 
     if (self.messages.count == 0) {
-        URLString = [NSString stringWithFormat:kGSChatMessagesURL, self.configPerson, self.configToken, self.configPerson, self.configSignature, kGSChatMessageLimit];
+        URLString = [NSString stringWithFormat:kGSChatMessagesURL, self.configPerson, self.tracker.token, self.configPerson, self.configSignature, kGSChatMessageLimit];
     } else {
         NSInteger timestamp = [(GSChatMessage *)self.messages.firstObject timestamp];
-        URLString = [NSString stringWithFormat:kGSChatMessagesToTimestampURL, self.configPerson, self.configToken, self.configPerson, self.configSignature, kGSChatMessageLimit, (long)timestamp];
+        URLString = [NSString stringWithFormat:kGSChatMessagesToTimestampURL, self.configPerson, self.tracker.token, self.configPerson, self.configSignature, kGSChatMessageLimit, (long)timestamp];
     }
 
     NSURL *URL = [NSURL URLWithString:URLString];
@@ -214,7 +321,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
     if (self.isLoadingMessages) return;
 
     NSInteger timestamp = [(GSChatMessage *)self.messages.firstObject timestamp];
-    NSString *URLString = [NSString stringWithFormat:kGSChatMessagesFromTimestampURL, self.configPerson, self.configToken, self.configPerson, self.configSignature, kGSChatMessageLimit, (long)timestamp];
+    NSString *URLString = [NSString stringWithFormat:kGSChatMessagesFromTimestampURL, self.configPerson, self.tracker.token, self.configPerson, self.configSignature, kGSChatMessageLimit, (long)timestamp];
     NSURL *URL = [NSURL URLWithString:URLString];
 
     [self loadMessageHistoryWithURL:URL];
@@ -238,7 +345,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
         if (error) {
             [self.delegate didAddMessagesInRange:NSMakeRange(NSNotFound, NSNotFound) reachedEnd:self.hasReachedEnd];
 
-            if (self.logLevel == GSLogLevelQuiet) {
+            if (self.tracker.logLevel == GSLogLevelQuiet) {
                 NSLog(@"GSChat - Error getting messages: %@", error);
             }
             return;
@@ -247,7 +354,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
         if (!data) {
             [self.delegate didAddMessagesInRange:NSMakeRange(NSNotFound, NSNotFound) reachedEnd:self.hasReachedEnd];
 
-            if (self.logLevel == GSLogLevelQuiet) {
+            if (self.tracker.logLevel == GSLogLevelQuiet) {
                 NSLog(@"GSChat - Error getting messages: Empty repsonse");
             }
             return;
@@ -259,7 +366,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
         if (err) {
             [self.delegate didAddMessagesInRange:NSMakeRange(NSNotFound, NSNotFound) reachedEnd:self.hasReachedEnd];
 
-            if (self.logLevel == GSLogLevelQuiet) {
+            if (self.tracker.logLevel == GSLogLevelQuiet) {
                 NSLog(@"GSChat - Error getting messages: %@", err);
             }
             return;
@@ -294,7 +401,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
         [self checkUnread];
     }];
 
-    if (self.logLevel == GSLogLevelDebug) {
+    if (self.tracker.logLevel == GSLogLevelDebug) {
         NSLog(@"GSChat - Attempting to load message history with URL: %@", URL);
     }
 
@@ -328,7 +435,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
 
 - (void)deleteMessage:(GSChatMessage *)message
 {
-    if (self.logLevel == GSLogLevelDebug) {
+    if (self.tracker.logLevel == GSLogLevelDebug) {
         NSLog(@"GSChat - Deleting message: %@", message);
     }
 
@@ -377,7 +484,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
 {
     [self.pendingMessages removeObject:payload];
 
-    if (self.logLevel == GSLogLevelDebug) {
+    if (self.tracker.logLevel == GSLogLevelDebug) {
         NSLog(@"GSChat - Attempting to send: %@", payload);
     }
 
@@ -518,7 +625,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
 
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
 {
-    if (self.logLevel == GSLogLevelDebug) {
+    if (self.tracker.logLevel == GSLogLevelDebug) {
         NSLog(@"GSChat - WebSocket message received: %@", message);
     }
 
@@ -534,7 +641,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
     } else if ([json[@"type"] isEqualToString:@"session"]) {
         return [self handleSession:json];
     } else {
-        if (self.logLevel == GSLogLevelDebug) {
+        if (self.tracker.logLevel == GSLogLevelDebug) {
             NSLog(@"GSChat - WebSocket message type not handled: %@", json[@"type"]);
         }
         return;
@@ -543,7 +650,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
 
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket
 {
-    if (self.logLevel == GSLogLevelDebug) {
+    if (self.tracker.logLevel == GSLogLevelDebug) {
         NSLog(@"GSChat - WebSocket opened");
     }
 
@@ -561,7 +668,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
 {
-    if (self.logLevel == GSLogLevelDebug) {
+    if (self.tracker.logLevel == GSLogLevelDebug) {
         NSLog(@"GSChat - WebSocket error: %@", error);
     }
 
@@ -575,7 +682,7 @@ const NSComparator kTimestampComparator = ^NSComparisonResult(GSChatMessage *obj
 
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean
 {
-    if (self.logLevel == GSLogLevelDebug) {
+    if (self.tracker.logLevel == GSLogLevelDebug) {
         NSLog(@"GSChat - WebSocket closed: %@", reason);
     }
 

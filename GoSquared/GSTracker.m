@@ -9,8 +9,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "GSDevice.h"
 #import "GSTracker.h"
+#import "GSTrackerDelegate.h"
+#import "GSDevice.h"
 #import "GSRequest.h"
 #import "GSTrackerEvent.h"
 #import "GSTransaction.h"
@@ -29,6 +30,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 @interface GSTracker()
 
 @property GSPageviewTracker *pageviewTracker;
+@property (weak) id<GSTrackerDelegate> delegate;
 
 @property NSString *personId;
 @property NSString *visitorId;
@@ -223,6 +225,10 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
     self.identified = true;
 
+    if (self.delegate != nil) {
+        [self.delegate didIdentifyPerson];
+    }
+
     // save the identified People user id for later app launches
     [[NSUserDefaults standardUserDefaults] setObject:self.personId forKey:kGSIdentifiedUUIDDefaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -239,6 +245,10 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
     self.personId = nil;
 
     self.identified = false;
+
+    if (self.delegate != nil) {
+        [self.delegate didUnidentifyPerson];
+    }
 
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kGSIdentifiedUUIDDefaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
