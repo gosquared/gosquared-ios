@@ -26,6 +26,7 @@ typedef void (^GSRequestCompletionBlock)(NSDictionary  * _Nullable data, NSError
 @property GSLogLevel logLevel;
 
 + (nonnull instancetype)requestWithMethod:(GSRequestMethod)method path:(nonnull NSString *)path body:(nullable NSDictionary *)body;
++ (nonnull instancetype)requestWithMethod:(GSRequestMethod)method URL:(nonnull NSString *)URL body:(nullable NSDictionary *)body;
 
 - (void)send;
 - (void)sendWithCompletionHandler:(nullable GSRequestCompletionBlock)completionHandler;
