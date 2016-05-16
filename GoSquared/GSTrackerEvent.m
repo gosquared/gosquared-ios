@@ -11,29 +11,42 @@
 
 @implementation GSTrackerEvent
 
-+ (GSTrackerEvent *)eventWithName:(NSString *)name
++ (GSTrackerEvent *)eventWithName:(NSString *)name properties:(NSDictionary *)properties
 {
-    GSTrackerEvent *e = [[GSTrackerEvent alloc] init];
+    GSTrackerEvent *event = [[GSTrackerEvent alloc] init];
 
-    if (e) {
-        [e setName:name];
-    }
+    event.name = name;
+    event.properties = properties;
 
-    return e;
+    return event;
 }
 
-- (NSDictionary *)serialize
+- (NSDictionary *)serializeWithVisitorId:(NSString *)visitorId personId:(NSString *)personId pageIndex:(NSNumber *)pageIndex;
 {
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *event = [[NSMutableDictionary alloc] init];
 
-    if (self.name != nil && [self.name isKindOfClass:[NSString class]]) {
-        dict[@"name"] = self.name;
-    }
+    event[@"name"] = self.name;
+
     if (self.properties) {
-        dict[@"data"] = self.properties;
+        event[@"data"] = self.properties;
     }
 
-    return [NSDictionary dictionaryWithDictionary:dict];
+    NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
+                                                                                @"visitor_id": visitorId, // anonymous user ID
+                                                                                @"event": event           // json object for event
+                                                                                }];
+
+
+    body[@"page"] = @{ @"index": pageIndex };
+
+    if (personId != nil) {
+        body[@"person_id"] = personId;
+    }
+
+    // detect location from request IP
+    body[@"ip"] = @"detect";
+
+    return [NSDictionary dictionaryWithDictionary:body];
 }
 
 @end

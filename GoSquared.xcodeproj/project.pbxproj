@@ -14,8 +14,8 @@
 		B7E1BDCC1BEA334800422FA0 /* GSDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC01BEA334800422FA0 /* GSDevice.m */; };
 		B7E1BDCD1BEA334800422FA0 /* GSTrackerEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC11BEA334800422FA0 /* GSTrackerEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7E1BDCE1BEA334800422FA0 /* GSTrackerEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC21BEA334800422FA0 /* GSTrackerEvent.m */; };
-		B7E1BDCF1BEA334800422FA0 /* GSPageviewTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC31BEA334800422FA0 /* GSPageviewTracker.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		B7E1BDD01BEA334800422FA0 /* GSPageviewTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC41BEA334800422FA0 /* GSPageviewTracker.m */; };
+		B7E1BDCF1BEA334800422FA0 /* GSPageview.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC31BEA334800422FA0 /* GSPageview.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		B7E1BDD01BEA334800422FA0 /* GSPageview.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC41BEA334800422FA0 /* GSPageview.m */; };
 		B7E1BDD11BEA334800422FA0 /* GSRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC51BEA334800422FA0 /* GSRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7E1BDD21BEA334800422FA0 /* GSRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E1BDC61BEA334800422FA0 /* GSRequest.m */; };
 		B7E1BDD31BEA334800422FA0 /* GSTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E1BDC71BEA334800422FA0 /* GSTracker.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -40,8 +40,8 @@
 		B7E1BDC01BEA334800422FA0 /* GSDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSDevice.m; sourceTree = "<group>"; };
 		B7E1BDC11BEA334800422FA0 /* GSTrackerEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSTrackerEvent.h; sourceTree = "<group>"; };
 		B7E1BDC21BEA334800422FA0 /* GSTrackerEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSTrackerEvent.m; sourceTree = "<group>"; };
-		B7E1BDC31BEA334800422FA0 /* GSPageviewTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSPageviewTracker.h; sourceTree = "<group>"; };
-		B7E1BDC41BEA334800422FA0 /* GSPageviewTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSPageviewTracker.m; sourceTree = "<group>"; };
+		B7E1BDC31BEA334800422FA0 /* GSPageview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSPageview.h; sourceTree = "<group>"; };
+		B7E1BDC41BEA334800422FA0 /* GSPageview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSPageview.m; sourceTree = "<group>"; };
 		B7E1BDC51BEA334800422FA0 /* GSRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSRequest.h; sourceTree = "<group>"; };
 		B7E1BDC61BEA334800422FA0 /* GSRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSRequest.m; sourceTree = "<group>"; };
 		B7E1BDC71BEA334800422FA0 /* GSTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSTracker.h; sourceTree = "<group>"; };
@@ -102,8 +102,8 @@
 				B7E1BDC01BEA334800422FA0 /* GSDevice.m */,
 				B7E1BDC11BEA334800422FA0 /* GSTrackerEvent.h */,
 				B7E1BDC21BEA334800422FA0 /* GSTrackerEvent.m */,
-				B7E1BDC31BEA334800422FA0 /* GSPageviewTracker.h */,
-				B7E1BDC41BEA334800422FA0 /* GSPageviewTracker.m */,
+				B7E1BDC31BEA334800422FA0 /* GSPageview.h */,
+				B7E1BDC41BEA334800422FA0 /* GSPageview.m */,
 				B7E1BDC51BEA334800422FA0 /* GSRequest.h */,
 				B7E1BDC61BEA334800422FA0 /* GSRequest.m */,
 				B7E1BDC71BEA334800422FA0 /* GSTracker.h */,
@@ -132,7 +132,7 @@
 				B7E1BDD31BEA334800422FA0 /* GSTracker.h in Headers */,
 				B7E1BDD11BEA334800422FA0 /* GSRequest.h in Headers */,
 				B7E1BDCB1BEA334800422FA0 /* GSDevice.h in Headers */,
-				B7E1BDCF1BEA334800422FA0 /* GSPageviewTracker.h in Headers */,
+				B7E1BDCF1BEA334800422FA0 /* GSPageview.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,7 +214,7 @@
 				B7E1BE021BEA5A9A00422FA0 /* GSTransaction.m in Sources */,
 				B7E1BE041BEA5A9A00422FA0 /* GSTransactionItem.m in Sources */,
 				B7E1BDCC1BEA334800422FA0 /* GSDevice.m in Sources */,
-				B7E1BDD01BEA334800422FA0 /* GSPageviewTracker.m in Sources */,
+				B7E1BDD01BEA334800422FA0 /* GSPageview.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

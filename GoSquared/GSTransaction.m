@@ -62,33 +62,52 @@
     }
 }
 
-- (NSDictionary *)serializeWithLastTimestamp:(NSNumber *)timestamp
+- (NSDictionary *)serializeWithVisitorId:(NSString *)visitorId personId:(NSString *)personId pageIndex:(NSNumber *)pageIndex lastTransactionTimestamp:(NSNumber *)lastTransactionTimestamp
 {
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-
-    dict[@"id"] = self.transactionID;
+    NSMutableDictionary *transaction = [[NSMutableDictionary alloc] init];
+    transaction[@"id"] = self.transactionID;
 
     if (self.properties) {
-        dict[@"opts"] = self.properties;
+        transaction[@"opts"] = self.properties;
     }
 
-    // make sure we don't attempt to serialize a nil items array
-    if (self.items == nil) self.items = [[NSMutableArray alloc] init];
+    if (self.items == nil) {
+        self.items = [[NSMutableArray alloc] init];
+    }
 
-    // serialize items
     NSMutableArray *items = [[NSMutableArray alloc] init];
+
     for (GSTransactionItem *item in self.items) {
         if ([item isKindOfClass:[GSTransactionItem class]]) {
-            [items addObject:item.serialize];
+            [self.items addObject:item.serialize];
         }
     }
-    dict[@"items"] = [NSArray arrayWithArray:items];
 
-    if (!timestamp) timestamp = @0;
-    dict[@"previous_transaction_timestamp"] = timestamp;
+    transaction[@"items"] = [NSArray arrayWithArray:items];
 
-    return [NSDictionary dictionaryWithDictionary:dict];
+    if (!lastTransactionTimestamp) {
+        lastTransactionTimestamp = @0;
+    }
+
+    transaction[@"previous_transaction_timestamp"] = lastTransactionTimestamp;
+
+    
+    NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
+                                                                                @"visitor_id": visitorId,
+                                                                                @"transaction": transaction
+                                                                                }];
+
+
+    body[@"page"] = @{ @"index": pageIndex };
+
+    if (personId != nil) {
+        body[@"person_id"] = personId;
+    }
+
+    // detect location from request IP
+    body[@"ip"] = @"detect";
+
+    return [NSDictionary dictionaryWithDictionary:body];
 }
-
 
 @end
