@@ -10,8 +10,6 @@
 #import "GSRequest.h"
 #import "GSDevice.h"
 
-#import <UIKit/UIKit.h>
-
 static NSMutableArray *GSRequestsInProgress;
 
 const float kGSRequestDefaultTimeout = 20.0f;

@@ -16,28 +16,60 @@
 #import "GSTrackerEvent.h"
 #import "GSTransaction.h"
 #import "GSTransactionItem.h"
-#import "GSPageviewTracker.h"
+#import "GSTrackerEvent.h"
+#import "GSPageview.h"
 
-static NSString * const kGSTrackerVersion      = @"ios-0.2.0";
-static NSString * const kGSTrackerDefaultTitle = @"Unknown";
-static NSString * const kGSTrackerDefaultPath  = @"";
 
+dispatch_queue_t GSPageviewTrackerQueue() {
+    static dispatch_once_t queueCreationGuard;
+    static dispatch_queue_t queue;
+    dispatch_once(&queueCreationGuard, ^{
+        queue = dispatch_queue_create("com.gosquared.pageviewtracker.queue", 0);
+    });
+    return queue;
+}
+
+
+// tracker default config
+static NSString * const kGSTrackerVersion        = @"ios-0.3.0";
+static NSString * const kGSTrackerDefaultTitle   = @"Unknown";
+static NSString * const kGSTrackerDefaultPath    = @"";
+static const float kGSTrackerDefaultPingInterval = 20.0f;
+
+// person / visitor UUIDs
 static NSString * const kGSAnonymousUUIDDefaultsKey  = @"com.gosquared.defaults.anonUUID";
 static NSString * const kGSIdentifiedUUIDDefaultsKey = @"com.gosquared.defaults.identifiedUUID";
 
-static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transaction.last";
+// tracker saved properties
+static NSString * const kGSPageviewReturningKey        = @"com.gosquared.pageviewtracker.returning";
+static NSString * const kGSPageviewLastTimestampKey    = @"com.gosquared.pageview.last";
+static NSString * const kGSTransactionLastTimestampKey = @"com.gosquared.transaction.last";
+
+// api endpoint paths
+static NSString * const kGSTrackerPageviewPath    = @"/tracking/v1/pageview?%@";
+static NSString * const kGSTrackerPingPath        = @"/tracking/v1/ping?%@";
+static NSString * const kGSTrackerEventPath       = @"/tracking/v1/event?%@";
+static NSString * const kGSTrackerTransactionPath = @"/tracking/v1/transaction?%@";
+static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
+
 
 @interface GSTracker()
 
-@property GSPageviewTracker *pageviewTracker;
 @property (weak) id<GSTrackerDelegate> delegate;
 
 @property NSString *personId;
 @property NSString *visitorId;
 
-@property (readwrite) BOOL identified;
+@property (getter=isIdentified) BOOL identified;
+@property (getter=isReturning) BOOL returning;
+@property (getter=isPageviewPingTimerValid) BOOL pageviewPingTimerValid;
 
+@property GSPageview *pageview;
+@property NSTimer *pageviewPingTimer;
+@property NSNumber *lastPageview;
 @property NSNumber *lastTransaction;
+
+@property long engagementOffset;
 
 @end
 
@@ -45,7 +77,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 #pragma mark Public methods
 
-- (GSTracker *)init
+- (instancetype)init
 {
     self = [super init];
 
@@ -60,25 +92,70 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
         NSString *identifiedPersonID = [[NSUserDefaults standardUserDefaults] objectForKey:kGSIdentifiedUUIDDefaultsKey];
         if (identifiedPersonID) {
             self.personId = identifiedPersonID;
-            self.identified = true;
+            self.identified = YES;
         }
 
-        self.lastTransaction = [[NSUserDefaults standardUserDefaults] objectForKey:kGSTransactionLastTimestamp];
+        self.lastTransaction = [[NSUserDefaults standardUserDefaults] objectForKey:kGSTransactionLastTimestampKey];
         if (!self.lastTransaction) {
             self.lastTransaction = @0;
         }
+
+        self.lastPageview = [[NSUserDefaults standardUserDefaults] objectForKey:kGSPageviewLastTimestampKey];
+        if (!self.lastPageview) {
+            self.lastPageview = @0;
+        }
+        
+        self.returning = [[NSUserDefaults standardUserDefaults] boolForKey:kGSPageviewReturningKey];
+
+        [self addNotificationObservers];
     }
 
     return self;
 }
 
-- (NSString *)trackerVersion
+- (void)setShouldTrackInBackground:(BOOL)shouldTrackInBackground
 {
-    return kGSTrackerVersion;
+    _shouldTrackInBackground = shouldTrackInBackground;
+
+    if (shouldTrackInBackground == YES) {
+        [self removeNotificationObservers];
+    } else {
+        [self addNotificationObservers];
+    }
+}
+
+#pragma mark Private - UIApplication Notification methods
+
+- (void)addNotificationObservers
+{
+    // ensure there are no notification observers already set
+    [self removeNotificationObservers];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnteredBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnteredForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+
+- (void)removeNotificationObservers
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+
+- (void)appEnteredBackground
+{
+    [self invalidatePingTimer];
+}
+
+- (void)appEnteredForeground
+{
+    if (self.pageview != nil) {
+        [self startPingTimer];
+        [self trackPageview:self.pageview];
+    }
 }
 
 
-#pragma mark Public - Page view tracking
+#pragma mark Public - Pageview tracking
 
 - (void)trackScreen:(NSString *)title
 {
@@ -88,6 +165,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 - (void)trackScreen:(NSString *)title withPath:(NSString *)path
 {
     [self verifyCredsAreSet];
+    [self invalidatePingTimer];
 
     // set default title if missing or empty
     if (title == nil || [title isEqual: @""]) {
@@ -103,13 +181,110 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
     NSString *os = [GSDevice currentDevice].os;
     NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
-    NSString *url = [NSString stringWithFormat:@"%@://%@/%@", os, bundleId, path];
+    NSString *URLString = [NSString stringWithFormat:@"%@://%@/%@", os, bundleId, path];
+    NSNumber *pageIndex = @0;
 
-    if (self.pageviewTracker == nil) {
-        self.pageviewTracker = [[GSPageviewTracker alloc] initWithTracker: self];
+    if (self.pageview.index != nil) {
+        pageIndex = self.pageview.index;
     }
 
-    [self.pageviewTracker startWithURLString:url title:title];
+    self.pageview = [GSPageview pageviewWithTitle:title URLString:URLString index:pageIndex];
+
+    [self startPingTimer];
+    [self trackPageview:self.pageview];
+}
+
+
+#pragma mark Private - Pageview tracking
+
+- (void)startPingTimer
+{
+    self.pageviewPingTimerValid = YES;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.engagementOffset = [NSDate new].timeIntervalSince1970;
+        self.pageviewPingTimer = [NSTimer scheduledTimerWithTimeInterval:kGSTrackerDefaultPingInterval target:self selector:@selector(ping) userInfo:nil repeats:YES];
+    });
+}
+
+- (void)invalidatePingTimer
+{
+    self.pageviewPingTimerValid = NO;
+
+    if (self.pageviewPingTimer) {
+        [self.pageviewPingTimer invalidate];
+        self.pageviewPingTimer = nil;
+        self.engagementOffset = [NSDate new].timeIntervalSince1970;
+    }
+}
+
+- (void)trackPageview:(GSPageview *)pageview
+{
+    if (self.isPageviewPingTimerValid == NO) {
+        return;
+    }
+
+    // use GCD barrier to force queuing of requests
+    dispatch_barrier_async(GSPageviewTrackerQueue(), ^{
+        NSString *path = [NSString stringWithFormat:kGSTrackerPageviewPath, self.trackingAPIParams];
+
+        NSDictionary *body = [pageview serializeWithDevice:[GSDevice currentDevice]
+                                                 visitorId:self.visitorId
+                                                  personId:self.personId
+                                              lastPageview:self.lastPageview
+                                                 returning:self.isReturning
+                                            trackerVersion:kGSTrackerVersion];
+
+        GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
+
+        [self sendRequest:req completionHandler:^(NSDictionary *data, NSError *error) {
+            if (data == nil) {
+                return;
+            }
+
+            NSNumber *index = data[@"index"];
+
+            if (index != nil && ![index isKindOfClass:[NSNull class]]) {
+                self.pageview.index = index;
+            }
+        }];
+    });
+
+    self.returning = YES;
+
+    [[NSUserDefaults standardUserDefaults] setBool:self.isReturning forKey:kGSPageviewReturningKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)ping
+{
+    if (self.isPageviewPingTimerValid == NO) return;
+
+    NSString *path = [NSString stringWithFormat:kGSTrackerPingPath, self.trackingAPIParams];
+
+    NSDictionary *body = [self.pageview serializeForPingWithDevice:[GSDevice currentDevice]
+                                                         visitorId:self.visitorId
+                                                          personId:self.personId
+                                                       engagedTime:@(((long)[NSDate new].timeIntervalSince1970 - self.engagementOffset) * 1000)
+                                                    trackerVersion:kGSTrackerVersion];
+
+    GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
+
+    [self sendRequest:req completionHandler:^(NSDictionary *data, NSError *error) {
+        if (!error) return;
+
+        if ([error.userInfo[@"code"] isEqualToString:@"visitor_not_online"]) {
+            [self trackPageview:self.pageview];
+        } else if ([error.userInfo[@"code"] isEqualToString:@"max_inactive_time"]) {
+            [self trackPageview:self.pageview];
+        } else if ([error.userInfo[@"code"] isEqualToString:@"max_session_time"]) {
+            [self trackPageview:self.pageview];
+        }
+    }];
+
+    self.engagementOffset = [NSDate new].timeIntervalSince1970;
+    self.lastPageview = [NSNumber numberWithLong:(long)[NSDate new].timeIntervalSince1970];
+    [[NSUserDefaults standardUserDefaults] setObject:self.lastPageview forKey:kGSPageviewLastTimestampKey];
 }
 
 
@@ -124,32 +299,16 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 {
     [self verifyCredsAreSet];
 
-    NSMutableDictionary *event = [[NSMutableDictionary alloc] init];
-    event[@"name"] = name;
+    NSString *path = [NSString stringWithFormat:kGSTrackerEventPath, self.trackingAPIParams];
 
-    if (properties != nil) {
-        event[@"data"] = properties;
-    }
+    GSTrackerEvent *event = [GSTrackerEvent eventWithName:name properties:properties];
 
-    NSString *path = [NSString stringWithFormat: @"/tracking/v1/event?%@", self.trackingAPIParams];
-    NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
-                                                                                @"visitor_id": self.visitorId, // anonymous user ID
-                                                                                @"event": event                // json object for event
-                                                                                }];
+    NSDictionary *body = [event serializeWithVisitorId:self.visitorId
+                                              personId:self.personId
+                                             pageIndex:self.pageview.index];
 
-    if (self.pageviewTracker != nil) {
-        body[@"page"] = @{ @"index": self.pageviewTracker.pageIndex };
-    }
-
-    if (self.personId != nil) {
-        body[@"person_id"] = self.personId;
-    }
-
-    // detect location from request IP
-    body[@"ip"] = @"detect";
-
-    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
-    [self scheduleRequest:r];
+    GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
+    [self scheduleRequest:req];
 }
 
 
@@ -162,68 +321,58 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 - (void)trackTransaction:(NSString *)transactionID items:(NSArray *)items properties:(NSDictionary *)properties
 {
-    GSTransaction *tx = [GSTransaction transactionWithID:transactionID properties:properties];
-    [tx addItems:items];
+    GSTransaction *transaction = [GSTransaction transactionWithID:transactionID properties:properties];
+    [transaction addItems:items];
 
-    [self trackTransaction:tx];
+    [self trackTransaction:transaction];
 }
 
 - (void)trackTransaction:(GSTransaction *)transaction
 {
     [self verifyCredsAreSet];
 
-    NSDictionary *tx = [transaction serializeWithLastTimestamp:self.lastTransaction];
+    NSString *path = [NSString stringWithFormat:kGSTrackerTransactionPath, self.trackingAPIParams];
 
-    NSString *path = [NSString stringWithFormat: @"/tracking/v1/transaction?%@", self.trackingAPIParams];
-    NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
-        @"visitor_id": self.visitorId, // anonymous UDID
-        @"transaction": tx
-    }];
-
-    if (self.personId != nil) {
-        body[@"person_id"] = self.personId;
-    }
-
-    body[@"ip"] = @"detect";
-
-    self.lastTransaction = [NSNumber numberWithLong:(long)[NSDate new].timeIntervalSince1970];
-    [[NSUserDefaults standardUserDefaults] setObject:self.lastTransaction forKey:kGSTransactionLastTimestamp];
+    NSDictionary *body = [transaction serializeWithVisitorId:self.visitorId
+                                                    personId:self.personId
+                                                   pageIndex:self.pageview.index
+                                    lastTransactionTimestamp:self.lastTransaction];
 
     GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:req];
+
+    self.lastTransaction = [NSNumber numberWithLong:(long)[NSDate new].timeIntervalSince1970];
+    [[NSUserDefaults standardUserDefaults] setObject:self.lastTransaction forKey:kGSTransactionLastTimestampKey];
 }
 
 
 #pragma mark Public - People Analytics
 
-- (void)identify:(NSString *)userID
+- (void)identify:(NSString *)personId
 {
-    [self identify:userID properties:nil];
+    [self identify:personId properties:nil];
 }
 
-- (void)identify:(NSString *)userID properties:(NSDictionary *)properties
+- (void)identify:(NSString *)personId properties:(NSDictionary *)properties
 {
     [self verifyCredsAreSet];
 
-    self.personId = userID;
+    self.personId = personId;
+    self.identified = YES;
 
-    NSString *path = [NSString stringWithFormat: @"/tracking/v1/identify?%@", self.trackingAPIParams];
+    NSString *path = [NSString stringWithFormat:kGSTrackerIdentifyPath, self.trackingAPIParams];
+
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
-                                                                                @"person_id": self.personId
+                                                                                @"person_id": self.personId,
+                                                                                @"visitor_id": self.visitorId
                                                                                 }];
 
     if (properties != nil) {
         body[@"properties"] = properties;
     }
-    if (self.visitorId != nil) {
-        body[@"visitor_id"] = self.visitorId; // anonymous user ID for stitching
-    }
 
-    GSRequest *r = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
-
-    [self scheduleRequest:r];
-
-    self.identified = true;
+    GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
+    [self scheduleRequest:req];
 
     if (self.delegate != nil) {
         [self.delegate didIdentifyPerson];
@@ -244,7 +393,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
     // wipe the current people ID
     self.personId = nil;
 
-    self.identified = false;
+    self.identified = NO;
 
     if (self.delegate != nil) {
         [self.delegate didUnidentifyPerson];
@@ -258,8 +407,8 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
 
 - (void)verifyCredsAreSet
 {
-    NSAssert((self.token != nil), @"You must call setSiteToken: before any tracking methods");
-    NSAssert((self.key != nil), @"You must call setApiKey: before any tracking methods");
+    NSAssert((self.token != nil), @"You must set a token before calling any tracking methods");
+    NSAssert((self.key != nil), @"You must an API key before calling any tracking methods");
 }
 
 
@@ -271,11 +420,7 @@ static NSString * const kGSTransactionLastTimestamp = @"com.gosquared.transactio
     NSString *uuid = [[NSUserDefaults standardUserDefaults] objectForKey:kGSAnonymousUUIDDefaultsKey];
 
     if (forceRegenerate || uuid == nil) {
-        // need to generate a UUID
-        CFUUIDRef theUUID = CFUUIDCreate(NULL);
-        CFStringRef string = CFUUIDCreateString(NULL, theUUID);
-        CFRelease(theUUID);
-        uuid = (__bridge NSString *)string;
+        uuid = [[NSUUID alloc] init].UUIDString;
 
         [[NSUserDefaults standardUserDefaults] setObject:uuid forKey:kGSAnonymousUUIDDefaultsKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
