@@ -11,22 +11,22 @@
 
 @interface GSPageview : NSObject
 
-+ (nonnull NSDictionary *)generateBodyForPingWithTitle:(nonnull NSString *)title
-                                                   URL:(nonnull NSString *)URL
-                                                device:(nonnull GSDevice *)device
-                                             visitorId:(nonnull NSString *)visitorId
-                                              personId:(nullable NSString *)personId
-                                             pageIndex:(nonnull NSNumber *)pageIndex
-                                        trackerVersion:(nonnull NSString *)trackerVersion;
+@property (nonnull) NSString *title;
+@property (nonnull) NSString *URLString;
+@property (nonnull) NSNumber *index;
 
-+ (nonnull NSDictionary *)generateBodyForPageviewWithTitle:(nonnull NSString *)title
-                                                       URL:(nonnull NSString *)URL
-                                                    device:(nonnull GSDevice *)device
-                                                 visitorId:(nonnull NSString *)visitorId
-                                                  personId:(nullable NSString *)personId
-                                                 pageIndex:(nonnull NSNumber *)pageIndex
-                                              lastPageview:(nullable NSNumber *)lastPageview
-                                                 returning:(BOOL)returning
-                                            trackerVersion:(nonnull NSString *)trackerVersion;
++ (nonnull instancetype)pageviewWithTitle:(nonnull NSString *)title URLString:(nonnull NSString *)URLString index:(nonnull NSNumber *)index;
+
+- (nonnull NSDictionary *)serializeForPingWithDevice:(nonnull GSDevice *)device
+                                           visitorId:(nonnull NSString *)visitorId
+                                            personId:(nullable NSString *)personId
+                                      trackerVersion:(nonnull NSString *)trackerVersion;
+
+- (nonnull NSDictionary *)serializeWithDevice:(nonnull GSDevice *)device
+                                    visitorId:(nonnull NSString *)visitorId
+                                     personId:(nullable NSString *)personId
+                                 lastPageview:(nullable NSNumber *)lastPageview
+                                    returning:(BOOL)returning
+                               trackerVersion:(nonnull NSString *)trackerVersion;
 
 @end

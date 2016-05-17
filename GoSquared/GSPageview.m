@@ -10,17 +10,22 @@
 
 @implementation GSPageview
 
-+ (NSDictionary *)generateBodyForPingWithTitle:(NSString *)title
-                                           URL:(NSString *)URL
-                                        device:(GSDevice *)device
-                                     visitorId:(NSString *)visitorId
-                                      personId:(NSString *)personId
-                                     pageIndex:(NSNumber *)pageIndex
-                                trackerVersion:(NSString *)trackerVersion
++ (instancetype)pageviewWithTitle:(NSString *)title URLString:(NSString *)URLString index:(NSNumber *)index
+{
+    GSPageview *pageview = [[GSPageview alloc] init];
+
+    pageview.title = title;
+    pageview.URLString = URLString;
+    pageview.index = index;
+
+    return pageview;
+}
+
+- (NSDictionary *)serializeForPingWithDevice:(GSDevice *)device visitorId:(NSString *)visitorId personId:(NSString *)personId trackerVersion:(NSString *)trackerVersion
 {
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                 @"visitor_id": visitorId,
-                                                                                @"page": @{ @"index": pageIndex },
+                                                                                @"page": @{ @"index": self.index },
                                                                                 @"user_agent": device.userAgent,
                                                                                 @"engaged_time": @0,
                                                                                 @"document": @{
@@ -46,23 +51,22 @@
     return [NSDictionary dictionaryWithDictionary:body];
 }
 
-+ (NSDictionary *)generateBodyForPageviewWithTitle:(NSString *)title
-                                               URL:(NSString *)URL
-                                            device:(GSDevice *)device
-                                         visitorId:(NSString *)visitorId
-                                          personId:(NSString *)personId
-                                         pageIndex:(NSNumber *)pageIndex
-                                      lastPageview:(NSNumber *)lastPageview
-                                         returning:(BOOL)returning
-                                    trackerVersion:(NSString *)trackerVersion
+- (NSDictionary *)serializeWithDevice:(GSDevice *)device
+                            visitorId:(NSString *)visitorId
+                             personId:(NSString *)personId
+                         lastPageview:(NSNumber *)lastPageview
+                            returning:(BOOL)returning
+                       trackerVersion:(NSString *)trackerVersion
 {
+    NSString *formattedTitle = [NSString stringWithFormat:@"%@: %@", device.os, self.title];
+
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                 @"timestamp": @([NSDate new].timeIntervalSince1970),
                                                                                 @"visitor_id": visitorId,
                                                                                 @"page": @{
-                                                                                        @"url": URL,
-                                                                                        @"title": [NSString stringWithFormat:@"%@: %@", device.os, title],
-                                                                                        @"previous": pageIndex
+                                                                                        @"url": self.URLString,
+                                                                                        @"title": formattedTitle,
+                                                                                        @"previous": self.index
                                                                                         },
                                                                                 @"character_set": @"UTF-8",
                                                                                 @"ip": @"detect",
