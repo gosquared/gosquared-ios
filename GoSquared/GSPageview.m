@@ -21,13 +21,17 @@
     return pageview;
 }
 
-- (NSDictionary *)serializeForPingWithDevice:(GSDevice *)device visitorId:(NSString *)visitorId personId:(NSString *)personId trackerVersion:(NSString *)trackerVersion
+- (NSDictionary *)serializeForPingWithDevice:(GSDevice *)device
+                                   visitorId:(NSString *)visitorId
+                                    personId:(NSString *)personId
+                                 engagedTime:(nonnull NSNumber *)engagedTime
+                              trackerVersion:(NSString *)trackerVersion
 {
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                 @"visitor_id": visitorId,
                                                                                 @"page": @{ @"index": self.index },
                                                                                 @"user_agent": device.userAgent,
-                                                                                @"engaged_time": @0,
+                                                                                @"engaged_time": engagedTime,
                                                                                 @"document": @{
                                                                                         @"height": device.screenHeight,
                                                                                         @"width": device.screenWidth

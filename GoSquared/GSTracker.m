@@ -66,6 +66,8 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 @property NSNumber *lastPageview;
 @property NSNumber *lastTransaction;
 
+@property long engagementOffset;
+
 @end
 
 @implementation GSTracker
@@ -171,6 +173,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.pageviewPingTimer = [NSTimer scheduledTimerWithTimeInterval:kGSTrackerDefaultPingInterval target:self selector:@selector(ping) userInfo:nil repeats:YES];
+        self.engagementOffset = [NSDate new].timeIntervalSince1970;
     });
 }
 
@@ -181,6 +184,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     if (self.pageviewPingTimer) {
         [self.pageviewPingTimer invalidate];
         self.pageviewPingTimer = nil;
+        self.engagementOffset = @0;
     }
 }
 
@@ -229,6 +233,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     NSDictionary *body = [self.pageview serializeForPingWithDevice:[GSDevice currentDevice]
                                                          visitorId:self.visitorId
                                                           personId:self.personId
+                                                       engagedTime:@((long)[NSDate new].timeIntervalSince1970 - self.engagementOffset)
                                                     trackerVersion:kGSTrackerVersion];
 
     GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];

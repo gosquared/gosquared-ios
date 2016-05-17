@@ -20,6 +20,7 @@
 - (nonnull NSDictionary *)serializeForPingWithDevice:(nonnull GSDevice *)device
                                            visitorId:(nonnull NSString *)visitorId
                                             personId:(nullable NSString *)personId
+                                         engagedTime:(nonnull NSNumber *)engagedTime
                                       trackerVersion:(nonnull NSString *)trackerVersion;
 
 - (nonnull NSDictionary *)serializeWithDevice:(nonnull GSDevice *)device
