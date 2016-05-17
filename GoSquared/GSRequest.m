@@ -48,7 +48,7 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
     return [GSRequest requestWithMethod:method URL:URL body:body];
 }
 
-+ (instancetype)requestWithMethod:(GSRequestMethod)method URL:(NSString *)URL body:(NSDictionary *)body
++ (instancetype)requestWithMethod:(GSRequestMethod)method URL:(NSURL *)URL body:(NSDictionary *)body
 {
     GSRequest *request = [[GSRequest alloc] init];
 
