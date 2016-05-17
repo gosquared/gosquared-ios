@@ -66,6 +66,8 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 @property NSNumber *lastPageview;
 @property NSNumber *lastTransaction;
 
+@property long engagementOffset;
+
 @end
 
 @implementation GSTracker
@@ -87,7 +89,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
         NSString *identifiedPersonID = [[NSUserDefaults standardUserDefaults] objectForKey:kGSIdentifiedUUIDDefaultsKey];
         if (identifiedPersonID) {
             self.personId = identifiedPersonID;
-            self.identified = true;
+            self.identified = YES;
         }
 
         self.lastTransaction = [[NSUserDefaults standardUserDefaults] objectForKey:kGSTransactionLastTimestampKey];
@@ -102,13 +104,51 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
         
         self.returning = [[NSUserDefaults standardUserDefaults] boolForKey:kGSPageviewReturningKey];
 
-        if (!self.shouldTrackInBackground) {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnteredBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnteredForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
-        }
+        [self addNotificationObservers];
     }
 
     return self;
+}
+
+- (void)setShouldTrackInBackground:(BOOL)shouldTrackInBackground
+{
+    _shouldTrackInBackground = shouldTrackInBackground;
+
+    if (shouldTrackInBackground == YES) {
+        [self removeNotificationObservers];
+    } else {
+        [self addNotificationObservers];
+    }
+}
+
+#pragma mark Private - UIApplication Notification methods
+
+- (void)addNotificationObservers
+{
+    // ensure there are no notification observers already set
+    [self removeNotificationObservers];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnteredBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnteredForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+
+- (void)removeNotificationObservers
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+
+- (void)appEnteredBackground
+{
+    [self invalidatePingTimer];
+}
+
+- (void)appEnteredForeground
+{
+    if (self.pageview != nil) {
+        [self startPingTimer];
+        [self trackPageview:self.pageview];
+    }
 }
 
 
@@ -146,7 +186,6 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     }
 
     self.pageview = [GSPageview pageviewWithTitle:title URLString:URLString index:pageIndex];
-    self.pageviewPingTimerValid = YES;
 
     [self startPingTimer];
     [self trackPageview:self.pageview];
@@ -155,21 +194,12 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
 #pragma mark Private - Pageview tracking
 
-- (void)appEnteredBackground
-{
-    [self invalidatePingTimer];
-}
-
-- (void)appEnteredForeground
-{
-    if (self.pageview != nil) {
-        [self trackPageview:self.pageview];
-    }
-}
-
 - (void)startPingTimer
 {
+    self.pageviewPingTimerValid = YES;
+    
     dispatch_async(dispatch_get_main_queue(), ^{
+        self.engagementOffset = [NSDate new].timeIntervalSince1970;
         self.pageviewPingTimer = [NSTimer scheduledTimerWithTimeInterval:kGSTrackerDefaultPingInterval target:self selector:@selector(ping) userInfo:nil repeats:YES];
     });
 }
@@ -181,12 +211,15 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     if (self.pageviewPingTimer) {
         [self.pageviewPingTimer invalidate];
         self.pageviewPingTimer = nil;
+        self.engagementOffset = [NSDate new].timeIntervalSince1970;
     }
 }
 
 - (void)trackPageview:(GSPageview *)pageview
 {
-    if (self.isPageviewPingTimerValid == NO) return;
+    if (self.isPageviewPingTimerValid == NO) {
+        return;
+    }
 
     // use GCD barrier to force queuing of requests
     dispatch_barrier_async(GSPageviewTrackerQueue(), ^{
@@ -229,6 +262,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     NSDictionary *body = [self.pageview serializeForPingWithDevice:[GSDevice currentDevice]
                                                          visitorId:self.visitorId
                                                           personId:self.personId
+                                                       engagedTime:@(((long)[NSDate new].timeIntervalSince1970 - self.engagementOffset) * 1000)
                                                     trackerVersion:kGSTrackerVersion];
 
     GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
@@ -245,6 +279,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
         }
     }];
 
+    self.engagementOffset = [NSDate new].timeIntervalSince1970;
     self.lastPageview = [NSNumber numberWithLong:(long)[NSDate new].timeIntervalSince1970];
     [[NSUserDefaults standardUserDefaults] setObject:self.lastPageview forKey:kGSPageviewLastTimestampKey];
 }
@@ -310,33 +345,31 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
 #pragma mark Public - People Analytics
 
-- (void)identify:(NSString *)userID
+- (void)identify:(NSString *)personId
 {
-    [self identify:userID properties:nil];
+    [self identify:personId properties:nil];
 }
 
-- (void)identify:(NSString *)userID properties:(NSDictionary *)properties
+- (void)identify:(NSString *)personId properties:(NSDictionary *)properties
 {
     [self verifyCredsAreSet];
 
-    self.personId = userID;
+    self.personId = personId;
+    self.identified = YES;
 
     NSString *path = [NSString stringWithFormat:kGSTrackerIdentifyPath, self.trackingAPIParams];
 
-    NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{ @"person_id": self.personId }];
+    NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
+                                                                                @"person_id": self.personId,
+                                                                                @"visitor_id": self.visitorId
+                                                                                }];
 
     if (properties != nil) {
         body[@"properties"] = properties;
     }
 
-    if (self.visitorId != nil) {
-        body[@"visitor_id"] = self.visitorId; // anonymous user ID for stitching
-    }
-
     GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:req];
-
-    self.identified = true;
 
     // save the identified person id for future app launches
     [[NSUserDefaults standardUserDefaults] setObject:self.personId forKey:kGSIdentifiedUUIDDefaultsKey];
@@ -353,7 +386,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     // wipe the current people ID
     self.personId = nil;
 
-    self.identified = false;
+    self.identified = NO;
 
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kGSIdentifiedUUIDDefaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
