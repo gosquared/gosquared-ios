@@ -9,9 +9,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GSTracker.h"
 #import "GSTransaction.h"
 #import "GSTransactionItem.h"
-#import "GSTracker.h"
 
 @interface GoSquared : NSObject
 

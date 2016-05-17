@@ -7,9 +7,9 @@
 //  Copyright (c) 2015-2016 Go Squared Ltd. All rights reserved.
 //
 
-#import "GSDevice.h"
-
 #import <UIKit/UIKit.h>
+
+#import "GSDevice.h"
 
 static NSString * const kGSUDIDDefaultsKey = @"com.gosquared.defaults.device.UDID";
 
@@ -86,7 +86,7 @@ static NSString * const kGSUDIDDefaultsKey = @"com.gosquared.defaults.device.UDI
     NSString *deviceIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:kGSUDIDDefaultsKey];
 
     if (deviceIdentifier == nil) {
-        deviceIdentifier = [self createUUID];
+        deviceIdentifier = [[NSUUID alloc] init].UUIDString;
 
         [[NSUserDefaults standardUserDefaults] setObject:deviceIdentifier forKey:kGSUDIDDefaultsKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -94,14 +94,5 @@ static NSString * const kGSUDIDDefaultsKey = @"com.gosquared.defaults.device.UDI
 
     return deviceIdentifier;
 }
-
-- (NSString *)createUUID
-{
-    CFUUIDRef theUUID = CFUUIDCreate(NULL);
-    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
-    CFRelease(theUUID);
-    return (__bridge NSString *)string;
-}
-
 
 @end

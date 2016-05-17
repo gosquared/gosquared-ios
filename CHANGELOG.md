@@ -1,5 +1,25 @@
 # GoSquared iOS Change Log
 
+## 2016-05-17, [v0.3.0]
+
+### Added
+
+- Added `GSPageview` class to contain and generate pageview related data and request bodies
+- `GSTrackerEvent` is now used as an internal model for generating request bodies
+- Send engagement time — this will only use the time that the app is the foreground app on your device, unless you have background tracking enabled
+
+### Changed
+
+- Pageview tracking logic now all sits in `GSTracker`
+- Most methods now generate request bodies from their related model classes instead of within `GSTracker`. People methods still generate bodies within the main tracker
+- Fixed issue where pinging would always continue in the background
+- Specifiy item types for `NSArray`s in method parameters
+
+### Removed
+
+- Removed `GSPageviewTracker` in favour of tracking logic being in the main tracker, and request bodies being generated in `GSPageview` classes
+
+
 ## 2016-05-09, [v0.2.0]
 
 ### Added
@@ -134,6 +154,7 @@
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
 
+[v0.3.0]: https://github.com/gosquared/gosquared-ios/compare/v0.2.0...v0.3.0
 [v0.2.0]: https://github.com/gosquared/gosquared-ios/compare/v0.1.2...v0.2.0
 [v0.1.2]: https://github.com/gosquared/gosquared-ios/compare/v0.1.1...v0.1.2
 [v0.1.1]: https://github.com/gosquared/gosquared-ios/compare/v0.1.0...v0.1.1

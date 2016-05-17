@@ -12,7 +12,7 @@
 @interface GSTransactionItem : NSObject
 
 @property NSString *name;
-@property NSMutableArray *categories;
+@property NSMutableArray<NSString *> *categories;
 @property NSNumber *revenue;
 @property NSNumber *quantity;
 @property NSNumber *price;
