@@ -18,7 +18,7 @@
 @property (nonnull) NSString *token;
 @property (nonnull) NSString *key;
 
-@property BOOL shouldTrackInBackground;
+@property (nonatomic) BOOL shouldTrackInBackground;
 @property GSLogLevel logLevel;
 
 @property (readonly, nonnull) NSString *visitorId;
@@ -37,8 +37,8 @@
 - (void)trackScreen:(nullable NSString *)title withPath:(nullable NSString *)path;
 
 // people
-- (void)identify:(nonnull NSString *)userID;
-- (void)identify:(nonnull NSString *)userID properties:(nullable NSDictionary *)properties;
+- (void)identify:(nonnull NSString *)personId;
+- (void)identify:(nonnull NSString *)personId properties:(nullable NSDictionary *)properties;
 - (void)unidentify;
 
 // ecommerce

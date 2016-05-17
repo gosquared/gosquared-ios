@@ -15,7 +15,9 @@
 @property (nonnull) NSString *URLString;
 @property (nonnull) NSNumber *index;
 
-+ (nonnull instancetype)pageviewWithTitle:(nonnull NSString *)title URLString:(nonnull NSString *)URLString index:(nonnull NSNumber *)index;
++ (nonnull instancetype)pageviewWithTitle:(nonnull NSString *)title
+                                URLString:(nonnull NSString *)URLString
+                                    index:(nonnull NSNumber *)index;
 
 - (nonnull NSDictionary *)serializeForPingWithDevice:(nonnull GSDevice *)device
                                            visitorId:(nonnull NSString *)visitorId
