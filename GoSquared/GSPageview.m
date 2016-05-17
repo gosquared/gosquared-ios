@@ -64,8 +64,8 @@
                                                                                 @"timestamp": @([NSDate new].timeIntervalSince1970),
                                                                                 @"visitor_id": visitorId,
                                                                                 @"page": @{
-                                                                                        @"url": self.URLString,
                                                                                         @"title": formattedTitle,
+                                                                                        @"url": self.URLString,
                                                                                         @"previous": self.index
                                                                                         },
                                                                                 @"character_set": @"UTF-8",

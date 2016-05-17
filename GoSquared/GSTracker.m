@@ -139,7 +139,11 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     NSString *os = [GSDevice currentDevice].os;
     NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
     NSString *URLString = [NSString stringWithFormat:@"%@://%@/%@", os, bundleId, path];
-    NSNumber *pageIndex = self.pageview.index ?: 0;
+    NSNumber *pageIndex = @0;
+
+    if (self.pageview.index != nil) {
+        pageIndex = self.pageview.index;
+    }
 
     self.pageview = [GSPageview pageviewWithTitle:title URLString:URLString index:pageIndex];
     self.pageviewPingTimerValid = YES;
