@@ -30,7 +30,7 @@ dispatch_queue_t GSPageviewTrackerQueue() {
 
 
 // tracker default config
-static NSString * const kGSTrackerVersion        = @"ios-0.2.0";
+static NSString * const kGSTrackerVersion        = @"ios-0.3.0";
 static NSString * const kGSTrackerDefaultTitle   = @"Unknown";
 static NSString * const kGSTrackerDefaultPath    = @"";
 static const float kGSTrackerDefaultPingInterval = 20.0f;
