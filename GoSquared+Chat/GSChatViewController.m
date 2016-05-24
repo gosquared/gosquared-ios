@@ -15,6 +15,7 @@
 #import "GSChatBubbleCell.h"
 #import "GSChatManager.h"
 #import "GSChatMessage.h"
+#import "GSChatConnectionStatus.h"
 #import "GSChatConnectionStatusView.h"
 #import "GSChatIceBreakerView.h"
 #import "GSChatViewLayout.h"
@@ -34,43 +35,29 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
 
 @interface GSChatViewController () <GSChatComposeViewDelegate, GSChatManagerDelegate, UICollectionViewDelegateFlowLayout, GSChatViewLayoutDelegate>
 
-@property (nonatomic) GSChatManager *chatManager;
-
+@property GSTracker *tracker;
+@property GSChatManager *chatManager;
 
 // UI / Subviews
-@property (nonatomic, readwrite) UIView *inputAccessoryView;
-@property (nonatomic) GSChatConnectionStatusView *connectionIndicator;
-@property UIActivityIndicatorView *spinner;
-@property (readonly) UIView *iceBreakerView;
-@property (readonly) UIView *failedToLoadMessageHistoryView;
-
+@property (nonatomic, readwrite) GSChatComposeView *inputAccessoryView;
+@property GSChatConnectionStatusView *connectionIndicator;
 @property UITapGestureRecognizer *tapGesture;
 
-@property int lastId;
-
+// state
+@property NSUInteger lastId; // TODO: move this to ChatManager
+@property NSUInteger numberOfMessages;
+//@property (readwrite) NSUInteger numberOfUnreadMessages;
 @property BOOL hasReachedEnd;
-@property BOOL hasEverBeenOpened;
-@property BOOL shouldDisplayIcebreaker;
-
 @property (getter=isOpen) BOOL open;
-@property (getter=isInitialHistoryLoad) BOOL initialHistoryLoad;
-@property (getter=isScrolling) BOOL scrolling;
 @property (getter=isUpdatingMessages) BOOL updatingMessages;
+@property (getter=isScrolling) BOOL scrolling;
+@property (getter=isEditing) BOOL editing;
 
-@property NSMutableDictionary *cellSizeCache;
 @property NSMutableArray *rowsToReload;
-
-@property (nonatomic) GSChatConnectionStatus connectionStatus;
-@property (readwrite) NSNumber *unreadMessageCount;
-
-@property GSTracker *tracker;
 
 @end
 
 @implementation GSChatViewController
-
-@synthesize iceBreakerView = _iceBreakerView;
-@synthesize failedToLoadMessageHistoryView = _failedToLoadMessageHistoryView;
 
 - (instancetype)init
 {
@@ -98,15 +85,9 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
         self.chatManager.delegate = self;
 
         self.rowsToReload = [[NSMutableArray alloc] init];
-        self.initialHistoryLoad = YES;
-        self.open = NO;
-        self.scrolling = NO;
-        self.hasEverBeenOpened = NO;
-        self.connectionIndicator = [[GSChatConnectionStatusView alloc] initWithFrame:CGRectZero];
-        self.connectionStatus = GSChatConnectionStatusLoading;
-        self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
 
-        self.cellSizeCache = [[NSMutableDictionary alloc] init];
+        // workaround for UICollectionView bug: http://www.openradar.me/15262692
+        [self.collectionView numberOfItemsInSection:0];
     }
     return self;
 }
@@ -115,98 +96,25 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
 {
     [super viewDidLoad];
 
-    // if set in interface builder the custom title will have not been set
-    if (self.title) {
-        [self setTitle:self.title];
-    }
-
+    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
     [self.view addGestureRecognizer:self.tapGesture];
 
     [self.collectionView registerClass:[GSChatBubbleCell class] forCellWithReuseIdentifier:kGSChatBubbleCellIdentifier];
     [self.collectionView registerClass:[GSChatHeaderLoadingView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kGSChatHeaderLoadingIdentifier];
     [self.collectionView registerClass:[GSChatHeaderEndView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kGSChatHeaderEndIdentifier];
 
-    self.spinner = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
-    self.spinner.color = [UIColor grayColor];
+    self.connectionIndicator = [[GSChatConnectionStatusView alloc] initWithFrame:CGRectZero];
+    self.connectionIndicator.connectionStatus = GSChatConnectionStatusLoading;
+    [self.view addSubview:self.connectionIndicator];
+    [self.view bringSubviewToFront:self.connectionIndicator];
 
-    UIActivityIndicatorView *initialSpinner = [[UIActivityIndicatorView alloc] initWithFrame:CGRectZero];
-    initialSpinner.color = [UIColor grayColor];
-    [initialSpinner startAnimating];
-
-    self.collectionView.backgroundView = initialSpinner;
     self.collectionView.backgroundColor = [UIColor gs_lightGrayColor];
     self.collectionView.contentInset = UIEdgeInsetsMake(4 + 38, 0, 4, 0);
     self.collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     self.collectionView.scrollEnabled = YES;
     self.collectionView.alwaysBounceVertical = YES;
-}
 
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (UIView *)inputAccessoryView
-{
-    if (!_inputAccessoryView) {
-        GSChatComposeView *composeView = [[GSChatComposeView alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
-        [composeView setComposeViewDelegate:self];
-
-        _inputAccessoryView = composeView;
-    }
-    return _inputAccessoryView;
-}
-
-- (UIView *)iceBreakerView
-{
-    if (!_iceBreakerView) {
-        _iceBreakerView = [GSChatIceBreakerView iceBreakerViewWithMessage:kGSChatUIIceBreaker];
-    }
-    return _iceBreakerView;
-}
-
-// lol terrible name
-- (UIView *)failedToLoadMessageHistoryView
-{
-    if (!_failedToLoadMessageHistoryView) {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
-        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-
-        UILabel *nomsg = [[UILabel alloc] initWithFrame:CGRectZero];
-        nomsg.translatesAutoresizingMaskIntoConstraints = NO;
-        nomsg.text = self.title;
-        nomsg.textAlignment = NSTextAlignmentCenter;
-        nomsg.font = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle2];
-        nomsg.textColor = [UIColor colorWithWhite:0 alpha:.7];
-
-        [nomsg sizeToFit];
-
-        [view addSubview:nomsg];
-
-        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-180-[title]->=60-|"
-                                                                     options:NSLayoutFormatAlignAllCenterX
-                                                                     metrics:nil
-                                                                       views:@{ @"title": nomsg }]];
-
-        _failedToLoadMessageHistoryView = view;
-    }
-    return _failedToLoadMessageHistoryView;
-}
-
-- (BOOL)messageIsOwnAtIndexPath:(NSIndexPath *)indexPath
-{
-    GSChatMessage *message = self.chatManager.messages[indexPath.item];
-    return [self messageIsOwn:message];
-}
-
-- (BOOL)messageIsOwn:(GSChatMessage *)message
-{
-    return message.sender == GSChatSenderClient;
-}
-
-- (BOOL)canBecomeFirstResponder
-{
-    return YES;
+    [self updateBackgroundView];
 }
 
 - (void)viewDidLayoutSubviews
@@ -214,13 +122,6 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
     [super viewDidLayoutSubviews];
 
     self.connectionIndicator.frame = CGRectMake(0, self.collectionView.contentInset.top - 38 - 4, self.view.frame.size.width, 38);
-}
-
-- (void)updateTableViewWithBlock:(void (^)())block
-{
-    if (self.hasEverBeenOpened) {
-        dispatch_async(dispatch_get_main_queue(), block);
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -238,16 +139,8 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
 
     self.inputAccessoryView.hidden = NO;
 
-    self.hasEverBeenOpened = YES;
     [self openConnection];
-
     [self scrollToBottomAnimated:NO];
-
-    self.connectionIndicator.frame = CGRectMake(0, self.collectionView.contentInset.top - 38 - 4, self.view.frame.size.width, 38);
-    self.connectionIndicator.hidden = NO;
-
-    [self.view addSubview:self.connectionIndicator];
-    [self.view bringSubviewToFront:self.connectionIndicator];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -257,36 +150,75 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
     self.open = YES;
 
     [self becomeFirstResponder];
-
-    [self.connectionIndicator didChageConnectionStatus:self.connectionStatus];
-    [self.chatManager markReadWithTimestamp:@([(GSChatMessage *)self.chatManager.messages.lastObject timestamp])];
+    [self.chatManager markRead];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    self.open = NO;
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+- (BOOL)shouldAutorotate
 {
-    [super viewDidDisappear:animated];
-    [self.connectionIndicator removeFromSuperview];
+    return YES;
+}
 
-    self.open = NO;
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
+}
 
-    [UIView animateWithDuration:.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        CGRect frame = self.inputAccessoryView.frame;
-        frame.origin.y += frame.size.height;
-        self.inputAccessoryView.frame = frame;
-    } completion:^(BOOL finished) {
-        [self.inputAccessoryView setHidden:YES];
-    }];
+- (GSChatComposeView *)inputAccessoryView
+{
+    if (!_inputAccessoryView) {
+        GSChatComposeView *composeView = [[GSChatComposeView alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
+        [composeView setComposeViewDelegate:self];
+
+        _inputAccessoryView = composeView;
+    }
+    return _inputAccessoryView;
+}
+
+- (void)updateBackgroundView
+{
+    if (self.isEditing) {
+        self.collectionView.backgroundView = nil;
+        return;
+    }
+
+    if (self.numberOfMessages == 0 && self.hasReachedEnd) {
+        self.collectionView.backgroundView = [GSChatIceBreakerView iceBreakerViewWithMessage:kGSChatUIIceBreaker];
+        return;
+    }
+
+    if (self.numberOfMessages > 0) {
+        self.collectionView.backgroundView = nil;
+        return;
+    }
+
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithFrame:CGRectZero];
+    spinner.color = [UIColor grayColor];
+    [spinner startAnimating];
+
+    self.collectionView.backgroundView = spinner;
+}
+
+- (BOOL)messageIsOwnAtIndexPath:(NSIndexPath *)indexPath
+{
+    GSChatMessage *message = [self.chatManager messageAtIndex:indexPath.item];
+    return [self messageIsOwn:message];
+}
+
+- (BOOL)messageIsOwn:(GSChatMessage *)message
+{
+    return message.sender == GSChatSenderClient;
 }
 
 - (void)dismissKeyboard:(id)sender
 {
-    [(GSChatComposeView *)self.inputAccessoryView endEditing];
-    [self.view resignFirstResponder];
+    [self.inputAccessoryView endEditing];
 }
 
 - (void)dismissChatViewController:(id)sender
@@ -297,37 +229,15 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)didBeginEditing
-{
-    self.collectionView.backgroundView = nil;
-    [self scrollToBottomAnimated:YES];
-}
-
-- (void)didEditText
-{
-    [self.chatManager sendTypingNotification];
-}
-
 - (void)openConnection
 {
     [self.chatManager setConfigWithTracker:self.tracker];
-
     [self.chatManager openWebSocket];
-
-    if (self.chatManager.messages.count == 0) {
-        [self.chatManager loadMessageHistory];
-    }
 }
 
 - (void)closeConnection
 {
     [self.chatManager closeWebSocket];
-}
-
-- (void)setConnectionStatus:(GSChatConnectionStatus)connectionStatus
-{
-    _connectionStatus = connectionStatus;
-    [self.connectionIndicator didChageConnectionStatus:connectionStatus];
 }
 
 - (void)showError:(NSString *)message
@@ -343,20 +253,12 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
 
 - (void)scrollToBottomAnimated:(BOOL)animated
 {
-    if (self.chatManager.messages.count > 0) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.chatManager.messages.count-1 inSection:0];
-
-        [self updateTableViewWithBlock:^{
-            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
-        }];
+    if (self.numberOfMessages > 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.numberOfMessages-1 inSection:0];
+            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionNone animated:animated];
+        });
     }
-}
-
-- (void)didSendMessage:(NSString *)message
-{
-    GSChatMessage *msg = [GSChatMessage messageWithContent:message sender:GSChatSenderClient];
-
-    [self.chatManager sendMessage:msg];
 }
 
 
@@ -373,135 +275,157 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
 }
 
 
+# pragma mark - GSChatComposeViewDelegate
+
+- (void)didBeginEditing
+{
+    self.editing = YES;
+    self.collectionView.backgroundView = nil;
+
+    [self scrollToBottomAnimated:YES];
+}
+
+- (void)didEditText
+{
+    [self.chatManager sendTypingNotification];
+}
+
+- (void)didEndEditing
+{
+    self.editing = NO;
+
+    [self updateBackgroundView];
+}
+
+- (void)didSendMessage:(NSString *)message
+{
+    GSChatMessage *msg = [GSChatMessage messageWithContent:message sender:GSChatSenderClient];
+
+    [self.chatManager sendMessage:msg];
+}
+
+
 # pragma mark - GSChatManagerDelegate
 
 - (void)managerDidConnect
 {
-    if (self.isOpen) {
-        [self.chatManager markReadWithTimestamp:@([(GSChatMessage *)self.chatManager.messages.lastObject timestamp])];
-    }
+//    if (self.isOpen) {
+//        [self.chatManager markRead];
+//    }
 
-    self.connectionStatus = GSChatConnectionStatusConnected;
-    [self.connectionIndicator didChageConnectionStatus:GSChatConnectionStatusConnected];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.connectionIndicator.connectionStatus = GSChatConnectionStatusConnected;
+    });
 }
 
 - (void)managerDidFailToConnect
 {
-    self.connectionStatus = GSChatConnectionStatusDisconnected;
-    [self.connectionIndicator didChageConnectionStatus:GSChatConnectionStatusDisconnected];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.connectionIndicator.connectionStatus = GSChatConnectionStatusDisconnected;
+    });
 }
 
 - (void)managerDidDisconnect
 {
-    self.connectionStatus = GSChatConnectionStatusDisconnected;
-    [self.connectionIndicator didChageConnectionStatus:GSChatConnectionStatusDisconnected];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.connectionIndicator.connectionStatus = GSChatConnectionStatusDisconnected;
+    });
 }
 
-- (void)didAddMessage:(GSChatMessage *)message
+- (void)didAddMessageAtIndex:(NSUInteger)index
 {
-    self.collectionView.backgroundView = nil;
+    self.numberOfMessages += 1;
 
-    if (![self messageIsOwn:message] && self.isOpen) {
-        [self.chatManager markReadWithTimestamp:@(message.timestamp)];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+
+    if (self.isOpen) {
+        [self.chatManager markRead];
     }
 
-    [self updateTableViewWithBlock:^{
-        // add to the end of the collectionView
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.chatManager.messages.count-1 inSection:0];
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        self.collectionView.backgroundView = nil;
 
         [self.collectionView insertItemsAtIndexPaths:@[ indexPath ]];
         [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
-    }];
+    });
+
+//    [[NSNotificationCenter defaultCenter] postNotificationName:GSUnreadMessageNotification
+//                                                        object:self
+//                                                      userInfo:@{
+//                                                                 GSUnreadMessageNotificationCount: self.unreadMessageCount
+//                                                                 }];
 }
 
-- (void)didUpdateMessageAtIndex:(NSInteger)index
+- (void)didUpdateMessageAtIndex:(NSUInteger)index
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-    self.cellSizeCache[((GSChatMessage *)self.chatManager.messages[index]).serverId] = nil;
-
     BOOL viewShouldScroll = self.collectionView.contentSize.height > self.view.frame.size.height;
 
     if (self.isScrolling && viewShouldScroll) {
         [self.rowsToReload addObject:indexPath];
     } else {
-        [self updateTableViewWithBlock:^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
             [self.collectionView reloadItemsAtIndexPaths:@[ indexPath ]];
-        }];
+        });
     }
 }
 
-- (void)didUpdateMessageList
+- (void)didRemoveMessageAtIndex:(NSUInteger)index
 {
-    self.cellSizeCache = [[NSMutableDictionary alloc] init];
+    self.numberOfMessages -= 1;
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
 
-    if (self.chatManager.messages.count == 0) {
-        self.collectionView.backgroundView = self.iceBreakerView;
-    } else {
-        self.collectionView.backgroundView = nil;
-    }
-
-    [self updateTableViewWithBlock:^{
-        [self.collectionView reloadData];
-        [self scrollToBottomAnimated:NO];
-    }];
-}
-
-- (void)didAddMessagesInRange:(NSRange)range reachedEnd:(BOOL)reachedEnd
-{
-    self.hasReachedEnd = reachedEnd;
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (reachedEnd) {
-            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-        }
-
-        if (self.chatManager.messages.count == 0) {
-            self.collectionView.backgroundView = self.iceBreakerView;
-        } else {
-            self.collectionView.backgroundView = nil;
-        }
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [self.collectionView deleteItemsAtIndexPaths:@[ indexPath ]];
     });
+}
 
-    [self updateTableViewWithBlock:^{
-        if (range.location == NSNotFound || self.chatManager.messages.count == 0) {
-            return;
-        }
+- (void)didAddMessagesInRange:(NSRange)range
+{
+    self.numberOfMessages += range.length;
 
-        self.updatingMessages = NO;
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [self updateBackgroundView];
 
         CGPoint beforeOffset = self.collectionView.contentOffset;
         CGFloat beforeHeight = self.collectionView.contentSize.height;
         CGFloat height = beforeHeight;
-        NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:range.length];
-
-        [CATransaction setDisableActions:YES];
 
         for (int i = 0; i < range.length; i++) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForItem:range.location + i inSection:0];
-            [indexPaths addObject:indexPath];
             height += [self collectionView:self.collectionView layout:self.collectionView.collectionViewLayout sizeForItemAtIndexPath:indexPath].height;
+            height += ((GSChatViewLayout *)self.collectionViewLayout).minimumLineSpacing;
         }
 
-        [self.collectionView insertItemsAtIndexPaths:indexPaths];
+        [CATransaction setDisableActions:YES];
+        [self.collectionView reloadData];
         self.collectionView.contentOffset = CGPointMake(self.collectionView.contentOffset.x, beforeOffset.y + height - beforeHeight);
         [CATransaction setDisableActions:NO];
+    });
 
-        if (self.initialHistoryLoad) {
-            [self scrollToBottomAnimated:NO];
-        }
-    }];
-
-    self.initialHistoryLoad = NO;
+    if (self.isOpen) {
+        [self.chatManager markRead];
+    }
 }
 
-- (void)didUpdateUnreadMessageCount:(NSUInteger)count
+- (void)didReachEndOfConversation
 {
-    self.unreadMessageCount = @(count);
+    self.hasReachedEnd = YES;
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:GSUnreadMessageNotification
-                                                        object:self
-                                                      userInfo:@{ GSUnreadMessageNotificationCount: self.unreadMessageCount }];
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [self updateBackgroundView];
+    });
 }
+
+//- (void)didUpdateUnreadMessageCount:(NSUInteger)count
+//{
+//    self.unreadMessageCount = @(count);
+//
+//    [[NSNotificationCenter defaultCenter] postNotificationName:GSUnreadMessageNotification
+//                                                        object:self
+//                                                      userInfo:@{ GSUnreadMessageNotificationCount: self.unreadMessageCount }];
+//}
 
 - (void)didRequestContextForMessageCell:(GSChatBubbleCell *)cell
 {
@@ -532,7 +456,7 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.chatManager.messages.count;
+    return self.numberOfMessages;
 }
 
 
@@ -540,7 +464,7 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    GSChatMessage *message = self.chatManager.messages[indexPath.row];
+    GSChatMessage *message = [self.chatManager messageAtIndex:indexPath.item];
 
     GSChatBubbleCell *cell = (GSChatBubbleCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kGSChatBubbleCellIdentifier forIndexPath:indexPath];
 
@@ -548,7 +472,6 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
         cell.delegate = self;
     }
 
-    cell.isOwn   = [self messageIsOwn:message];
     cell.message = message;
 
     return cell;
@@ -556,48 +479,34 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    if (kind != UICollectionElementKindSectionHeader) {
+    if (![kind isEqualToString:UICollectionElementKindSectionHeader]) {
         return [super collectionView:collectionView viewForSupplementaryElementOfKind:kind atIndexPath:indexPath];
     }
 
     if (self.hasReachedEnd) {
-        GSChatHeaderEndView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                                                                         withReuseIdentifier:kGSChatHeaderEndIdentifier
-                                                                                forIndexPath:indexPath];
-        header.text = kGSChatUIConversationStart;
-
-        return header;
+        return [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kGSChatHeaderEndIdentifier forIndexPath:indexPath];
     } else {
-        return [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                                                  withReuseIdentifier:kGSChatHeaderLoadingIdentifier
-                                                         forIndexPath:indexPath];
+        return [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kGSChatHeaderLoadingIdentifier forIndexPath:indexPath];
     }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    GSChatMessage *message = self.chatManager.messages[indexPath.item];
-    NSValue *size = self.cellSizeCache[message.serverId];
+    GSChatMessage *message = [self.chatManager messageAtIndex:indexPath.item];
+    GSChatBubbleContent *content = [[GSChatBubbleContent alloc] initWithFrame:CGRectZero];
+    content.text = message.content;
+    [content sizeToFit];
 
-    if (size == nil) {
-        GSChatBubbleContent *content = [[GSChatBubbleContent alloc] initWithFrame:CGRectZero];
-        content.text = message.content;
-
-        [content sizeToFit];
-
-        size = [NSValue valueWithCGSize:[content sizeThatFits:CGSizeMake(260, CGFLOAT_MAX)]];
-
-        if (message.serverId) {
-            self.cellSizeCache[message.serverId] = size;
-        }
-    }
-
-    return [size CGSizeValue];
+    return [content sizeThatFits:CGSizeMake(260, CGFLOAT_MAX)];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    return CGSizeMake(collectionView.frame.size.width, 60);
+    if (self.numberOfMessages > 0) {
+        return CGSizeMake(collectionView.frame.size.width, 60);
+    } else {
+        return CGSizeZero;
+    }
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -614,20 +523,21 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
 
 - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
     if (action == @selector(copy:)) {
-        GSChatMessage *message = self.chatManager.messages[indexPath.item];
+        GSChatMessage *message = [self.chatManager messageAtIndex:indexPath.item];
         [[UIPasteboard generalPasteboard] setString:message.content];
     }
 }
 
 
-# pragma mark - UIScrollViewController
+# pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     self.scrolling = YES;
 
-    if ((scrollView.contentOffset.y + scrollView.contentInset.top) <= 0 && !self.initialHistoryLoad && self.open && !self.hasReachedEnd && !self.updatingMessages) {
-        self.updatingMessages = YES;
+    BOOL isScrolledAboveTop = (scrollView.contentOffset.y + scrollView.contentInset.top) <= 0;
+
+    if (isScrolledAboveTop && self.isOpen && !self.hasReachedEnd) {
         [self.chatManager loadMessageHistory];
     }
 }

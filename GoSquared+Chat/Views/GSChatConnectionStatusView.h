@@ -7,17 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GSChatConnectionStatus.h"
 
-typedef NS_ENUM(NSInteger, GSChatConnectionStatus) {
-    GSChatConnectionStatusLoading,
-    GSChatConnectionStatusConnected,
-    GSChatConnectionStatusDisconnected
-};
 
 @interface GSChatConnectionStatusView : UIView
 
-@property GSChatConnectionStatus connectionStatus;
-
-- (void)didChageConnectionStatus:(GSChatConnectionStatus)status;
+@property (nonatomic) GSChatConnectionStatus connectionStatus;
 
 @end

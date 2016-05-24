@@ -15,13 +15,13 @@ typedef NS_ENUM(NSInteger, GSChatSender) {
 
 @interface GSChatMessage : NSObject
 
-@property int internalId;
+@property NSUInteger internalId;
 @property (nullable) NSString *serverId;
 @property (nullable) NSString *personId;
 @property (nonnull) NSString *content;
 @property (nullable) NSURL *avatar;
 @property GSChatSender sender;
-@property NSInteger timestamp;
+@property NSUInteger timestamp;
 @property BOOL pending;
 @property BOOL failed;
 

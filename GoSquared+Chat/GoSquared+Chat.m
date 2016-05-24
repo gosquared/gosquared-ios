@@ -8,15 +8,16 @@
 
 #import "GoSquared+Chat.h"
 
-static GSChatViewController *sharedChatViewController = nil;
-
 @implementation GoSquared (Chat)
 
 + (GSChatViewController *)sharedChatViewController
 {
-    if (sharedChatViewController == nil) {
+    static GSChatViewController *sharedChatViewController = nil;
+    static dispatch_once_t onceToken;
+
+    dispatch_once(&onceToken, ^{
         sharedChatViewController = [[GSChatViewController alloc] initWithTracker:[GoSquared sharedTracker]];
-    }
+    });
     return sharedChatViewController;
 }
 

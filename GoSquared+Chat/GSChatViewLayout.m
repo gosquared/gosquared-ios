@@ -15,7 +15,7 @@
     if (self = [super init]) {
         self.scrollDirection = UICollectionViewScrollDirectionVertical;
         self.minimumInteritemSpacing = CGFLOAT_MAX;
-        self.minimumLineSpacing = 4;
+        self.minimumLineSpacing = 2;
     }
     return self;
 }
@@ -55,9 +55,9 @@
         if (isOwn) {
             frame.origin.x = self.collectionView.frame.size.width - 4 - frame.size.width;
         } else {
-            frame.origin.x = 4;
+            frame.origin.x = 4 + 32 + 4;
         }
-        
+
         attrs.frame = frame;
     }
 

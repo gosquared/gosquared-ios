@@ -10,6 +10,14 @@
 #import "UIColor+GoSquared.h"
 #import <PINRemoteImage/PINImageView+PINRemoteImage.h>
 
+
+@interface GSChatViewController ()
+
+- (void)didRequestContextForMessageCell:(nonnull GSChatBubbleCell *)cell;
+
+@end
+
+
 @interface GSChatBubbleCell ()
 
 @property UITapGestureRecognizer *tapRecogniser;
@@ -25,6 +33,7 @@
         self.avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
         
         self.avatarImageView.layer.cornerRadius = 16;
+        self.avatarImageView.clipsToBounds = YES;
 
         self.backgroundColor = [UIColor gs_lightGrayColor];
 
@@ -44,27 +53,26 @@
 
 - (void)setMessage:(GSChatMessage *)message
 {
-    BOOL needsSetStyles = (self.message == nil);
-    needsSetStyles = YES;
-
     _message = message;
 
     self.contentTextView.text = message.content;
 
-    if (needsSetStyles) {
-        if (self.isOwn) {
-            self.contentTextView.textColor = [UIColor whiteColor];
-            self.contentTextView.tintColor = [UIColor whiteColor];
-            self.contentTextView.backgroundColor = [UIColor gs_ChatBubbleSelfColor];
-        } else {
-            if (message.avatar) {
-                [self.avatarImageView pin_setImageFromURL:message.avatar];
-            }
-
-            self.contentTextView.textColor = [UIColor blackColor];
-            self.contentTextView.tintColor = [UIColor gs_ChatBubbleSelfColor];
-            self.contentTextView.backgroundColor = [UIColor whiteColor];
+    if (self.message.sender == GSChatSenderClient) {
+        self.contentTextView.textColor = [UIColor whiteColor];
+        self.contentTextView.tintColor = [UIColor whiteColor];
+        self.contentTextView.backgroundColor = [UIColor gs_ChatBubbleSelfColor];
+        self.contentTextView.tailFacesRight = YES;
+        self.avatarImageView.frame = CGRectZero;
+    } else {
+        if (message.avatar) {
+            [self.avatarImageView pin_setImageFromURL:message.avatar];
         }
+        self.avatarImageView.frame = CGRectMake(-36, self.bounds.size.height - 32, 32, 32);
+
+        self.contentTextView.textColor = [UIColor blackColor];
+        self.contentTextView.tintColor = [UIColor gs_ChatBubbleSelfColor];
+        self.contentTextView.backgroundColor = [UIColor whiteColor];
+        self.contentTextView.tailFacesRight = NO;
     }
 
     if (self.message.failed) {
@@ -80,13 +88,7 @@
 {
     [super layoutSubviews];
 
-    if (self.isOwn) {
-        self.avatarImageView.frame = CGRectZero;
-        self.contentTextView.frame = self.bounds;
-    } else {
-        self.avatarImageView.frame = CGRectMake(0, self.bounds.size.height - 32, 32, 32);
-        self.contentTextView.frame = CGRectOffset(self.bounds, 36, 0);
-    }
+    self.contentTextView.frame = self.bounds;
 }
 
 - (void)handleTapGesture:(UITapGestureRecognizer *)sender
@@ -112,6 +114,13 @@
     } else {
         self.contentTextView.backgroundColor = [UIColor colorWithHue:hue saturation:sat brightness:bri + .15 alpha:alp];
     }
+}
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+
+    self.avatarImageView.frame = CGRectZero;
 }
 
 @end

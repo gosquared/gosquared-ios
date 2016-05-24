@@ -10,4 +10,6 @@
 
 @interface GSChatBubbleContent : UITextView
 
+@property BOOL tailFacesRight;
+
 @end

@@ -103,6 +103,11 @@
     [self.textView resignFirstResponder];
 }
 
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    [self.composeViewDelegate didEndEditing];
+}
+
 
 #pragma mark UITextViewDelegate methods
 

@@ -15,6 +15,7 @@
 @optional
 - (void)didBeginEditing;
 - (void)didEditText;
+- (void)didEndEditing;
 
 @end
 

@@ -19,10 +19,9 @@ NS_ASSUME_NONNULL_END
 
 @interface GSChatViewController : UICollectionViewController
 
-@property (nonnull, readonly) NSNumber *unreadMessageCount;
+@property (readonly) NSUInteger numberOfUnreadMessages;
 
 - (nonnull instancetype)initWithTracker:(nonnull GSTracker *)tracker;
-- (void)didRequestContextForMessageCell:(nonnull GSChatBubbleCell *)cell;
 - (void)openConnection;
 - (void)closeConnection;
 

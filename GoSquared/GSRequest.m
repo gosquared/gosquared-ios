@@ -156,9 +156,9 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
     }];
 
     if (self.logLevel == GSLogLevelDebug) {
-        NSLog(@"GSRequest::send - %@", self);
+        NSLog(@"GSRequest::sending request - %@", self);
     } else if (self.logLevel == GSLogLevelQuiet) {
-        NSLog(@"GSRequest sending data");
+        NSLog(@"GSRequest sending request");
     }
 
     [task resume];

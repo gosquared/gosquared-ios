@@ -17,6 +17,5 @@
 @property (nonatomic) GSChatBubbleContent *contentTextView;
 @property (nonatomic) GSChatMessage *message;
 @property (weak) GSChatViewController *delegate;
-@property BOOL isOwn;
 
 @end

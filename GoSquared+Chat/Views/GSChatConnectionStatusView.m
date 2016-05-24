@@ -27,14 +27,13 @@
         self.statusLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
         [self addSubview:self.statusLabel];
-        [self didChageConnectionStatus:GSChatConnectionStatusLoading];
     }
     return self;
 }
 
-- (void)didChageConnectionStatus:(GSChatConnectionStatus)status
+- (void)setConnectionStatus:(GSChatConnectionStatus)connectionStatus
 {
-    self.connectionStatus = status;
+    _connectionStatus = connectionStatus;
 
     BOOL shouldDisappearAfterDisplay = NO;
 
