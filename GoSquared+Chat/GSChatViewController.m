@@ -326,9 +326,9 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
 
 - (void)managerDidConnect
 {
-//    if (self.isOpen) {
-//        [self.chatManager markRead];
-//    }
+    if (self.isOpen) {
+        [self.chatManager markRead];
+    }
 
     dispatch_async(dispatch_get_main_queue(), ^{
         self.connectionIndicator.connectionStatus = GSChatConnectionStatusConnected;
@@ -446,15 +446,6 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
         [self updateBackgroundView];
     });
 }
-
-//- (void)didUpdateUnreadMessageCount:(NSUInteger)count
-//{
-//    self.unreadMessageCount = @(count);
-//
-//    [[NSNotificationCenter defaultCenter] postNotificationName:GSUnreadMessageNotification
-//                                                        object:self
-//                                                      userInfo:@{ GSUnreadMessageNotificationCount: self.unreadMessageCount }];
-//}
 
 - (void)didRequestContextForMessageCell:(GSChatBubbleCell *)cell
 {
