@@ -22,15 +22,22 @@
 #import "UIColor+GoSquared.h"
 
 
+// will be moved when we support different languages
 NSString * const kGSChatUIConversationStart = @"This is the begining of your conversation.";
 NSString * const kGSChatUIIceBreaker        = @"How can we help? Send us a message and we’ll get back to you as soon as possible.";
 
+// uicollectionview cell identifiers
 NSString * const kGSChatBubbleCellIdentifier    = @"ChatBubbleCell";
 NSString * const kGSChatHeaderEndIdentifier     = @"ChatHeaderEnd";
 NSString * const kGSChatHeaderLoadingIdentifier = @"ChatHeaderLoading";
 
+// message notification constants
 NSString * const GSUnreadMessageNotification      = @"GSUnreadMessageNotification";
 NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificationCount";
+NSString * const GSMessageNotification            = @"GSMessageNotification";
+NSString * const GSMessageNotificationBody        = @"GSMessageNotificationBody";
+NSString * const GSMessageNotificationAuthor      = @"GSMessageNotificationAuthor";
+NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvatar";
 
 
 @interface GSChatViewController () <GSChatComposeViewDelegate, GSChatManagerDelegate, UICollectionViewDelegateFlowLayout, GSChatViewLayoutDelegate>
@@ -38,7 +45,7 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
 @property GSTracker *tracker;
 @property GSChatManager *chatManager;
 
-// UI / Subviews
+// ui / subviews
 @property (nonatomic, readwrite) GSChatComposeView *inputAccessoryView;
 @property GSChatConnectionStatusView *connectionIndicator;
 @property UITapGestureRecognizer *tapGesture;
@@ -46,7 +53,7 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
 // state
 @property NSUInteger lastId; // TODO: move this to ChatManager
 @property NSUInteger numberOfMessages;
-//@property (readwrite) NSUInteger numberOfUnreadMessages;
+@property (readwrite) NSUInteger numberOfUnreadMessages;
 @property BOOL hasReachedEnd;
 @property (getter=isOpen) BOOL open;
 @property (getter=isUpdatingMessages) BOOL updatingMessages;
@@ -148,6 +155,7 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
     [super viewDidAppear:animated];
 
     self.open = YES;
+    self.numberOfUnreadMessages = 0;
 
     [self becomeFirstResponder];
     [self.chatManager markRead];
@@ -168,6 +176,15 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
 - (BOOL)canBecomeFirstResponder
 {
     return YES;
+}
+
+- (void)setNumberOfUnreadMessages:(NSUInteger)numberOfUnreadMessages
+{
+    _numberOfUnreadMessages = numberOfUnreadMessages;
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:GSUnreadMessageNotification
+                                                        object:self
+                                                      userInfo:@{ GSUnreadMessageNotificationCount: @(numberOfUnreadMessages) }];
 }
 
 - (GSChatComposeView *)inputAccessoryView
@@ -340,6 +357,8 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
 
     if (self.isOpen) {
         [self.chatManager markRead];
+    } else {
+        self.numberOfUnreadMessages += 1;
     }
 
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -349,11 +368,16 @@ NSString * const GSUnreadMessageNotificationCount = @"GSUnreadMessageNotificatio
         [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
     });
 
-//    [[NSNotificationCenter defaultCenter] postNotificationName:GSUnreadMessageNotification
-//                                                        object:self
-//                                                      userInfo:@{
-//                                                                 GSUnreadMessageNotificationCount: self.unreadMessageCount
-//                                                                 }];
+    GSChatMessage *message = [self.chatManager messageAtIndex:index];
+
+    NSDictionary *userInfo = @{
+                               GSMessageNotificationAuthor: [NSString stringWithFormat:@"%@ %@", message.agentFirstName, message.agentLastName],
+                               GSMessageNotificationAvatar: message.avatar,
+                               GSMessageNotificationBody: message.content
+                               };
+    [[NSNotificationCenter defaultCenter] postNotificationName:GSMessageNotification
+                                                        object:self
+                                                      userInfo:userInfo];
 }
 
 - (void)didUpdateMessageAtIndex:(NSUInteger)index

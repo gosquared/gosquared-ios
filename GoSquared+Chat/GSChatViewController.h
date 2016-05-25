@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "GSTracker+Chat.h"
 
-// get rid of all of these
-@class GSChatBubbleCell;
-
 NS_ASSUME_NONNULL_BEGIN
 extern NSString * const GSUnreadMessageNotification;
 extern NSString * const GSUnreadMessageNotificationCount;
+
+extern NSString * const GSMessageNotification;
+extern NSString * const GSMessageNotificationBody;
+extern NSString * const GSMessageNotificationAuthor;
+extern NSString * const GSMessageNotificationAvatar;
 NS_ASSUME_NONNULL_END
 
 @interface GSChatViewController : UICollectionViewController
