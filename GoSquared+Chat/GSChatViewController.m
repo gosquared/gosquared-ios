@@ -370,6 +370,11 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
 
     GSChatMessage *message = [self.chatManager messageAtIndex:index];
 
+    // don't send message notification if its by the client
+    if ([self messageIsOwn:message]) {
+        return;
+    }
+
     NSDictionary *userInfo = @{
                                GSMessageNotificationAuthor: [NSString stringWithFormat:@"%@ %@", message.agentFirstName, message.agentLastName],
                                GSMessageNotificationAvatar: message.avatar,
