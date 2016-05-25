@@ -25,9 +25,6 @@
 - (void)managerDidConnect;
 - (void)managerDidFailToConnect;
 - (void)managerDidDisconnect;
-//- (void)managerDidChangeConnectionStatus:(GSChatConnectionStatus)connectionStatus;
-
-- (void)didBeginLoadingHistory;
 - (void)didReceiveTypingMessageWithSender:(nonnull NSDictionary *)sender;
 - (void)didUpdateUnreadMessageCount:(NSUInteger)count;
 
@@ -50,6 +47,5 @@
 
 - (void)markRead;
 - (void)sendTypingNotification;
-- (BOOL)isOpen;
 
 @end

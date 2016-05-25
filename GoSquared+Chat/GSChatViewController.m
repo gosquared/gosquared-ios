@@ -155,7 +155,6 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
     [super viewDidAppear:animated];
 
     self.open = YES;
-    self.numberOfUnreadMessages = 0;
 
     [self becomeFirstResponder];
     [self.chatManager markRead];
@@ -357,8 +356,6 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
 
     if (self.isOpen) {
         [self.chatManager markRead];
-    } else {
-        self.numberOfUnreadMessages += 1;
     }
 
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -421,16 +418,18 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
         CGFloat beforeHeight = self.collectionView.contentSize.height;
         CGFloat height = beforeHeight;
 
-        for (int i = 0; i < range.length; i++) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:range.location + i inSection:0];
+        for (int i = 0; i < self.numberOfMessages; i++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
             height += [self collectionView:self.collectionView layout:self.collectionView.collectionViewLayout sizeForItemAtIndexPath:indexPath].height;
             height += ((GSChatViewLayout *)self.collectionViewLayout).minimumLineSpacing;
         }
 
+        [CATransaction begin];
         [CATransaction setDisableActions:YES];
         [self.collectionView reloadData];
         self.collectionView.contentOffset = CGPointMake(self.collectionView.contentOffset.x, beforeOffset.y + height - beforeHeight);
         [CATransaction setDisableActions:NO];
+        [CATransaction commit];
     });
 
     if (self.isOpen) {
@@ -445,6 +444,11 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
     dispatch_sync(dispatch_get_main_queue(), ^{
         [self updateBackgroundView];
     });
+}
+
+- (void)didUpdateUnreadMessageCount:(NSUInteger)count
+{
+    self.numberOfUnreadMessages = count;
 }
 
 - (void)didRequestContextForMessageCell:(GSChatBubbleCell *)cell

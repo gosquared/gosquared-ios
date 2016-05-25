@@ -18,15 +18,7 @@ NSString * const kGSChatAnonymousClaimURL        = @"/chat/v1/clientAuth?site_to
 NSString * const kGSChatWebsocketURL             = @"/chat/v1/stream?%@";
 NSString * const kGSChatMessagesURL              = @"https://api.gosquared.com/chat/v1/chats/%@/messages?%@&limit=%d";
 NSString * const kGSChatMessagesToTimestampURL   = @"https://api.gosquared.com/chat/v1/chats/%@/messages?%@&limit=%d&to=%lu";
-NSString * const kGSChatMessagesFromTimestampURL = @"https://api.gosquared.com/chat/v1/chats/%@/messages?%@&auth=%@&limit=%d&from=%lu";
-
-
-@interface GSTracker ()
-
-@property (weak) id<GSTrackerDelegate> delegate;
-
-@end
-
+NSString * const kGSChatMessagesFromTimestampURL = @"https://api.gosquared.com/chat/v1/chats/%@/messages?%@&limit=%d&from=%lu";
 
 const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessage *obj1, GSChatMessage *obj2) {
     if (obj1.timestamp == 0 && obj2.timestamp == 0) {
@@ -39,6 +31,14 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
         return obj1.timestamp >= obj2.timestamp;
     }
 };
+
+
+@interface GSTracker ()
+
+@property (weak) id<GSTrackerDelegate> delegate;
+
+@end
+
 
 @interface GSChatManager () <GSTrackerDelegate>
 
@@ -65,6 +65,9 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
 // rate limitting
 @property (nonnull) NSDate *lastSentTypingNotifTimestamp;
 
+- (BOOL)needsAnonymousId;
+- (NSString *)APIAuthParams;
+
 @end
 
 @implementation GSChatManager
@@ -74,13 +77,7 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
     if (self = [super init]) {
         self.messages = [[NSMutableArray alloc] init];
         self.pendingMessages = [[NSMutableArray alloc] init];
-
         self.nextMessageId = 200;
-        self.isConnected = NO;
-        self.isLoadingMessages = NO;
-        self.hasReachedEnd = NO;
-        self.numberOfUnreadMessages = 0;
-
         self.queue = dispatch_queue_create("com.gosquared.chat.queue", DISPATCH_QUEUE_SERIAL);
     }
     return self;
@@ -93,10 +90,6 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
     if ([self.delegate respondsToSelector:@selector(didUpdateUnreadMessageCount:)]) {
         [self.delegate didUpdateUnreadMessageCount:self.numberOfUnreadMessages];
     }
-}
-
-- (BOOL)isOpen {
-    return self.isConnected;
 }
 
 - (void)setConfigWithTracker:(GSTracker *)tracker
@@ -299,31 +292,23 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
     }
 
     NSURL *URL = [NSURL URLWithString:URLString];
-    [self loadMessageHistoryWithURL:URL];
+    [self loadMessageHistoryWithURL:URL allowsReachingEnd:YES];
 }
 
-//- (void)loadMessageHistoryFrom:(NSUInteger)from
-//{
-//    if (self.isLoadingMessages) return;
-//
-//    NSInteger timestamp = [(GSChatMessage *)self.messages.firstObject timestamp];
-//    NSString *URLString = [NSString stringWithFormat:kGSChatMessagesFromTimestampURL, self.configPerson, self.tracker.token, self.configPerson, self.configSignature, kGSChatMessageLimit, (long)timestamp];
-//    NSURL *URL = [NSURL URLWithString:URLString];
-//
-//    [self loadMessageHistoryWithURL:URL];
-//}
-
-- (void)loadMessageHistoryWithURL:(NSURL *)URL
+- (void)loadMessageHistoryFrom:(NSUInteger)from
 {
-    if (self.isLoadingMessages || self.needsAnonymousId) {
-        return;
-    }
+    NSInteger timestamp = [(GSChatMessage *)self.messages.firstObject timestamp];
+    NSString *URLString = [NSString stringWithFormat:kGSChatMessagesFromTimestampURL, self.configPerson, self.APIAuthParams, kGSChatMessageLimit, timestamp];
+    NSURL *URL = [NSURL URLWithString:URLString];
+
+    [self loadMessageHistoryWithURL:URL allowsReachingEnd:NO];
+}
+
+- (void)loadMessageHistoryWithURL:(NSURL *)URL allowsReachingEnd:(BOOL)allowsReachingEnd
+{
+    NSLog(@"URL: %@", URL);
 
     self.isLoadingMessages = YES;
-
-//    if ([self.delegate respondsToSelector:@selector(didBeginLoadingHistory)]) {
-//        [self.delegate didBeginLoadingHistory];
-//    }
 
     GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodGET URL:URL body:nil];
 
@@ -363,14 +348,12 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
             }
         }
 
-        [newMessages sortUsingComparator:kGSChatTimestampComparator];
-        
         dispatch_barrier_async(self.queue, ^{
-            NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, newMessages.count)];
-            [self.messages insertObjects:newMessages atIndexes:indexes];
-            [self.delegate didAddMessagesInRange:NSMakeRange(0, newMessages.count)];
+            [self.messages addObjectsFromArray:newMessages];
+            [self.messages sortUsingComparator:kGSChatTimestampComparator];
+            [self.delegate didAddMessagesInRange:NSMakeRange(NSNotFound, newMessages.count)];
 
-            if (newMessages.count == 0) {
+            if (newMessages.count == 0 && allowsReachingEnd == YES) {
                 [self.delegate didReachEndOfConversation];
             }
 
@@ -422,6 +405,7 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
 - (void)markRead
 {
     dispatch_barrier_async(self.queue, ^{
+        self.numberOfUnreadMessages = 0;
         GSChatMessage *latestMessage = self.messages.lastObject;
         [self markReadWithTimestamp:latestMessage.timestamp];
     });
@@ -536,17 +520,7 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
         }
 
         if (messageExists) {
-            GSChatMessage *message = self.messages[index];
-            message.serverId = payload[@"id"];
-
-            if (successful) {
-                message.pending = NO;
-                message.failed = NO;
-            } else {
-                message.pending = YES;
-                message.failed = YES;
-            }
-
+            self.messages[index] = [GSChatMessage messageWithDictionary:payload];
             [self.delegate didUpdateMessageAtIndex:index];
         }
     });
@@ -594,11 +568,9 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
 
 - (void)handleSession:(NSDictionary *)payload
 {
-    self.lastReadTimestamp = [(NSNumber *)payload[@"last_read"] longValue];
+    self.lastReadTimestamp = ((NSNumber *)payload[@"last_read"]).longValue;
 
-//    if (self.messages.count == 0) {
-//        [self loadMessageHistoryFrom:self.lastReadTimestamp];
-//    }
+    [self loadMessageHistoryFrom:self.lastReadTimestamp];
     [self checkUnread];
 }
 
