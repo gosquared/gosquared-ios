@@ -288,7 +288,7 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
         URLString = [NSString stringWithFormat:kGSChatMessagesURL, self.userId, self.APIAuthParams, kGSChatMessageLimit];
     } else {
         NSUInteger timestamp = [(GSChatMessage *)self.messages.firstObject timestamp];
-        URLString = [NSString stringWithFormat:kGSChatMessagesToTimestampURL, self.userId, self.APIAuthParams, kGSChatMessageLimit, timestamp];
+        URLString = [NSString stringWithFormat:kGSChatMessagesToTimestampURL, self.userId, self.APIAuthParams, kGSChatMessageLimit, (long)timestamp];
     }
 
     NSURL *URL = [NSURL URLWithString:URLString];
@@ -298,7 +298,7 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
 - (void)loadMessageHistoryFrom:(NSUInteger)from
 {
     NSInteger timestamp = [(GSChatMessage *)self.messages.firstObject timestamp];
-    NSString *URLString = [NSString stringWithFormat:kGSChatMessagesFromTimestampURL, self.configPerson, self.APIAuthParams, kGSChatMessageLimit, timestamp];
+    NSString *URLString = [NSString stringWithFormat:kGSChatMessagesFromTimestampURL, self.configPerson, self.APIAuthParams, kGSChatMessageLimit, (long)timestamp];
     NSURL *URL = [NSURL URLWithString:URLString];
 
     [self loadMessageHistoryWithURL:URL allowsReachingEnd:NO];
@@ -522,9 +522,9 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
         if (messageExists) {
             GSChatMessage *message = self.messages[index];
             message.serverId = payload[@"id"];
-            message.timestamp = payload[@"timestamp"];
+            message.timestamp = ((NSNumber *)payload[@"timestamp"]).unsignedIntegerValue;
             message.pending = NO;
-            message.failed = NO;
+            message.failed = !successful;
 
             [self.delegate didUpdateMessageAtIndex:index];
         }

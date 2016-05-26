@@ -1,18 +1,18 @@
 PODS:
   - FLAnimatedImage (1.0.12)
-  - GoSquared (0.3.0-chat):
-    - GoSquared/Core (= 0.3.0-chat)
-  - GoSquared/Chat (0.3.0-chat):
+  - GoSquared (0.4.0):
+    - GoSquared/Core (= 0.4.0)
+  - GoSquared/Chat (0.4.0):
     - GoSquared/Core
-    - PINRemoteImage (~> 2.1.3)
-    - SocketRocket (~> 0.4.2)
-  - GoSquared/Core (0.3.0-chat)
+    - PINRemoteImage (= 2.1.3)
+    - SocketRocket (= 0.4.2)
+  - GoSquared/Core (0.4.0)
   - PINCache (2.2.2)
-  - PINRemoteImage (2.1.4):
-    - PINRemoteImage/FLAnimatedImage (= 2.1.4)
-  - PINRemoteImage/Core (2.1.4):
+  - PINRemoteImage (2.1.3):
+    - PINRemoteImage/FLAnimatedImage (= 2.1.3)
+  - PINRemoteImage/Core (2.1.3):
     - PINCache (>= 2.1)
-  - PINRemoteImage/FLAnimatedImage (2.1.4):
+  - PINRemoteImage/FLAnimatedImage (2.1.3):
     - FLAnimatedImage (>= 1.0)
     - PINRemoteImage/Core
   - SocketRocket (0.4.2)
@@ -27,9 +27,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
-  GoSquared: af6eca45c74ae82d2102ad2283aa3207c641d7f5
+  GoSquared: f92d02af3be2590a1024ff828b32c494affab72b
   PINCache: 078426d356ab95ef875e9e62e5c35a2ea3333c28
-  PINRemoteImage: 4ac4011c5caefd6befd99758e09becede05d3226
+  PINRemoteImage: b8fb531016f3603016dd105a6139bf36c92b4316
   SocketRocket: ffe08119b00ef982f6c37052a4705a057c8494ad
 
 COCOAPODS: 0.39.0

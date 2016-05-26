@@ -390,7 +390,7 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
     BOOL viewShouldScroll = self.collectionView.contentSize.height > self.view.frame.size.height;
 
     dispatch_sync(dispatch_get_main_queue(), ^{
-        if (self.isScrolling) {
+        if (self.isScrolling && viewShouldScroll) {
             [self.itemsToReload addObject:indexPath];
         } else {
             [self.collectionView reloadItemsAtIndexPaths:@[ indexPath ]];

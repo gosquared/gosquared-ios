@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = '9.0'
 
   s.requires_arc = true
-  s.source = { :git => 'https://github.com/gosquared/gosquared-ios' }
+  s.source = { :git => 'https://github.com/gosquared/gosquared-ios.git' }
   s.default_subspec = 'Core'
 
   s.subspec 'Core' do |ss|

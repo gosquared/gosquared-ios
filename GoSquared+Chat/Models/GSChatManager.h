@@ -37,7 +37,6 @@
 
 - (void)setConfigWithTracker:(nonnull GSTracker *)tracker;
 - (void)loadMessageHistory;
-- (void)loadMessageHistoryWithURL:(nonnull NSURL *)URL;
 - (void)openWebSocket;
 - (void)closeWebSocket;
 

@@ -73,7 +73,7 @@
 - (NSDictionary *)payloadValue
 {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:@{
-                                                                                  @"id": [NSNumber numberWithInt:self.internalId],
+                                                                                  @"id": @(self.internalId),
                                                                                   @"type": @"message",
                                                                                   @"content": self.content,
                                                                                   @"data": @{
@@ -100,7 +100,7 @@
 - (NSString *)description
 {
     NSString *msgId = self.serverId;
-    if (msgId == nil) msgId = [NSString stringWithFormat:@"%d", self.internalId];
+    if (msgId == nil) msgId = [NSString stringWithFormat:@"%ld", (long)self.internalId];
 
     return [NSString stringWithFormat:@"%@: %@", msgId, self.content];
 }
