@@ -418,7 +418,7 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
 
         CGPoint beforeOffset = self.collectionView.contentOffset;
         CGFloat beforeHeight = self.collectionView.contentSize.height;
-        CGFloat height = beforeHeight;
+        CGFloat height = 0;
 
         for (int i = 0; i < self.numberOfMessages; i++) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
@@ -429,7 +429,7 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
         [CATransaction begin];
         [CATransaction setDisableActions:YES];
         [self.collectionView reloadData];
-        self.collectionView.contentOffset = CGPointMake(self.collectionView.contentOffset.x, beforeOffset.y + height - beforeHeight);
+        self.collectionView.contentOffset = CGPointMake(0, beforeOffset.y + (height - beforeHeight));
         [CATransaction setDisableActions:NO];
         [CATransaction commit];
     });
