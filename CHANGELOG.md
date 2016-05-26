@@ -1,5 +1,9 @@
 # GoSquared iOS Change Log
 
+## 2016-05-26, [v0.4.0]
+
+### Added [GoSquared Chat](https://www.gosquared.com/software/chat/)
+
 ## 2016-05-17, [v0.3.0]
 
 ### Added
@@ -154,6 +158,7 @@
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
 
+[v0.4.0]: https://github.com/gosquared/gosquared-ios/compare/v0.3.0...v0.4.0
 [v0.3.0]: https://github.com/gosquared/gosquared-ios/compare/v0.2.0...v0.3.0
 [v0.2.0]: https://github.com/gosquared/gosquared-ios/compare/v0.1.2...v0.2.0
 [v0.1.2]: https://github.com/gosquared/gosquared-ios/compare/v0.1.1...v0.1.2

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'GoSquared'
-  s.version = '0.3.0'
+  s.version = '0.4.0'
   s.summary = 'Tracking SDK for integrating GoSquared in your iOS app.'
 
   s.homepage = 'https://gosquared.com/'
@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = '9.0'
 
   s.requires_arc = true
-  s.source = { :git => 'https://github.com/gosquared/gosquared-ios.git' }
+  s.source = { :git => 'https://github.com/gosquared/gosquared-ios.git', :tag => "v#{s.version}" }
   s.default_subspec = 'Core'
 
   s.subspec 'Core' do |ss|
@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
     ss.source_files = 'GoSquared+Chat/**/*.{h,m}'
     ss.public_header_files = 'Gosquared+Chat/{GoSquared+Chat,GSTracker+Chat,GSChatViewController,GSChatBarButtonItem,UIViewController+Chat}.h'
     ss.dependency 'GoSquared/Core'
-    ss.dependency 'SocketRocket', '~>0.4.2'
-    ss.dependency 'PINRemoteImage', '~>2.1.3'
+    ss.dependency 'SocketRocket', '0.4.2'
+    ss.dependency 'PINRemoteImage', '2.1.3'
   end
 end

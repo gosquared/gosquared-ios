@@ -18,7 +18,8 @@
   },
   "requires_arc": true,
   "source": {
-    "git": "https://github.com/gosquared/gosquared-ios.git"
+    "git": "https://github.com/gosquared/gosquared-ios.git",
+    "tag": "v0.4.0"
   },
   "default_subspecs": "Core",
   "subspecs": [

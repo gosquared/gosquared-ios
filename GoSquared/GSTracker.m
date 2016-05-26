@@ -31,7 +31,7 @@ dispatch_queue_t GSPageviewTrackerQueue() {
 
 
 // tracker default config
-static NSString * const kGSTrackerVersion        = @"ios-0.3.0";
+static NSString * const kGSTrackerVersion        = @"ios-0.4.0";
 static NSString * const kGSTrackerDefaultTitle   = @"Unknown";
 static NSString * const kGSTrackerDefaultPath    = @"";
 static const float kGSTrackerDefaultPingInterval = 20.0f;
@@ -104,7 +104,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
         if (!self.lastPageview) {
             self.lastPageview = @0;
         }
-        
+
         self.returning = [[NSUserDefaults standardUserDefaults] boolForKey:kGSPageviewReturningKey];
 
         [self addNotificationObservers];
@@ -200,7 +200,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 - (void)startPingTimer
 {
     self.pageviewPingTimerValid = YES;
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         self.engagementOffset = [NSDate new].timeIntervalSince1970;
         self.pageviewPingTimer = [NSTimer scheduledTimerWithTimeInterval:kGSTrackerDefaultPingInterval target:self selector:@selector(ping) userInfo:nil repeats:YES];
