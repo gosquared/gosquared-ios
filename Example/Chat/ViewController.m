@@ -18,4 +18,25 @@
     [self gs_presentChatViewController];
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateUnreadCount:)
+                                                 name:GSUnreadMessageNotification
+                                               object:nil];
+}
+
+- (void)updateUnreadCount:(NSNotification *)notification
+{
+    NSNumber *count = notification.userInfo[GSUnreadMessageNotificationCount];
+
+    if ([count isEqualToNumber:@0]) {
+        [self.button setTitle:@"Chat with GoSquared" forState:UIControlStateNormal];
+    } else {
+        [self.button setTitle:[NSString stringWithFormat:@"Chat with GoSquared (%@)", count] forState:UIControlStateNormal];
+    }
+}
+
 @end

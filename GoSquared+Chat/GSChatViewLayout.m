@@ -47,19 +47,15 @@
 - (UICollectionViewLayoutAttributes *)gs_layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewLayoutAttributes *attrs = [[super layoutAttributesForItemAtIndexPath:indexPath] copy];
+    CGRect frame = attrs.frame;
 
-    if ([self.chatLayoutDelegate respondsToSelector:@selector(messageIsOwnAtIndexPath:)]) {
-        BOOL isOwn = [self.chatLayoutDelegate messageIsOwnAtIndexPath:attrs.indexPath];
-        CGRect frame = attrs.frame;
-
-        if (isOwn) {
-            frame.origin.x = self.collectionView.frame.size.width - 4 - frame.size.width;
-        } else {
-            frame.origin.x = 4 + 32 + 4;
-        }
-
-        attrs.frame = frame;
+    if ([self.chatLayoutDelegate messageIsOwnAtIndexPath:attrs.indexPath]) {
+        frame.origin.x = self.collectionView.frame.size.width - 4 - frame.size.width;
+    } else {
+        frame.origin.x = 4 + 32 + 4;
     }
+
+    attrs.frame = frame;
 
     return attrs;
 }

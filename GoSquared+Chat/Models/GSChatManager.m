@@ -434,7 +434,7 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
     }
 
     self.lastReadTimestamp = timestamp;
-    [self checkUnread];
+    [self updateUnreadCount];
 
     NSDictionary *payload = @{
                               @"type": @"read",
@@ -480,23 +480,23 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
     [self sendWithPayload:payload retryIfFailed:YES];
 }
 
-- (void)checkUnread
+- (void)updateUnreadCount
 {
     if (self.lastReadTimestamp == 0 || self.isLoadingMessages) {
         return;
     }
 
-    NSUInteger unread = 0;
+    dispatch_async(self.queue, ^{
+        NSUInteger unread = 0;
 
-    if (self.lastReadTimestamp > 0 && !self.isLoadingMessages) {
         for (GSChatMessage *message in self.messages) {
             if (message.timestamp > self.lastReadTimestamp && message.sender != GSChatSenderClient) {
                 unread += 1;
             }
         }
-    }
 
-    self.numberOfUnreadMessages = unread;
+        self.numberOfUnreadMessages = unread;
+    });
 }
 
 
@@ -520,7 +520,12 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
         }
 
         if (messageExists) {
-            self.messages[index] = [GSChatMessage messageWithDictionary:payload];
+            GSChatMessage *message = self.messages[index];
+            message.serverId = payload[@"id"];
+            message.timestamp = payload[@"timestamp"];
+            message.pending = NO;
+            message.failed = NO;
+
             [self.delegate didUpdateMessageAtIndex:index];
         }
     });
@@ -552,7 +557,7 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
             [self.delegate didAddMessageAtIndex:self.messages.count-1];
 
             [self markDelivered:message];
-            [self checkUnread];
+            [self updateUnreadCount];
         }
     });
 }
@@ -571,7 +576,7 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
     self.lastReadTimestamp = ((NSNumber *)payload[@"last_read"]).longValue;
 
     [self loadMessageHistoryFrom:self.lastReadTimestamp];
-    [self checkUnread];
+    [self updateUnreadCount];
 }
 
 

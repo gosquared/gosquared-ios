@@ -82,6 +82,8 @@
         UIColor *color = self.contentTextView.backgroundColor;
         [self.contentTextView setBackgroundColor:[color colorWithAlphaComponent:0.5]];
     }
+
+    self.contentTextView.frame = self.bounds;
 }
 
 - (void)layoutSubviews

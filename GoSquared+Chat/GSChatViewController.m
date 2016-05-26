@@ -60,7 +60,7 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
 @property (getter=isScrolling) BOOL scrolling;
 @property (getter=isEditing) BOOL editing;
 
-@property NSMutableArray *rowsToReload;
+@property NSMutableArray *itemsToReload;
 
 @end
 
@@ -91,7 +91,7 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
         self.chatManager = manager;
         self.chatManager.delegate = self;
 
-        self.rowsToReload = [[NSMutableArray alloc] init];
+        self.itemsToReload = [[NSMutableArray alloc] init];
 
         // workaround for UICollectionView bug: http://www.openradar.me/15262692
         [self.collectionView numberOfItemsInSection:0];
@@ -181,9 +181,11 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
 {
     _numberOfUnreadMessages = numberOfUnreadMessages;
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:GSUnreadMessageNotification
-                                                        object:self
-                                                      userInfo:@{ GSUnreadMessageNotificationCount: @(numberOfUnreadMessages) }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:GSUnreadMessageNotification
+                                                            object:self
+                                                          userInfo:@{ GSUnreadMessageNotificationCount: @(numberOfUnreadMessages) }];
+    });
 }
 
 - (GSChatComposeView *)inputAccessoryView
@@ -350,6 +352,8 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
 
 - (void)didAddMessageAtIndex:(NSUInteger)index
 {
+    [self.collectionView numberOfItemsInSection:0];
+    
     self.numberOfMessages += 1;
 
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
@@ -363,23 +367,21 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
 
         [self.collectionView insertItemsAtIndexPaths:@[ indexPath ]];
         [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+
+        GSChatMessage *message = [self.chatManager messageAtIndex:index];
+
+        // don't send message notification if its by the client
+        if ([self messageIsOwn:message]) {
+            return;
+        }
+
+        NSDictionary *userInfo = @{
+                                   GSMessageNotificationAuthor: [NSString stringWithFormat:@"%@ %@", message.agentFirstName, message.agentLastName],
+                                   GSMessageNotificationAvatar: message.avatar,
+                                   GSMessageNotificationBody: message.content
+                                   };
+        [[NSNotificationCenter defaultCenter] postNotificationName:GSMessageNotification object:self userInfo:userInfo];
     });
-
-    GSChatMessage *message = [self.chatManager messageAtIndex:index];
-
-    // don't send message notification if its by the client
-    if ([self messageIsOwn:message]) {
-        return;
-    }
-
-    NSDictionary *userInfo = @{
-                               GSMessageNotificationAuthor: [NSString stringWithFormat:@"%@ %@", message.agentFirstName, message.agentLastName],
-                               GSMessageNotificationAvatar: message.avatar,
-                               GSMessageNotificationBody: message.content
-                               };
-    [[NSNotificationCenter defaultCenter] postNotificationName:GSMessageNotification
-                                                        object:self
-                                                      userInfo:userInfo];
 }
 
 - (void)didUpdateMessageAtIndex:(NSUInteger)index
@@ -387,13 +389,13 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
     BOOL viewShouldScroll = self.collectionView.contentSize.height > self.view.frame.size.height;
 
-    if (self.isScrolling && viewShouldScroll) {
-        [self.rowsToReload addObject:indexPath];
-    } else {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        if (self.isScrolling) {
+            [self.itemsToReload addObject:indexPath];
+        } else {
             [self.collectionView reloadItemsAtIndexPaths:@[ indexPath ]];
-        });
-    }
+        }
+    });
 }
 
 - (void)didRemoveMessageAtIndex:(NSUInteger)index
@@ -489,7 +491,6 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     GSChatMessage *message = [self.chatManager messageAtIndex:indexPath.item];
-
     GSChatBubbleCell *cell = (GSChatBubbleCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kGSChatBubbleCellIdentifier forIndexPath:indexPath];
 
     if (cell.delegate == nil) {
@@ -570,14 +571,8 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
 {
     self.scrolling = NO;
 
-    if (self.rowsToReload.count == 0) {
-        return;
-    }
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.collectionView reloadItemsAtIndexPaths:self.rowsToReload];
-        [self.rowsToReload removeAllObjects];
-    });
+    [self.collectionView reloadItemsAtIndexPaths:self.itemsToReload];
+    [self.itemsToReload removeAllObjects];
 }
 
 @end
