@@ -51,7 +51,7 @@ const NSComparator kGSChatTimestampComparator = ^NSComparisonResult(GSChatMessag
 @property (nullable) SRWebSocket *webSocket;
 
 @property (nonnull) NSMutableArray<GSChatMessage *> *messages;
-@property (nonnull) NSMutableArray<GSChatMessage *> *pendingMessages;
+@property (nonnull) NSMutableArray<NSDictionary *> *pendingMessages;
 
 @property (nullable) NSTimer *retryTimer;
 
