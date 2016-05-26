@@ -1,0 +1,1 @@
+../../../../../GoSquared+Chat/Views/GSChatTitleView.h

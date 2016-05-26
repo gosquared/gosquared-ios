@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "D639ADF846BD7ACA4DD9406F25E7961121B6E6A3",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "A8997737C68869E5FAE05DC2C4BD5FB70139496D" : 0,
+    "D639ADF846BD7ACA4DD9406F25E7961121B6E6A3" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "27A4F19E-6A32-438B-A156-3F2601850236",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "A8997737C68869E5FAE05DC2C4BD5FB70139496D" : "",
+    "D639ADF846BD7ACA4DD9406F25E7961121B6E6A3" : "gosquared-chat\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Chat",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Chat.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:edwellbrook\/gosquared-people.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A8997737C68869E5FAE05DC2C4BD5FB70139496D"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:gosquared\/chat-client-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D639ADF846BD7ACA4DD9406F25E7961121B6E6A3"
+    }
+  ]
+}

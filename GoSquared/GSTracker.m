@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 
 #import "GSTracker.h"
+#import "GSTrackerDelegate.h"
 #import "GSDevice.h"
 #import "GSRequest.h"
 #import "GSTrackerEvent.h"
@@ -53,6 +54,8 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
 
 @interface GSTracker()
+
+@property (weak) id<GSTrackerDelegate> delegate;
 
 @property NSString *personId;
 @property NSString *visitorId;
@@ -371,7 +374,11 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:req];
 
-    // save the identified person id for future app launches
+    if (self.delegate != nil) {
+        [self.delegate didIdentifyPerson];
+    }
+
+    // save the identified People user id for later app launches
     [[NSUserDefaults standardUserDefaults] setObject:self.personId forKey:kGSIdentifiedUUIDDefaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -387,6 +394,10 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     self.personId = nil;
 
     self.identified = NO;
+
+    if (self.delegate != nil) {
+        [self.delegate didUnidentifyPerson];
+    }
 
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kGSIdentifiedUUIDDefaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
