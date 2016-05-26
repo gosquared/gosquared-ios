@@ -7,12 +7,12 @@
 You should be familiar with installing through [CocoaPods](https://cocoapods.org/). Your Podfile should include the following two lines for the target you're wishing to install Chat with:
 
 ```ruby
-pod 'GoSquared', :git => 'git@github.com:gosquared/gosquared-ios-chat.git'
-pod 'GoSquared/Chat', :git => 'git@github.com:gosquared/gosquared-ios-chat.git'
+pod 'GoSquared'
+pod 'GoSquared/Chat'
 
 # optional if you want to auotmatically track view controllers
 # if not added, you must manually call `trackScreen:` yourself
-pod 'GoSquared/Autoload', :git => 'git@github.com:gosquared/gosquared-ios-chat.git'
+pod 'GoSquared/Autoload'
 ```
 
 ## Configuration
@@ -29,7 +29,7 @@ pod 'GoSquared/Autoload', :git => 'git@github.com:gosquared/gosquared-ios-chat.g
 {
     [GoSquared sharedTracker].token  = @"your-site-token";
     [GoSquared sharedTracker].key    = @"your-api-key";
-    
+
     // this is required for Chat and can be generated from:
     // https://www.gosquared.com/setup/general
     [GoSquared sharedTracker].secret = @"your-secure-secret";
@@ -37,11 +37,11 @@ pod 'GoSquared/Autoload', :git => 'git@github.com:gosquared/gosquared-ios-chat.g
     // ===========================================================
     // this is where we will configure the Chat view controller...
     // ===========================================================
-    
+
     // this sets the title that is displayed at the top of the view controller
     [GoSquared sharedChatViewController].title = @"Chatting with Support";
-    
-    // this opens the connection for chat, showing the user as online, and 
+
+    // this opens the connection for chat, showing the user as online, and
     // loading messages they missed while the app was closed
     [[GoSquared sharedChatViewController] openConnection];
 
@@ -68,11 +68,11 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     // ===========================================================
     // this is where we will configure the Chat view controller...
     // ===========================================================
-    
+
     // this sets the title that is displayed at the top of the view controller
     GoSquared.sharedChatViewController().title = "Chatting with Support"
-    
-    // this opens the connection for chat, showing the user as online, and 
+
+    // this opens the connection for chat, showing the user as online, and
     // loading messages they missed while the app was closed
     GoSquared.sharedChatViewController().openConnection()
 
@@ -130,7 +130,7 @@ Often you'll want to display the number of unread messages from a chat somewhere
                                                  name:GSUnreadMessageNotification
                                                object:nil];
 }
-    
+
 // method for handling notification
 - (void)unreadNotificationHandler:(NSNotification *)notification
 {
@@ -148,7 +148,7 @@ import GoSquared
 func someSetupFunction() {
     let notifCenter = NSNotificationCenter.defaultCenter()
     let notifHandler = #selector(CustomUIButton.unreadNotificationHandler(_:))
-    
+
     notifCenter.addObserver(self, selector: notifHandler, name: GSUnreadMessageNotification, object:nil)
 }
 
@@ -178,16 +178,16 @@ We currently don't provide any UI for displaying an in-app notification for new 
                                                  name:GSMessageNotification
                                                object:nil];
 }
-    
+
 // method for handling notification
 - (void)newMessageHandler:(NSNotification *)notification
 {
     NSDictionary *messageInfo = notification.userInfo;
-    
+
     NSString *senderName = messageInfo[GSMessageNotificationAuthor];
     NSString *senderAvatar = messageInfo[GSMessageNotificationAvatar];
     NSString *messageBody = messageInfo[GSMessageNotificationBody];
-    
+
     // build and display ui for message notification
 }
 ```
@@ -201,18 +201,18 @@ import GoSquared
 func someSetupFunction() {
     let notifCenter = NSNotificationCenter.defaultCenter()
     let notifHandler = #selector(CustomUIButton.newMessageHandler(_:))
-    
+
     notifCenter.addObserver(self, selector: notifHandler, name: GSMessageNotification, object:nil)
 }
 
 // function for handling notification
 func newMessageHandler(notification: NSNotification) {
     let messageInfo = notification.userInfo
-    
+
     let senderName = messageInfo[GSMessageNotificationAuthor]
     let senderAvatar = messageInfo[GSMessageNotificationAvatar]
     let messageBody = messageInfo[GSMessageNotificationBody]
-    
+
     // build and display ui for message notification
 }
 
