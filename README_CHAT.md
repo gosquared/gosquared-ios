@@ -154,7 +154,7 @@ func someSetupFunction() {
 
 // function for handling notification
 func unreadNotificationHandler(notification: NSNotification) {
-    let count = notification.userInfo[GSUnreadMessageNotificationCount]
+    let count = notification.userInfo![GSUnreadMessageNotificationCount]
     // update ui with count
 }
 
@@ -207,7 +207,7 @@ func someSetupFunction() {
 
 // function for handling notification
 func newMessageHandler(notification: NSNotification) {
-    let messageInfo = notification.userInfo
+    let messageInfo = notification.userInfo!
 
     let senderName = messageInfo[GSMessageNotificationAuthor]
     let senderAvatar = messageInfo[GSMessageNotificationAvatar]
