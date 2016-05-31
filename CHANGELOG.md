@@ -31,7 +31,7 @@
 ### Added
 
 - Added option to continue pinging when app enters background (only needed for apps that continually run in the background)
-- Added ability to track events without properties parameter (was incorrectly docuemtned as being possible, sorry!)
+- Added ability to track events without properties parameter (was incorrectly documented as being possible, sorry!)
 
 ### Changed
 
