@@ -273,11 +273,13 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     [self sendRequest:req completionHandler:^(NSDictionary *data, NSError *error) {
         if (!error) return;
 
-        if ([error.userInfo[@"code"] isEqualToString:@"visitor_not_online"]) {
+        NSString *errorCode = [NSString stringWithFormat:@"%@", error.userInfo[@"code"]];
+
+        if ([errorCode isEqualToString:@"visitor_not_online"]) {
             [self trackPageview:self.pageview];
-        } else if ([error.userInfo[@"code"] isEqualToString:@"max_inactive_time"]) {
+        } else if ([errorCode isEqualToString:@"max_inactive_time"]) {
             [self trackPageview:self.pageview];
-        } else if ([error.userInfo[@"code"] isEqualToString:@"max_session_time"]) {
+        } else if ([errorCode isEqualToString:@"max_session_time"]) {
             [self trackPageview:self.pageview];
         }
     }];
