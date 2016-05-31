@@ -2,7 +2,9 @@
 
 ## 2016-05-26, [v0.4.0]
 
-### Added [GoSquared Chat](https://www.gosquared.com/software/chat/)
+### Added
+
+- Added [GoSquared Chat](https://www.gosquared.com/software/chat/)
 
 ## 2016-05-17, [v0.3.0]
 
