@@ -20,16 +20,6 @@
 #import "GSPageview.h"
 
 
-dispatch_queue_t GSPageviewTrackerQueue() {
-    static dispatch_once_t queueCreationGuard;
-    static dispatch_queue_t queue;
-    dispatch_once(&queueCreationGuard, ^{
-        queue = dispatch_queue_create("com.gosquared.pageviewtracker.queue", 0);
-    });
-    return queue;
-}
-
-
 // tracker default config
 static NSString * const kGSTrackerVersion        = @"ios-0.4.0";
 static NSString * const kGSTrackerDefaultTitle   = @"Unknown";
@@ -70,6 +60,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 @property NSNumber *lastTransaction;
 
 @property long engagementOffset;
+@property dispatch_queue_t queue;
 
 @end
 
@@ -82,6 +73,8 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     self = [super init];
 
     if (self) {
+        self.queue = dispatch_queue_create("com.gosquared.pageviewtracker.queue", DISPATCH_QUEUE_SERIAL);
+
         // grab a saved anon UDID or generate on if it doesn't exist
         self.visitorId = [self generateUUID:NO];
 
@@ -225,7 +218,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     }
 
     // use GCD barrier to force queuing of requests
-    dispatch_barrier_async(GSPageviewTrackerQueue(), ^{
+    dispatch_barrier_async(self.queue, ^{
         NSString *path = [NSString stringWithFormat:kGSTrackerPageviewPath, self.trackingAPIParams];
 
         NSDictionary *body = [pageview serializeWithDevice:[GSDevice currentDevice]
