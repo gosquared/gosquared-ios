@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'B2F2B83B85D8D6FE9CCD7337'
+               BlueprintIdentifier = '795D2DD24BD9C58A59EF3B4A'
                BlueprintName = 'GoSquared'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libGoSquared.a'>

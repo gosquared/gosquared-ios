@@ -8,7 +8,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GSRequest.h"
 #import "GSLogLevel.h"
 #import "GSTransaction.h"
 #import "GSTransactionItem.h"
@@ -25,8 +24,6 @@
 @property (readonly, nullable) NSString *personId;
 @property (readonly, getter=isIdentified) BOOL identified;
 
-- (void)scheduleRequest:(nonnull GSRequest *)request;
-- (void)sendRequest:(nonnull GSRequest *)request completionHandler:(nonnull GSRequestCompletionBlock)completionHandler;
 
 // event tracking
 - (void)trackEvent:(nonnull NSString *)name;
