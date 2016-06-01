@@ -1,5 +1,20 @@
 # GoSquared iOS Change Log
 
+## 2016-06-01, [v0.5.0]
+
+### Added
+
+- Added fix for crash when API error isn't in expected format
+
+### Changed
+
+- Defined public headers in Podfile
+- When using Autoload (automatic tracking), view controllers without a title or trackingTitle will not be tracked
+
+### Removed
+
+- Removed sending/scheduling requests from public headers
+
 ## 2016-05-26, [v0.4.0]
 
 ### Added
@@ -160,6 +175,7 @@
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
 
+[v0.5.0]: https://github.com/gosquared/gosquared-ios/compare/v0.4.0...v0.5.0
 [v0.4.0]: https://github.com/gosquared/gosquared-ios/compare/v0.3.0...v0.4.0
 [v0.3.0]: https://github.com/gosquared/gosquared-ios/compare/v0.2.0...v0.3.0
 [v0.2.0]: https://github.com/gosquared/gosquared-ios/compare/v0.1.2...v0.2.0
