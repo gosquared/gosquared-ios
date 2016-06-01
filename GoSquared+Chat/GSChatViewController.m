@@ -53,7 +53,7 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
 // state
 @property NSUInteger lastId; // TODO: move this to ChatManager
 @property NSUInteger numberOfMessages;
-@property (readwrite) NSUInteger numberOfUnreadMessages;
+@property (nonatomic, readwrite) NSUInteger numberOfUnreadMessages;
 @property BOOL hasReachedEnd;
 @property (getter=isOpen) BOOL open;
 @property (getter=isUpdatingMessages) BOOL updatingMessages;
