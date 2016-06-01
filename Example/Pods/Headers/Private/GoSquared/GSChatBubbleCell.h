@@ -1,1 +1,1 @@
-../../../../../GoSquared+Chat/GSChatBubbleCell.h
+../../../../../GoSquared+Chat/Views/GSChatBubbleCell.h

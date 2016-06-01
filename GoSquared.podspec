@@ -18,6 +18,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Core' do |ss|
     ss.source_files = 'GoSquared/*.{h,m}'
+    ss.public_header_files = 'Gosquared/{GoSquared,GSTracker,GSLogLevel,GSTransaction,GSTransactionItem}.h'
   end
 
   # include swizzling to automatically track view controllers

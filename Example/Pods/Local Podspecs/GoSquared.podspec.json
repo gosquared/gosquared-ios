@@ -25,7 +25,8 @@
   "subspecs": [
     {
       "name": "Core",
-      "source_files": "GoSquared/*.{h,m}"
+      "source_files": "GoSquared/*.{h,m}",
+      "public_header_files": "Gosquared/{GoSquared,GSTracker,GSLogLevel,GSTransaction,GSTransactionItem}.h"
     },
     {
       "name": "Autoload",
