@@ -48,7 +48,7 @@ void _gs__viewDidAppear(id self, SEL _cmd, bool animated)
 
     if (title != nil && [title isEqualToString:@""] == NO) {
         [[GoSquared sharedTracker] trackScreen:title];
-    } else if ([GoSquared sharedTracker].logLevel = GSLogLevelDebug) {
+    } else if ([GoSquared sharedTracker].logLevel == GSLogLevelDebug) {
         NSLog(@"UIViewController+GSTracking: Not tracking view controller without title");
     }
 }
