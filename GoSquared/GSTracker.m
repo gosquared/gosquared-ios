@@ -21,7 +21,7 @@
 
 
 // tracker default config
-static NSString * const kGSTrackerVersion        = @"ios-0.5.0";
+static NSString * const kGSTrackerVersion        = @"ios-0.5.1";
 static NSString * const kGSTrackerDefaultTitle   = @"Unknown";
 static NSString * const kGSTrackerDefaultPath    = @"";
 static const float kGSTrackerDefaultPingInterval = 20.0f;
