@@ -200,7 +200,7 @@ The `person_id` can be set to an email address by using the prefix `email:` (see
 **Swift:**
 
 ```swift
-// idenitfy with id
+// identify with id
 GoSquared.sharedTracker().identify("test-person_id", properties: ["name" : "Test User"])
 
 // identify with email
