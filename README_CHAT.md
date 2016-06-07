@@ -27,7 +27,7 @@ pod 'GoSquared/Autoload'
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [GoSquared sharedTracker].token  = @"your-site-token";
+    [GoSquared sharedTracker].token  = @"your-project-token";
     [GoSquared sharedTracker].key    = @"your-api-key";
 
     // this is required for Chat and can be generated from:
@@ -58,7 +58,7 @@ import GoSquared
 
 func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-    GoSquared.sharedTracker().token  = "your-site-token"
+    GoSquared.sharedTracker().token  = "your-project-token"
     GoSquared.sharedTracker().key    = "your-api-key"
 
     // this is required for Chat and can be generated from:
