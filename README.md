@@ -21,7 +21,7 @@ For instructions using Carthage, [please read their documentation](https://githu
 
 ## Configuration
 
-Make sure you initialise the library with your site token before calling any tracking / people methods otherwise the library will throw an exception. It is recommended to add the below line to your UIApplication's `didFinishLaunchingWithOptions` method.
+Make sure you initialise the library with your project token before calling any tracking / people methods otherwise the library will throw an exception. It is recommended to add the below line to your UIApplication's `didFinishLaunchingWithOptions` method.
 
 **Objective-C:**
 
@@ -32,7 +32,7 @@ Make sure you initialise the library with your site token before calling any tra
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [GoSquared sharedTracker].token = @"your-site-token";
+    [GoSquared sharedTracker].token = @"your-project-token";
     [GoSquared sharedTracker].key   = @"your-api-key";
 
     // optionally set logging level: Debug, Quiet (Default), Silent
@@ -55,7 +55,7 @@ import GoSquared
 
 func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-    GoSquared.sharedTracker().token = "your-site-token"
+    GoSquared.sharedTracker().token = "your-project-token"
     GoSquared.sharedTracker().key   = "your-api-key"
 
     // optionally set logging level: Debug, Quiet (Default), Silent
@@ -75,7 +75,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
 > **Note**: This is only available if you installed with CocoaPods.
 
-Make sure you're using the `GoSquared/Autoload` subspec in your Podfile. Configure your Site Token and API Key as described above, and you're good to go!
+Make sure you're using the `GoSquared/Autoload` subspec in your Podfile. Configure your Project Token and API Key as described above, and you're good to go!
 
 If needed, you can disable tracking on indiviual ViewControllers, or set a custom title:
 
