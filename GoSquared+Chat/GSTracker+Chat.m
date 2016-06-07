@@ -25,11 +25,6 @@ NSString * const userSignature = @"com.gosqured.chat.signature";
     objc_setAssociatedObject(self, &secretKey, secret, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)setSignature:(NSString *)signature
-{
-    objc_setAssociatedObject(self, &userSignature, signature, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
 - (NSString *)signature {
     NSString *sig = objc_getAssociatedObject(self, &userSignature);
 
@@ -43,6 +38,11 @@ NSString * const userSignature = @"com.gosqured.chat.signature";
         sig = [GSTracker hexStringWithData:hash];
     }
     return sig;
+}
+
+- (void)setSignature:(NSString *)signature
+{
+    objc_setAssociatedObject(self, &userSignature, signature, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 + (NSString *)hexStringWithData:(NSData *)data

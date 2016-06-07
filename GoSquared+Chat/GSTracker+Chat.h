@@ -11,8 +11,6 @@
 @interface GSTracker (Chat)
 
 @property (nonnull) NSString *secret;
-
-- (nonnull NSString *)signature;
-- (void)setSignature:(nonnull NSString *)signature;
+@property (nonnull) NSString *signature;
 
 @end
