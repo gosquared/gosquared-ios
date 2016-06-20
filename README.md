@@ -194,6 +194,7 @@ NSDictionary *properties = @{
                              @"id": @"user-id", // Required if no email address
                              @"email": @"someone@example.com", // Required if no id
                              
+                             // Reserved property names
                              @"name": @"Test User",
                              @"username": @"testuser",
                              @"phone": @"+447901229693",
@@ -202,6 +203,7 @@ NSDictionary *properties = @{
                              @"company_industry": @"Customer Analytics",
                              @"company_size": @150000,
                              
+                             // Custom properties
                              @"custom": @{
                                          @"custom_property_name": @"custom property value"
                                          }
@@ -216,7 +218,8 @@ NSDictionary *properties = @{
 let properties = [
     "id": "user-id", // Required if no email address
     "email": "someone@example.com", // Required if no id
-                             
+
+    // Reserved property names
     "name": "Test User",
     "username": "testuser",
     "phone": "+447901229693",
@@ -224,7 +227,8 @@ let properties = [
     "company_name": "GoSquared",
     "company_industry": "Customer Analytics",
     "company_size": 150000,
-                             
+
+    // Custom properties
     "custom": [
         "custom_property_name": "custom property value"
     ]
