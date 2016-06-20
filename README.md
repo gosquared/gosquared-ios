@@ -37,9 +37,9 @@ Make sure you initialise the library with your project token before calling any 
 
     // optionally set logging level: Debug, Quiet (Default), Silent
     [GoSquared sharedTracker].logLevel = GSLogLevelDebug;
-    
+
     // if your app primarily runs in the background and you want visitors to show in
-    // your Now dashboard, you should set the following to `YES` (default: NO) 
+    // your Now dashboard, you should set the following to `YES` (default: NO)
     [GoSquared sharedTracker].shouldTrackInBackground = YES;
 
     return YES;
@@ -60,9 +60,9 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
     // optionally set logging level: Debug, Quiet (Default), Silent
     GoSquared.sharedTracker().logLevel = .Debug
-    
+
     // if your app primarily runs in the background and you want visitors to show in
-    // your Now dashboard, you should set the following to `true` (default: false) 
+    // your Now dashboard, you should set the following to `true` (default: false)
     GoSquared.sharedTracker().shouldTrackInBackground = true
 
     return true
@@ -181,30 +181,60 @@ GoSquared.sharedTracker().trackEvent("event name", properties: ["properties": "a
 ## People
 
 ### Identify your user
-To identify a user you will need to provide a `person_id`. This will create a new profile in [GoSquared People](https://www.gosquared.com/customer/en/portal/articles/2170492-an-introduction-to-gosquared-people) where all of the user's session data, events and custom properties will be tracked.
+To identify a user you will need to provide an `id` or `email` property. This will create a new profile in [GoSquared People](https://www.gosquared.com/customer/en/portal/articles/2170492-an-introduction-to-gosquared-people) where all of the user's session data, events and custom properties will be tracked.
 
-The `person_id` can be set to an email address by using the prefix `email:` (see example below).
+If you do not have an `id` to use for the person, one will be created from the email address.
 
-*Note the library caches your identified person_id and uses it again on the next launch. If you do not want this behavior, call `unidentify` after setting the `token` on each launch.*
+> **Note:** the library caches your identified `id` and uses it again on the next launch. If you do not want this behavior, call `unidentify` after setting the `token` on each launch.
 
 **Objective-C:**
 
 ```objc
-// identify with id
-[[GoSquared sharedTracker] identify:@"test-person_id" properties:@{ @"name": @"Test User" }];
+NSDictionary *properties = @{
+                             @"id": @"user-id", // Required if no email address
+                             @"email": @"someone@example.com", // Required if no id
+                             
+                             // Reserved property names
+                             @"name": @"Test User",
+                             @"username": @"testuser",
+                             @"phone": @"+447901229693",
+                             @"created_at": @"2016-06-07T15:44:20Z", // ISO 8601 formatted NSString
+                             @"company_name": @"GoSquared",
+                             @"company_industry": @"Customer Analytics",
+                             @"company_size": @150000,
+                             
+                             // Custom properties
+                             @"custom": @{
+                                         @"custom_property_name": @"custom property value"
+                                         }
+                             };
 
-// identify with email
-[[GoSquared sharedTracker] identify:@"email:user@example.com" properties:@{ @"name": @"Test User" }];
+[[GoSquared sharedTracker] identifyWithProperties: properties];
 ```
 
 **Swift:**
 
 ```swift
-// identify with id
-GoSquared.sharedTracker().identify("test-person_id", properties: ["name" : "Test User"])
+let properties = [
+    "id": "user-id", // Required if no email address
+    "email": "someone@example.com", // Required if no id
 
-// identify with email
-GoSquared.sharedTracker().identify("email:user@example.com", properties: ["name": "Test User"]);
+    // Reserved property names
+    "name": "Test User",
+    "username": "testuser",
+    "phone": "+447901229693",
+    "created_at": "2016-06-07T15:44:20Z", // ISO 8601 formatted String
+    "company_name": "GoSquared",
+    "company_industry": "Customer Analytics",
+    "company_size": 150000,
+
+    // Custom properties
+    "custom": [
+        "custom_property_name": "custom property value"
+    ]
+]
+
+GoSquared.sharedTracker().identify(properties: properties)
 ```
 
 ### Unidentify (e.g. on logout)

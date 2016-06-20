@@ -24,10 +24,11 @@
 
     [GoSquared sharedChatViewController].title = @"Chatting with Example App";
 
-    [[GoSquared sharedTracker] identify:@"example" properties:@{
-                                                                @"name": @"Example Name",
-                                                                @"email": @"someone@example.com"
-                                                                }];
+    [[GoSquared sharedTracker] identifyWithProperties:@{
+                                                        @"id": @"2388975",
+                                                        @"name": @"Example User",
+                                                        @"email": @"email@example.com"
+                                                        }];
 
     return YES;
 }
