@@ -34,8 +34,7 @@
 - (void)trackScreen:(nullable NSString *)title withPath:(nullable NSString *)path;
 
 // people
-- (void)identify:(nonnull NSString *)personId;
-- (void)identify:(nonnull NSString *)personId properties:(nullable NSDictionary *)properties;
+- (void)identifyWithProperties:(nonnull NSDictionary *)properties;
 - (void)unidentify;
 
 // ecommerce

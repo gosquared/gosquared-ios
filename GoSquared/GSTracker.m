@@ -238,7 +238,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
                 // call identify with cached properties after initial pageview
                 if ([index isEqualToNumber:@0] && self.personId != nil) {
-                    NSMutableDictionary *props = [[NSMutableDictionary alloc] init];
+                    NSMutableDictionary *props = [[NSMutableDictionary alloc] initWithDictionary:@{ @"id": self.personId }];
 
                     if (self.personName != nil) {
                         props[@"name"] = self.personName;
@@ -248,7 +248,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
                         props[@"email"] = self.personEmail;
                     }
 
-                    [self identify:self.personId properties:props];
+                    [self identifyWithProperties:props];
                 }
             }
         }];
@@ -354,35 +354,38 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
 #pragma mark Public - People Analytics
 
-- (void)identify:(NSString *)personId
-{
-    [self identify:personId properties:nil];
-}
-
-- (void)identify:(NSString *)personId properties:(NSDictionary *)properties
+- (void)identifyWithProperties:(NSDictionary *)properties
 {
     [self verifyCredsAreSet];
 
+    NSString *personId = properties[@"id"] ?: properties[@"person_id"];
+    NSString *personEmail = properties[@"email"];
+
+    if (personId == nil && personEmail == nil) {
+        return;
+    }
+
+    if (personId == nil) {
+        personId = [NSString stringWithFormat:@"email:%@", personEmail];
+    }
+
     self.personId = personId;
+    self.personEmail = personEmail;
     self.identified = YES;
+
+    self.personName = properties[@"name"];
+
+    if (self.personName == nil && properties[@"first_name"] != nil && properties[@"last_name"] != nil) {
+        self.personName = [NSString stringWithFormat:@"%@ %@", properties[@"first_name"], properties[@"last_name"]];
+    }
 
     NSString *path = [NSString stringWithFormat:kGSTrackerIdentifyPath, self.trackingAPIParams];
 
-    NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
-                                                                                @"person_id": self.personId,
-                                                                                @"visitor_id": self.visitorId
-                                                                                }];
-
-    if (properties != nil) {
-        body[@"properties"] = properties;
-
-        self.personName = properties[@"name"];
-        self.personEmail = properties[@"email"];
-
-        if (self.personName == nil && properties[@"first_name"] != nil && properties[@"last_name"] != nil) {
-            self.personName = [NSString stringWithFormat:@"%@ %@", properties[@"first_name"], properties[@"last_name"]];
-        }
-    }
+    NSDictionary *body = @{
+                           @"person_id": self.personId,
+                           @"visitor_id": self.visitorId,
+                           @"properties": properties
+                           };
 
     GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:req];
@@ -436,7 +439,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 - (NSString *)generateUUID:(BOOL)forceRegenerate
 {
     // set forceRegenerate to NO to simply pick up the existing UUID
-    NSString *uuid = [[NSUserDefaults standardUserDefaults] objectForKey:kGSAnonymousUUIDDefaultsKey];
+    NSString *uuid = [[NSUserDefaults standardUserDefaults] stringForKey:kGSAnonymousUUIDDefaultsKey];
 
     if (forceRegenerate || uuid == nil) {
         uuid = [[NSUUID alloc] init].UUIDString;
