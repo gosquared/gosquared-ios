@@ -362,7 +362,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     NSString *personEmail = properties[@"email"];
 
     if (personId == nil && personEmail == nil) {
-        return;
+        return NSLog(@"id or email must be set in person properties for identify");
     }
 
     if (personId == nil) {

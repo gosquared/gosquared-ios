@@ -120,6 +120,8 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
     NSURLRequest *request = [self URLRequest];
 
     if (request == nil) {
+        NSLog(@"GSRequest: Invalid JSON body. Cancelling request. JSON: %@", self.body);
+
         if (completionHandler == nil) {
             return;
         } else {
