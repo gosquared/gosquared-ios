@@ -1,5 +1,16 @@
 # GoSquared iOS Change Log
 
+## 2016-06-20, [v0.6.0]
+
+### Changed
+
+- The `identifyWithProperties:` method replaces the previous identify methods
+- The `identifyWithProperties:` method will create a person_id from an email if a regular `id` is not present
+
+### Removed
+
+- `identify:` and `identify:properties:` methods have been removed in favour of `identifyWithProperties:`
+
 ## 2016-06-01, [v0.5.1]
 
 ### Changed
@@ -181,6 +192,7 @@
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
 
+[v0.6.0]: https://github.com/gosquared/gosquared-ios/compare/v0.5.1...v0.6.0
 [v0.5.1]: https://github.com/gosquared/gosquared-ios/compare/v0.5.0...v0.5.1
 [v0.5.0]: https://github.com/gosquared/gosquared-ios/compare/v0.4.0...v0.5.0
 [v0.4.0]: https://github.com/gosquared/gosquared-ios/compare/v0.3.0...v0.4.0
