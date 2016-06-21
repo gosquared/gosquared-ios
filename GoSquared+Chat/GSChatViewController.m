@@ -375,11 +375,14 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
             return;
         }
 
-        NSDictionary *userInfo = @{
-                                   GSMessageNotificationAuthor: [NSString stringWithFormat:@"%@ %@", message.agentFirstName, message.agentLastName],
-                                   GSMessageNotificationAvatar: message.avatar,
-                                   GSMessageNotificationBody: message.content
-                                   };
+        NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithDictionary:@{
+                                                                                          GSMessageNotificationAuthor: [NSString stringWithFormat:@"%@ %@", message.agentFirstName, message.agentLastName],
+                                                                                          GSMessageNotificationBody: message.content
+                                                                                          }];
+        if (message.avatar != nil) {
+            userInfo[GSMessageNotificationAvatar] = message.avatar;
+        }
+
         [[NSNotificationCenter defaultCenter] postNotificationName:GSMessageNotification object:self userInfo:userInfo];
     });
 }
