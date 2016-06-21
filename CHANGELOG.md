@@ -1,5 +1,11 @@
 # GoSquared iOS Change Log
 
+## 2016-06-21, [v0.6.1]
+
+### Fixed
+
+- Fixed crash when an incoming message didn't have an avatar available
+
 ## 2016-06-20, [v0.6.0]
 
 ### Changed
@@ -192,6 +198,7 @@
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
 
+[v0.6.1]: https://github.com/gosquared/gosquared-ios/compare/v0.6.0...v0.6.1
 [v0.6.0]: https://github.com/gosquared/gosquared-ios/compare/v0.5.1...v0.6.0
 [v0.5.1]: https://github.com/gosquared/gosquared-ios/compare/v0.5.0...v0.5.1
 [v0.5.0]: https://github.com/gosquared/gosquared-ios/compare/v0.4.0...v0.5.0
