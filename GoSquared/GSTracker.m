@@ -233,7 +233,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
             NSNumber *index = data[@"index"];
 
-            if (index != nil && ![index isKindOfClass:[NSNull class]]) {
+            if (index != nil && index != NSNull.null) {
                 self.pageview.index = index;
 
                 // call identify with cached properties after initial pageview
