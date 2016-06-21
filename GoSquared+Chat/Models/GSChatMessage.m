@@ -48,23 +48,23 @@
     }
 
     NSDictionary *dataDict = dictionary[@"data"];
-    if (dataDict == nil || dataDict == NSNull.null) {
+    if (dataDict == nil || [dataDict isKindOfClass:NSNull.class]) {
         return message;
     }
 
     NSString *avatarURLString = dataDict[@"avatar"];
-    if (avatarURLString != nil && avatarURLString != NSNull.null) {
+    if (avatarURLString != nil && [avatarURLString isKindOfClass:NSNull.class] == NO) {
         message.avatar = [[NSURL alloc] initWithString:avatarURLString];
         return message;
     }
 
     NSDictionary *agentDict = dataDict[@"agent"];
-    if (agentDict == nil || agentDict == NSNull.null) {
+    if (agentDict == nil || [agentDict isKindOfClass:NSNull.class]) {
         return message;
     }
 
     avatarURLString = agentDict[@"avatar"];
-    if (avatarURLString == nil || avatarURLString == NSNull.null) {
+    if (avatarURLString == nil || [avatarURLString isKindOfClass:NSNull.class]) {
         return message;
     }
 
