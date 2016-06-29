@@ -193,7 +193,7 @@ If you do not have an `id` to use for the person, one will be created from the e
 NSDictionary *properties = @{
                              @"id": @"user-id", // Required if no email address
                              @"email": @"someone@example.com", // Required if no id
-                             
+
                              // Reserved property names
                              @"name": @"Test User",
                              @"username": @"testuser",
@@ -202,10 +202,10 @@ NSDictionary *properties = @{
                              @"company_name": @"GoSquared",
                              @"company_industry": @"Customer Analytics",
                              @"company_size": @150000,
-                             
+
                              // Custom properties
                              @"custom": @{
-                                         @"custom_property_name": @"custom property value"
+                                    //   @"custom_property_name": @"custom property value"
                                          }
                              };
 
@@ -230,11 +230,11 @@ let properties = [
 
     // Custom properties
     "custom": [
-        "custom_property_name": "custom property value"
+    //  "custom_property_name": "custom property value"
     ]
 ]
 
-GoSquared.sharedTracker().identify(properties: properties)
+GoSquared.sharedTracker().identifyWithProperties(properties: properties)
 ```
 
 ### Unidentify (e.g. on logout)
