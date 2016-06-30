@@ -463,10 +463,10 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
 - (void)scheduleRequest:(GSRequest *)request
 {
-    // NOTE - this is where we'll make the requests durable later to enable offline event sync - not currently working.
+    // NOTE - this is where we'll make the requests durable later to enable offline event sync - not currently working
 
     [request setLogLevel:self.logLevel];
-    [request send];
+    [request sendWithCompletionHandler:nil];
 }
 
 - (void)sendRequest:(GSRequest *)request completionHandler:(GSRequestCompletionBlock)completionHandler

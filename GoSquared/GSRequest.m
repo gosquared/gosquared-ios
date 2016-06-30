@@ -92,11 +92,6 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
     return request;
 }
 
-- (void)send
-{
-    [self sendWithCompletionHandler:nil];
-}
-
 - (void)sendWithCompletionHandler:(GSRequestCompletionBlock)completionHandler
 {
     NSURLRequest *request = [self URLRequest];
