@@ -22,7 +22,7 @@
 - (void)addItems:(nonnull NSArray<GSTransactionItem *> *)items;
 - (nonnull NSDictionary *)serializeWithVisitorId:(nonnull NSString *)visitorId
                                         personId:(nullable NSString *)personId
-                                       pageIndex:(nonnull NSNumber *)pageIndex
+                                       pageIndex:(nullable NSNumber *)pageIndex
                         lastTransactionTimestamp:(nullable NSNumber *)lastTransactionTimestamp;
 
 @end

@@ -85,20 +85,21 @@
 
     transaction[@"items"] = [NSArray arrayWithArray:items];
 
-    if (!lastTransactionTimestamp) {
+    if (lastTransactionTimestamp == nil) {
         lastTransactionTimestamp = @0;
     }
 
     transaction[@"previous_transaction_timestamp"] = lastTransactionTimestamp;
 
-    
     NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                 @"visitor_id": visitorId,
                                                                                 @"transaction": transaction
                                                                                 }];
 
 
-    body[@"page"] = @{ @"index": pageIndex };
+    if (pageIndex != nil) {
+        body[@"page"] = @{ @"index": pageIndex };
+    }
 
     if (personId != nil) {
         body[@"person_id"] = personId;
