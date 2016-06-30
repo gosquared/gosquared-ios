@@ -11,16 +11,17 @@
 
 @interface GSTransactionItem : NSObject
 
-@property NSString *name;
-@property NSMutableArray<NSString *> *categories;
-@property NSNumber *revenue;
-@property NSNumber *quantity;
-@property NSNumber *price;
+@property (nonnull) NSString *name;
+@property (nonnull) NSMutableArray<NSString *> *categories;
+@property (nonnull) NSNumber *quantity;
+@property (nonnull) NSNumber *price;
+@property (nullable) NSNumber *revenue;
 
-+ (instancetype)transactionItemWithName:(NSString *)name price:(NSNumber *)price quantity:(NSNumber *)quantity;
++ (nonnull instancetype)transactionItemWithName:(nonnull NSString *)name
+                                          price:(nonnull NSNumber *)price
+                                       quantity:(nonnull NSNumber *)quantity;
 
-- (void)setCategory:(NSString *)category;
-
-- (NSDictionary *)serialize;
+- (void)setCategory:(nonnull NSString *)category;
+- (nonnull NSDictionary *)serialize;
 
 @end
