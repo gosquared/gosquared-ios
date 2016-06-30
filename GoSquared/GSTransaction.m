@@ -79,7 +79,7 @@
 
     for (GSTransactionItem *item in self.items) {
         if ([item isKindOfClass:[GSTransactionItem class]]) {
-            [self.items addObject:item.serialize];
+            [items addObject:item.serialize];
         }
     }
 
