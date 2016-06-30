@@ -225,6 +225,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
         GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
 
+        __weak typeof(self) weakself = self;
         [self sendRequest:req completionHandler:^(NSDictionary *data, NSError *error) {
             if (data == nil) {
                 return;
@@ -233,21 +234,21 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
             NSNumber *index = data[@"index"];
 
             if (index != nil && [index isKindOfClass:NSNull.class] == NO) {
-                self.pageview.index = index;
+                weakself.pageview.index = index;
 
                 // call identify with cached properties after initial pageview
-                if ([index isEqualToNumber:@0] && self.personId != nil) {
-                    NSMutableDictionary *props = [[NSMutableDictionary alloc] initWithDictionary:@{ @"id": self.personId }];
+                if ([index isEqualToNumber:@0] && weakself.personId != nil) {
+                    NSMutableDictionary *props = [[NSMutableDictionary alloc] initWithDictionary:@{ @"id": weakself.personId }];
 
                     if (self.personName != nil) {
-                        props[@"name"] = self.personName;
+                        props[@"name"] = weakself.personName;
                     }
 
                     if (self.personEmail != nil) {
-                        props[@"email"] = self.personEmail;
+                        props[@"email"] = weakself.personEmail;
                     }
 
-                    [self identifyWithProperties:props];
+                    [weakself identifyWithProperties:props];
                 }
             }
         }];
@@ -273,17 +274,18 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
     GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
 
+    __weak typeof(self) weakself = self;
     [self sendRequest:req completionHandler:^(NSDictionary *data, NSError *error) {
         if (!error) return;
 
         NSString *errorCode = [NSString stringWithFormat:@"%@", error.userInfo[@"code"]];
 
         if ([errorCode isEqualToString:@"visitor_not_online"]) {
-            [self trackPageview:self.pageview];
+            [weakself trackPageview:weakself.pageview];
         } else if ([errorCode isEqualToString:@"max_inactive_time"]) {
-            [self trackPageview:self.pageview];
+            [weakself trackPageview:weakself.pageview];
         } else if ([errorCode isEqualToString:@"max_session_time"]) {
-            [self trackPageview:self.pageview];
+            [weakself trackPageview:weakself.pageview];
         }
     }];
 
