@@ -12,6 +12,10 @@
 #import "GSTransaction.h"
 #import "GSTransactionItem.h"
 
+#ifndef NS_SWIFT_NAME
+#define NS_SWIFT_NAME(args)
+#endif
+
 @interface GSTracker : NSObject
 
 @property (nonnull) NSString *token;
@@ -24,22 +28,21 @@
 @property (readonly, nullable) NSString *personId;
 @property (readonly, getter=isIdentified) BOOL identified;
 
-
 // event tracking
-- (void)trackEvent:(nonnull NSString *)name;
-- (void)trackEvent:(nonnull NSString *)name properties:(nullable GSPropertyDictionary *)properties;
+- (void)trackEventWithName:(nonnull NSString *)name NS_SWIFT_NAME(trackEvent(name:));
+- (void)trackEventWithName:(nonnull NSString *)name properties:(nullable GSPropertyDictionary *)properties NS_SWIFT_NAME(trackEvent(name:properties:));
 
 // pageview tracking - only used if not using the UIViewController+GSTracking category
-- (void)trackScreen:(nullable NSString *)title;
-- (void)trackScreen:(nullable NSString *)title withPath:(nullable NSString *)path;
+- (void)trackScreenWithTitle:(nullable NSString *)title NS_SWIFT_NAME(trackScreen(title:));
+- (void)trackScreenWithTitle:(nullable NSString *)title path:(nullable NSString *)path NS_SWIFT_NAME(trackScreen(title:path:));
 
 // people
-- (void)identifyWithProperties:(nonnull GSPropertyDictionary *)properties;
+- (void)identifyWithProperties:(nonnull GSPropertyDictionary *)properties NS_SWIFT_NAME(identify(properties:));
 - (void)unidentify;
 
 // ecommerce
 - (void)trackTransaction:(nonnull GSTransaction *)transaction;
-- (void)trackTransaction:(nonnull NSString *)transactionID items:(nonnull NSArray<GSTransactionItem *> *)items;
-- (void)trackTransaction:(nonnull NSString *)transactionID items:(nonnull NSArray<GSTransactionItem *> *)items properties:(nullable GSPropertyDictionary *)properties;
+- (void)trackTransactionWithId:(nonnull NSString *)transactionId items:(nonnull NSArray<GSTransactionItem *> *)items NS_SWIFT_NAME(trackTransaction(id:items:));
+- (void)trackTransactionWithId:(nonnull NSString *)transactionId items:(nonnull NSArray<GSTransactionItem *> *)items properties:(nullable GSPropertyDictionary *)properties NS_SWIFT_NAME(trackTransaction(id:items:properties:));
 
 @end

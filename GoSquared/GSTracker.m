@@ -295,12 +295,12 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
 #pragma mark Public - Event tracking
 
-- (void)trackEvent:(NSString *)name
+- (void)trackEventWithName:(NSString *)name
 {
-    [self trackEvent:name properties:nil];
+    [self trackEventWithName:name properties:nil];
 }
 
-- (void)trackEvent:(NSString *)name properties:(GSPropertyDictionary *)properties
+- (void)trackEventWithName:(NSString *)name properties:(GSPropertyDictionary *)properties
 {
     [self verifyCredsAreSet];
 
@@ -319,14 +319,14 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
 #pragma mark Public - Ecommerce tracking
 
-- (void)trackTransaction:(NSString *)transactionID items:(NSArray *)items
+- (void)trackTransactionWithId:(NSString *)transactionId items:(NSArray *)items
 {
-    [self trackTransaction:transactionID items:items properties:nil];
+    [self trackTransactionWithId:transactionId items:items properties:nil];
 }
 
-- (void)trackTransaction:(NSString *)transactionID items:(NSArray *)items properties:(GSPropertyDictionary *)properties
+- (void)trackTransactionWithId:(NSString *)transactionId items:(NSArray *)items properties:(GSPropertyDictionary *)properties
 {
-    GSTransaction *transaction = [GSTransaction transactionWithID:transactionID properties:properties];
+    GSTransaction *transaction = [GSTransaction transactionWithId:transactionId properties:properties];
     [transaction addItems:items];
 
     [self trackTransaction:transaction];
