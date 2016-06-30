@@ -8,7 +8,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
 #import "GSTracker.h"
 #import "GSTrackerDelegate.h"
 #import "GSDevice.h"
@@ -301,7 +300,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     [self trackEvent:name properties:nil];
 }
 
-- (void)trackEvent:(NSString *)name properties:(NSDictionary *)properties
+- (void)trackEvent:(NSString *)name properties:(GSPropertyDictionary *)properties
 {
     [self verifyCredsAreSet];
 
@@ -325,7 +324,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     [self trackTransaction:transactionID items:items properties:nil];
 }
 
-- (void)trackTransaction:(NSString *)transactionID items:(NSArray *)items properties:(NSDictionary *)properties
+- (void)trackTransaction:(NSString *)transactionID items:(NSArray *)items properties:(GSPropertyDictionary *)properties
 {
     GSTransaction *transaction = [GSTransaction transactionWithID:transactionID properties:properties];
     [transaction addItems:items];
@@ -354,7 +353,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
 #pragma mark Public - People Analytics
 
-- (void)identifyWithProperties:(NSDictionary *)properties
+- (void)identifyWithProperties:(GSPropertyDictionary *)properties
 {
     [self verifyCredsAreSet];
 

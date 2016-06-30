@@ -8,7 +8,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
 #import "GSDevice.h"
 
 static NSString * const kGSUDIDDefaultsKey = @"com.gosquared.defaults.device.UDID";

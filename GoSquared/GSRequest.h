@@ -8,8 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#import "GSLogLevel.h"
+#import "GSTypes.h"
 
 typedef NS_ENUM(NSInteger, GSRequestMethod) {
     GSRequestMethodGET,

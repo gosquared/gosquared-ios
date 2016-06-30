@@ -8,7 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GSLogLevel.h"
+#import "GSTypes.h"
 #import "GSTransaction.h"
 #import "GSTransactionItem.h"
 
@@ -27,19 +27,19 @@
 
 // event tracking
 - (void)trackEvent:(nonnull NSString *)name;
-- (void)trackEvent:(nonnull NSString *)name properties:(nullable NSDictionary *)properties;
+- (void)trackEvent:(nonnull NSString *)name properties:(nullable GSPropertyDictionary *)properties;
 
 // pageview tracking - only used if not using the UIViewController+GSTracking category
 - (void)trackScreen:(nullable NSString *)title;
 - (void)trackScreen:(nullable NSString *)title withPath:(nullable NSString *)path;
 
 // people
-- (void)identifyWithProperties:(nonnull NSDictionary *)properties;
+- (void)identifyWithProperties:(nonnull GSPropertyDictionary *)properties;
 - (void)unidentify;
 
 // ecommerce
 - (void)trackTransaction:(nonnull GSTransaction *)transaction;
 - (void)trackTransaction:(nonnull NSString *)transactionID items:(nonnull NSArray<GSTransactionItem *> *)items;
-- (void)trackTransaction:(nonnull NSString *)transactionID items:(nonnull NSArray<GSTransactionItem *> *)items properties:(nullable NSDictionary *)properties;
+- (void)trackTransaction:(nonnull NSString *)transactionID items:(nonnull NSArray<GSTransactionItem *> *)items properties:(nullable GSPropertyDictionary *)properties;
 
 @end

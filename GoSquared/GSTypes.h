@@ -1,5 +1,5 @@
 //
-//  GSLogLevel.h
+//  GSTypes.h
 //  GoSquared
 //
 //  Created by Edward Wellbrook on 09/05/16.
@@ -13,3 +13,5 @@ typedef NS_ENUM(NSInteger, GSLogLevel) {
     GSLogLevelQuiet,
     GSLogLevelDebug
 };
+
+typedef NSDictionary<NSString *, id> GSPropertyDictionary;
