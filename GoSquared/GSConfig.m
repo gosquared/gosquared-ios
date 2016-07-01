@@ -51,7 +51,7 @@ static NSString * const kGSTransactionLastTimestampKey = @"com.gosquared.transac
 + (NSNumber *)lastPageviewTimestampForToken:(NSString *)token
 {
     NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPageviewLastTimestampKey, token];
-    NSString *timestamp = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    NSNumber *timestamp = [[NSUserDefaults standardUserDefaults] objectForKey:key];
 
     if (timestamp == nil) {
         timestamp = @0;
@@ -63,12 +63,12 @@ static NSString * const kGSTransactionLastTimestampKey = @"com.gosquared.transac
 + (NSNumber *)lastTransactionTimestampForToken:(NSString *)token
 {
     NSString *key = [NSString stringWithFormat:@"%@.%@", kGSTransactionLastTimestampKey, token];
-    NSString *timestamp = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    NSNumber *timestamp = [[NSUserDefaults standardUserDefaults] objectForKey:key];
 
     if (timestamp == nil) {
         timestamp = @0;
     }
-    
+
     return timestamp;
 }
 
