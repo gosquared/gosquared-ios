@@ -1,5 +1,22 @@
 # GoSquared iOS Change Log
 
+## 2016-07-01, [v0.7.0]
+
+### Added
+
+- Added `NS_SWIFT_NAME` overrides to tracking methods for better Swift use
+- Added nullability annotations to `GSTransactionItem`
+
+### Changed
+
+- Tracking methods now have updated names
+- Property dictionary paramters are now a `NSString: id` mapping
+
+### Fixed
+
+- Fixed persisted properties being leaked across multiple GSTracker instances
+- Fixed some retain cycles
+
 ## 2016-06-30, [v0.6.2]
 
 ### Fixed
