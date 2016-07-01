@@ -127,8 +127,8 @@ You can use one of the below methods to manually track a UIViewController:
 
 - (void)viewDidAppear
 {
-    [[GoSquared sharedTracker] trackScreen:self.title];
-    [[GoSquared sharedTracker] trackScreen:self.title withPath:@"/custom-url-path"];
+    [[GoSquared sharedTracker] trackScreenWithTitle:self.title];
+    [[GoSquared sharedTracker] trackScreenWithTitle:self.title path:@"/custom-url-path"];
 }
 ```
 
@@ -142,8 +142,8 @@ import GoSquared
 override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
 
-    GoSquared.sharedTracker().trackScreen(self.title)
-    GoSquared.sharedTracker().trackScreen(self.title, withPath:"/custom-url-path")
+    GoSquared.sharedTracker().trackScreen(title: self.title)
+    GoSquared.sharedTracker().trackScreen(title: self.title, path:"/custom-url-path")
 }
 
 ```
@@ -155,13 +155,13 @@ override func viewDidAppear(animated: Bool) {
 **Objective-C:**
 
 ```objc
-[[GoSquared sharedTracker] trackEvent:"event name"];
+[[GoSquared sharedTracker] trackEventWithName:"event name"];
 ```
 
 **Swift:**
 
 ```swift
-GoSquared.sharedTracker().trackEvent("event name")
+GoSquared.sharedTracker().trackEvent(name: "event name")
 ```
 
 ### Track an event with properties
@@ -169,13 +169,13 @@ GoSquared.sharedTracker().trackEvent("event name")
 **Objective-C:**
 
 ```objc
-[[GoSquared sharedTracker] trackEvent:@"event name" properties:@{ @"properties": @"are cool" }];
+[[GoSquared sharedTracker] trackEventWithName:@"event name" properties:@{ @"properties": @"are cool" }];
 ```
 
 **Swift:**
 
 ```swift
-GoSquared.sharedTracker().trackEvent("event name", properties: ["properties": "are cool"])
+GoSquared.sharedTracker().trackEvent(name: "event name", properties: ["properties": "are cool"])
 ```
 
 ## People
@@ -205,11 +205,11 @@ NSDictionary *properties = @{
 
                              // Custom properties
                              @"custom": @{
-                                    //   @"custom_property_name": @"custom property value"
+                                      // @"custom_property_name": @"custom property value"
                                          }
                              };
 
-[[GoSquared sharedTracker] identifyWithProperties: properties];
+[[GoSquared sharedTracker] identifyWithProperties:properties];
 ```
 
 **Swift:**
@@ -230,11 +230,11 @@ let properties = [
 
     // Custom properties
     "custom": [
-    //  "custom_property_name": "custom property value"
+    // "custom_property_name": "custom property value"
     ]
 ]
 
-GoSquared.sharedTracker().identifyWithProperties(properties: properties)
+GoSquared.sharedTracker().identify(properties: properties)
 ```
 
 ### Unidentify (e.g. on logout)
@@ -262,7 +262,7 @@ GSTransactionItem *coke = [GSTransactionItem transactionItemWithName:@"Coca Cola
                                                                price:@0.99
                                                             quantity:@6];
 
-[[GoSquared sharedTracker] trackTransaction:@"unique-id" items: @[ coke ]];
+[[GoSquared sharedTracker] trackTransactionWithId:@"unique-id" items: @[ coke ]];
 ```
 
 **Swift:**
@@ -270,7 +270,7 @@ GSTransactionItem *coke = [GSTransactionItem transactionItemWithName:@"Coca Cola
 ```swift
 let coke = GSTransactionItem(name: "Coca Cola", price: 0.99, quantity: 6)
 
-GoSquared.sharedTracker().trackTransaction("unique-id", items: [coke])
+GoSquared.sharedTracker().trackTransaction(id: "unique-id", items: [coke])
 ```
 
 ## Code of Conduct
