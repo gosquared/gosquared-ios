@@ -105,6 +105,8 @@
 		B7158086E9C839CB1A17F5AAA6CD8F55 /* GSChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 31C2DC29AB182FE1CFD7A19B85B5A992 /* GSChatManager.m */; };
 		B9834781308B5A0DBAF8F8CCF4BDCA9F /* PINRemoteLock.m in Sources */ = {isa = PBXBuildFile; fileRef = DE513A5FC7C2EBF3B8703499C33C67BD /* PINRemoteLock.m */; };
 		BA9D19928B5CFC78F187583E7D3D7D4F /* PINRemoteImageManagerResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 65BBE0BADF9BC1CBA76F5C24F2E6D5DD /* PINRemoteImageManagerResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC530D041D26AF290060D28B /* GSConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = BC530D021D26AF290060D28B /* GSConfig.h */; };
+		BC530D051D26AF290060D28B /* GSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BC530D031D26AF290060D28B /* GSConfig.m */; };
 		C0A97BC74589A0C42FE42773CE10641D /* GSChatComposeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1002AC1831AE7E6882DC429F728F32 /* GSChatComposeTextView.m */; };
 		C154FF05A9B6B7AE12DC724D5814533B /* GSChatHeaderLoadingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B74E18341808E2FA46DEE17AEAADC29 /* GSChatHeaderLoadingView.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		C34A306B7532B432190E2F44A6CF3B9E /* GSRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 882999D9F4E3D51AEACAD81AE11567A4 /* GSRequest.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -313,6 +315,8 @@
 		B7C60AA749AAA3D0E4D071751B91E800 /* GSChatViewLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatViewLayout.m; sourceTree = "<group>"; };
 		BBACDEBA08DC653173C4D36811D8D1B3 /* PINRemoteImage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PINRemoteImage.xcconfig; sourceTree = "<group>"; };
 		BC3815E1FB9C5AB4E37657F007B05BF2 /* PINImage+DecodedImage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "PINImage+DecodedImage.m"; path = "Pod/Classes/Categories/PINImage+DecodedImage.m"; sourceTree = "<group>"; };
+		BC530D021D26AF290060D28B /* GSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSConfig.h; sourceTree = "<group>"; };
+		BC530D031D26AF290060D28B /* GSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSConfig.m; sourceTree = "<group>"; };
 		C0FDF1C92BC0B46E90FD817704BF370D /* SRWebSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SRWebSocket.m; path = SocketRocket/SRWebSocket.m; sourceTree = "<group>"; };
 		C1EF4A9D11EC5C779E16B4737AD6E9DF /* GSTracker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSTracker.m; sourceTree = "<group>"; };
 		C2D6FBDCD41E925C78550B4FAE99DE9F /* GSPageview.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSPageview.m; sourceTree = "<group>"; };
@@ -585,6 +589,8 @@
 				FA1563BDB3D321834EC7430B211B11A0 /* GSRequest.m */,
 				E9D2ACD9665E9E39F583F65E0167EF48 /* GSTracker.h */,
 				C1EF4A9D11EC5C779E16B4737AD6E9DF /* GSTracker.m */,
+				BC530D021D26AF290060D28B /* GSConfig.h */,
+				BC530D031D26AF290060D28B /* GSConfig.m */,
 				7494DBC14AF88FAD56E3C26B7994C3FD /* GSTrackerDelegate.h */,
 				82608DBAC365438894B16B00CE7888EC /* GSTrackerEvent.h */,
 				19FE251B902A8AA4EB5A9889DFFB0DAB /* GSTrackerEvent.m */,
@@ -816,6 +822,7 @@
 				CEEFDAADA46ED2EA4A6DAD539A0A4DDC /* GoSquared.h in Headers */,
 				7650DB74AD302A2175E94C4BFA96E427 /* GSChatBarButtonItem.h in Headers */,
 				D0DE43854ECF7BB3C94F82893F57EFF7 /* GSChatBubbleCell.h in Headers */,
+				BC530D041D26AF290060D28B /* GSConfig.h in Headers */,
 				44E9D4F554F23B5BCF7487D838EFBCC8 /* GSChatBubbleContent.h in Headers */,
 				2A0A45E0B1671F10C0B4CC2A62C2BC40 /* GSChatComposeTextView.h in Headers */,
 				641E26A474A18D0B9870417013372F00 /* GSChatComposeView.h in Headers */,
@@ -1044,6 +1051,7 @@
 				97D3520C516B5E4E78BB8250509FD15A /* GSRequest.m in Sources */,
 				CAB50B396D883AA9D745394E1ACBA28D /* GSTracker+Chat.m in Sources */,
 				679BFA2CC72AB4D72B2E625159585220 /* GSTracker.m in Sources */,
+				BC530D051D26AF290060D28B /* GSConfig.m in Sources */,
 				9F349D9709DFF5E71DF322370199AA82 /* GSTrackerEvent.m in Sources */,
 				833C03DEC47E7A2682422D34FE3A44E4 /* GSTransaction.m in Sources */,
 				0128DEA53157B69C7B77779EAF318392 /* GSTransactionItem.m in Sources */,

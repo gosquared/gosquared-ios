@@ -18,15 +18,17 @@
 
 @interface GSTracker : NSObject
 
-@property (nonnull) NSString *token;
-@property (nonnull) NSString *key;
+@property (nonatomic, nullable) NSString *token;
+@property (nullable) NSString *key;
 
 @property (nonatomic) BOOL shouldTrackInBackground;
 @property GSLogLevel logLevel;
 
-@property (readonly, nonnull) NSString *visitorId;
+@property (readonly, nullable) NSString *visitorId;
 @property (readonly, nullable) NSString *personId;
 @property (readonly, getter=isIdentified) BOOL identified;
+
+- (nonnull instancetype)initWithToken:(nonnull NSString *)token key:(nonnull NSString *)key;
 
 // event tracking
 - (void)trackEventWithName:(nonnull NSString *)name NS_SWIFT_NAME(trackEvent(name:));
