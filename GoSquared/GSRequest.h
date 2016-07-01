@@ -8,8 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#import "GSLogLevel.h"
+#import "GSTypes.h"
 
 typedef NS_ENUM(NSInteger, GSRequestMethod) {
     GSRequestMethodGET,
@@ -28,7 +27,6 @@ typedef void (^GSRequestCompletionBlock)(NSDictionary  * _Nullable data, NSError
 + (nonnull instancetype)requestWithMethod:(GSRequestMethod)method path:(nonnull NSString *)path body:(nullable NSDictionary *)body;
 + (nonnull instancetype)requestWithMethod:(GSRequestMethod)method URL:(nonnull NSURL *)URL body:(nullable NSDictionary *)body;
 
-- (void)send;
 - (void)sendWithCompletionHandler:(nullable GSRequestCompletionBlock)completionHandler;
 
 @end

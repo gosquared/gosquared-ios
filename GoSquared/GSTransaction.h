@@ -12,11 +12,11 @@
 
 @interface GSTransaction : NSObject
 
-@property (nonnull) NSString *transactionID;
+@property (nonnull) NSString *transactionId;
 @property (nullable) NSDictionary *properties;
 
-+ (nonnull instancetype)transactionWithID:(nonnull NSString *)transactionID;
-+ (nonnull instancetype)transactionWithID:(nonnull NSString *)transactionID properties:(nullable NSDictionary *)properties;
++ (nonnull instancetype)transactionWithId:(nonnull NSString *)transactionId;
++ (nonnull instancetype)transactionWithId:(nonnull NSString *)transactionId properties:(nullable NSDictionary *)properties;
 
 - (void)addItem:(nonnull GSTransactionItem *)item;
 - (void)addItems:(nonnull NSArray<GSTransactionItem *> *)items;

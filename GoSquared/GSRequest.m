@@ -10,8 +10,6 @@
 #import "GSRequest.h"
 #import "GSDevice.h"
 
-static NSMutableArray *GSRequestsInProgress;
-
 const float kGSRequestDefaultTimeout = 20.0f;
 static NSString * const kGSAPIBase = @"https://api.gosquared.com";
 
@@ -25,22 +23,6 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
 @end
 
 @implementation GSRequest
-
-+ (void)addRequestRetain:(GSRequest *)req
-{
-    if (!GSRequestsInProgress) {
-        GSRequestsInProgress = [[NSMutableArray alloc] init];
-    }
-
-    [GSRequestsInProgress addObject:req];
-}
-
-+ (void)clearRequestRetain:(GSRequest *)req
-{
-    if (GSRequestsInProgress) {
-        [GSRequestsInProgress removeObject:req];
-    }
-}
 
 + (instancetype)requestWithMethod:(GSRequestMethod)method path:(NSString *)path body:(NSDictionary *)body
 {
@@ -108,11 +90,6 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
     }
 
     return request;
-}
-
-- (void)send
-{
-    [self sendWithCompletionHandler:nil];
 }
 
 - (void)sendWithCompletionHandler:(GSRequestCompletionBlock)completionHandler

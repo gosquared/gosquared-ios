@@ -30,24 +30,24 @@
 
 + (instancetype)transaction:(NSString *)transactionId
 {
-    return [GSTransaction transactionWithID:transactionId properties:nil];
+    return [GSTransaction transactionWithId:transactionId properties:nil];
 }
 
-+ (instancetype)transactionWithID:(NSString *)transactionID
++ (instancetype)transactionWithId:(NSString *)transactionId
 {
-    return [GSTransaction transactionWithID:transactionID properties:nil];
+    return [GSTransaction transactionWithId:transactionId properties:nil];
 }
 
-+ (instancetype)transactionWithID:(NSString *)transactionID properties:(NSDictionary *)properties
++ (instancetype)transactionWithId:(NSString *)transactionId properties:(NSDictionary *)properties
 {
-    GSTransaction *t = [[GSTransaction alloc] init];
+    GSTransaction *transaction = [[GSTransaction alloc] init];
 
-    if (t) {
-        t.transactionID = transactionID;
-        t.properties = properties;
+    if (transaction) {
+        transaction.transactionId = transactionId;
+        transaction.properties = properties;
     }
 
-    return t;
+    return transaction;
 }
 
 - (void)addItem:(GSTransactionItem *)item
@@ -65,7 +65,7 @@
 - (NSDictionary *)serializeWithVisitorId:(NSString *)visitorId personId:(NSString *)personId pageIndex:(NSNumber *)pageIndex lastTransactionTimestamp:(NSNumber *)lastTransactionTimestamp
 {
     NSMutableDictionary *transaction = [[NSMutableDictionary alloc] init];
-    transaction[@"id"] = self.transactionID;
+    transaction[@"id"] = self.transactionId;
 
     if (self.properties) {
         transaction[@"opts"] = self.properties;

@@ -15,6 +15,9 @@
 @property (nullable) NSDictionary *properties;
 
 + (nonnull instancetype)eventWithName:(nonnull NSString *)name properties:(nullable NSDictionary *)properties;
-- (nonnull NSDictionary *)serializeWithVisitorId:(nonnull NSString *)visitorId personId:(nullable NSString *)personId pageIndex:(nonnull NSNumber *)pageIndex;
+
+- (nonnull NSDictionary *)serializeWithVisitorId:(nonnull NSString *)visitorId
+                                        personId:(nullable NSString *)personId
+                                       pageIndex:(nonnull NSNumber *)pageIndex;
 
 @end
