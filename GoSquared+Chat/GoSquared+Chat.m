@@ -16,6 +16,7 @@
     static dispatch_once_t onceToken;
 
     dispatch_once(&onceToken, ^{
+        [[GoSquared sharedTracker] performSelector:"verifyCredsAreSet"];
         sharedChatViewController = [[GSChatViewController alloc] initWithTracker:[GoSquared sharedTracker]];
     });
     return sharedChatViewController;
