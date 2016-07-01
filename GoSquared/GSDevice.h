@@ -11,7 +11,6 @@
 
 @interface GSDevice : NSObject
 
-@property (nonnull) NSString *udid;
 @property (nonnull) NSNumber *screenHeight;
 @property (nonnull) NSNumber *screenWidth;
 @property (nonnull) NSNumber *screenPixelRatio;

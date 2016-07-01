@@ -37,9 +37,6 @@ static NSString * const kGSUDIDDefaultsKey = @"com.gosquared.defaults.device.UDI
         self.screenPixelRatio = [NSNumber numberWithFloat:[UIScreen mainScreen].scale];
         self.colorDepth = @24;
 
-        // device ID
-        self.udid = [self deviceIdentifier];
-
         // timezone
         NSDate *date = [NSDate new];
         NSTimeZone *currentTimeZone = [NSTimeZone localTimeZone];
@@ -78,20 +75,6 @@ static NSString * const kGSUDIDDefaultsKey = @"com.gosquared.defaults.device.UDI
     }
 
     return self;
-}
-
-- (NSString *)deviceIdentifier
-{
-    NSString *deviceIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:kGSUDIDDefaultsKey];
-
-    if (deviceIdentifier == nil) {
-        deviceIdentifier = [[NSUUID alloc] init].UUIDString;
-
-        [[NSUserDefaults standardUserDefaults] setObject:deviceIdentifier forKey:kGSUDIDDefaultsKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-
-    return deviceIdentifier;
 }
 
 @end
