@@ -1,5 +1,12 @@
 # GoSquared iOS Change Log
 
+## 2016-07-01, [v0.7.1]
+
+## Fixed
+
+- Fixed incorrect types in `GSConfig`
+- Fixed old method name in Autoload
+
 ## 2016-07-01, [v0.7.0]
 
 ### Added
