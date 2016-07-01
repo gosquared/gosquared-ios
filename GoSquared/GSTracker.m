@@ -145,12 +145,12 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
 #pragma mark Public - Pageview tracking
 
-- (void)trackScreen:(NSString *)title
+- (void)trackScreenWithTitle:(NSString *)title
 {
-    [self trackScreen:title withPath:nil];
+    [self trackScreenWithTitle:title path:nil];
 }
 
-- (void)trackScreen:(NSString *)title withPath:(NSString *)path
+- (void)trackScreenWithTitle:(NSString *)title path:(NSString *)path
 {
     [self verifyCredsAreSet];
     [self invalidatePingTimer];
