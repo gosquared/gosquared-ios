@@ -1,8 +1,14 @@
 # GoSquared iOS Change Log
 
+## 2016-07-05, [v0.7.2]
+
+### Changed
+
+- Network request errors will always be logged
+
 ## 2016-07-01, [v0.7.1]
 
-## Fixed
+### Fixed
 
 - Fixed incorrect types in `GSConfig`
 - Fixed old method name in Autoload
@@ -229,6 +235,9 @@
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
 
+[v0.7.2]: https://github.com/gosquared/gosquared-ios/compare/v0.7.1...v0.7.2
+[v0.7.1]: https://github.com/gosquared/gosquared-ios/compare/v0.7.0...v0.7.1
+[v0.7.0]: https://github.com/gosquared/gosquared-ios/compare/v0.6.2...v0.7.0
 [v0.6.2]: https://github.com/gosquared/gosquared-ios/compare/v0.6.1...v0.6.2
 [v0.6.1]: https://github.com/gosquared/gosquared-ios/compare/v0.6.0...v0.6.1
 [v0.6.0]: https://github.com/gosquared/gosquared-ios/compare/v0.5.1...v0.6.0
