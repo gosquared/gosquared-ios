@@ -106,19 +106,23 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
         }
     }
 
+    void (^handleResponse)(NSDictionary *, NSError *) = ^(NSDictionary *json, NSError *err) {
+        if (completionHandler) {
+            completionHandler(json, err);
+        } else if (err != nil) {
+            NSLog(@"GSRequst: Error response: %@", err.userInfo);
+        }
+    };
+
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 
-        if (completionHandler == nil) {
-            return;
-        }
-
         if (error) {
-            return completionHandler(nil, error);
+            return handleResponse(nil, error);
         }
 
         if (!data) {
-            return completionHandler(nil, [NSError errorWithDomain:@"com.gosquared" code:-1 userInfo:nil]);
+            return handleResponse(nil, [NSError errorWithDomain:@"com.gosquared" code:-1 userInfo:nil]);
         }
 
         NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
@@ -126,18 +130,18 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
 
         if (error != nil) {
-            return completionHandler(nil, error);
+            return handleResponse(nil, error);
         } else if (success) {
-            return completionHandler(json, nil);
+            return handleResponse(json, nil);
         } else {
-            return completionHandler(nil, [NSError errorWithDomain:@"com.gosquared" code:-1 userInfo:json]);
+            return handleResponse(nil, [NSError errorWithDomain:@"com.gosquared" code:-1 userInfo:json]);
         }
     }];
 
     if (self.logLevel == GSLogLevelDebug) {
-        NSLog(@"GSRequest::sending request - %@", self);
+        NSLog(@"GSRequest: sending request - %@", self);
     } else if (self.logLevel == GSLogLevelQuiet) {
-        NSLog(@"GSRequest sending request");
+        NSLog(@"GSRequest: sending request");
     }
 
     [task resume];
