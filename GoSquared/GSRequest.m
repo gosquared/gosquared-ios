@@ -110,7 +110,7 @@ static NSString * const kGSAPIBase = @"https://api.gosquared.com";
         if (completionHandler) {
             completionHandler(json, err);
         } else if (err != nil) {
-            NSLog(@"GSRequst: Error response: %@", err.userInfo);
+            NSLog(@"GSRequest: Error response: %@", err.userInfo);
         }
     };
 
