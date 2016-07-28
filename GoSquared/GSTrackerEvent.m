@@ -37,7 +37,9 @@
                                                                                 }];
 
 
-    body[@"page"] = @{ @"index": pageIndex };
+    if (pageIndex != nil) {
+        body[@"page"] = @{ @"index": pageIndex };
+    }
 
     if (personId != nil) {
         body[@"person_id"] = personId;
