@@ -1,5 +1,12 @@
 # GoSquared iOS Change Log
 
+## 2016-07-28, [v0.7.3]
+
+### Fixed
+
+- Fixed crash when tracking event before tracking a screen
+- Fixed incorrect use of performMethodWithSelector in GoSquared+Chat.m
+
 ## 2016-07-05, [v0.7.2]
 
 ### Changed
@@ -235,6 +242,7 @@
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
 
+[v0.7.3]: https://github.com/gosquared/gosquared-ios/compare/v0.7.2...v0.7.3
 [v0.7.2]: https://github.com/gosquared/gosquared-ios/compare/v0.7.1...v0.7.2
 [v0.7.1]: https://github.com/gosquared/gosquared-ios/compare/v0.7.0...v0.7.1
 [v0.7.0]: https://github.com/gosquared/gosquared-ios/compare/v0.6.2...v0.7.0
