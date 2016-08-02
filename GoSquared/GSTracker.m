@@ -240,11 +240,11 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
                 if ([index isEqualToNumber:@0] && weakself.personId != nil) {
                     NSMutableDictionary *props = [[NSMutableDictionary alloc] initWithDictionary:@{ @"id": weakself.personId }];
 
-                    if (self.personName != nil) {
+                    if (weakself.personName != nil) {
                         props[@"name"] = weakself.personName;
                     }
 
-                    if (self.personEmail != nil) {
+                    if (weakself.personEmail != nil) {
                         props[@"email"] = weakself.personEmail;
                     }
 
