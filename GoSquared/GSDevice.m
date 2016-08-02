@@ -63,13 +63,13 @@ static NSString * const kGSUDIDDefaultsKey = @"com.gosquared.defaults.device.UDI
 
         NSString *osVersionStr = [versionComponents componentsJoinedByString:@"_"];
 
-        #if TARGET_OS_TV
-            NSString *deviceType = @"Apple TV";
-            self.os = @"tvOS";
-        #else
-            NSString *deviceType = [[UIDevice currentDevice].model componentsSeparatedByString:@" "][0];
-            self.os = @"iOS";
-        #endif
+#if TARGET_OS_TV
+        NSString *deviceType = @"Apple TV";
+        self.os = @"tvOS";
+#else
+        NSString *deviceType = [[UIDevice currentDevice].model componentsSeparatedByString:@" "][0];
+        self.os = @"iOS";
+#endif
 
         self.userAgent = [NSString stringWithFormat:@"%@/%@ (%@; CPU OS %@ like Mac OS X)", appNameStr, appVersionStr, deviceType, osVersionStr];
     }
