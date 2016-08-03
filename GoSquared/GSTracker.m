@@ -390,9 +390,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     GSRequest *req = [GSRequest requestWithMethod:GSRequestMethodPOST path:path body:body];
     [self scheduleRequest:req];
 
-    if (self.delegate != nil) {
-        [self.delegate didIdentifyPerson];
-    }
+    [self.delegate didIdentifyPerson];
 
     // save the identified person properties for later app launches
     [GSConfig setPersonId:self.personId forToken:self.token];
@@ -414,9 +412,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
     self.identified = NO;
 
-    if (self.delegate != nil) {
-        [self.delegate didUnidentifyPerson];
-    }
+    [self.delegate didUnidentifyPerson];
 
     [GSConfig setPersonId:nil forToken:self.token];
     [GSConfig setPersonName:nil forToken:self.token];
