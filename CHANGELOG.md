@@ -1,5 +1,10 @@
 # GoSquared iOS Change Log
 
+## 2016-08-15, [v0.7.4]
+
+### Fixed
+- Fixed potential retain cycle in GSTracker
+
 ## 2016-07-28, [v0.7.3]
 
 ### Fixed
@@ -242,6 +247,7 @@
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
 
+[v0.7.4]: https://github.com/gosquared/gosquared-ios/compare/v0.7.3...v0.7.4
 [v0.7.3]: https://github.com/gosquared/gosquared-ios/compare/v0.7.2...v0.7.3
 [v0.7.2]: https://github.com/gosquared/gosquared-ios/compare/v0.7.1...v0.7.2
 [v0.7.1]: https://github.com/gosquared/gosquared-ios/compare/v0.7.0...v0.7.1
