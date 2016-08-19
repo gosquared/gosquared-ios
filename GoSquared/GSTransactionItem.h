@@ -21,7 +21,6 @@
                                           price:(nonnull NSNumber *)price
                                        quantity:(nonnull NSNumber *)quantity;
 
-- (void)setCategory:(nonnull NSString *)category;
 - (nonnull NSDictionary *)serialize;
 
 @end

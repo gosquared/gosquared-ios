@@ -32,11 +32,6 @@
     return item;
 }
 
-- (void)setCategory:(NSString *)category
-{
-    self.categories = [NSMutableArray arrayWithObject:category];
-}
-
 - (NSDictionary *)serialize
 {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
