@@ -121,4 +121,10 @@ static NSString * const kGSTransactionLastTimestampKey = @"com.gosquared.transac
     return UUID;
 }
 
++ (void)regenerateVisitorIdForToken:(NSString *)token
+{
+    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSVisitorIdKey, token];
+    [GSConfig generatePersistedUUIDforKey:key];
+}
+
 @end

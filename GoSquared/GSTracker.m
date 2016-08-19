@@ -403,6 +403,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     [self verifyCredsAreSet];
 
     // wipe the current anon ID
+    [GSConfig regenerateVisitorIdForToken:self.token];
     self.visitorId = [GSConfig visitorIdForToken:self.token];
 
     // wipe the current people ID
