@@ -10,21 +10,16 @@
 
 @interface GSConfig : NSObject
 
-+ (nonnull NSString *)visitorIdForToken:(nonnull NSString *)token;
-+ (nullable NSString *)personIdForToken:(nonnull NSString *)token;
-+ (nullable NSString *)personNameForToken:(nonnull NSString *)token;
-+ (nullable NSString *)personEmailForToken:(nonnull NSString *)token;
-+ (nonnull NSNumber *)lastPageviewTimestampForToken:(nonnull NSString *)token;
-+ (nonnull NSNumber *)lastTransactionTimestampForToken:(nonnull NSString *)token;
-+ (BOOL)isReturningForToken:(nonnull NSString *)token;
+@property (nonnull) NSString *token;
+@property (nonnull, readonly, nonatomic) NSString *visitorId;
+@property (nullable, nonatomic) NSString *personId;
+@property (nullable, nonatomic) NSString *personName;
+@property (nullable, nonatomic) NSString *personEmail;
+@property (nonnull, nonatomic) NSNumber *lastPageviewTimestamp;
+@property (nonnull, nonatomic) NSNumber *lastTransactionTimestamp;
+@property (nonatomic, getter=isReturning) BOOL returning;
 
-+ (void)setPersonId:(nullable NSString *)personId forToken:(nonnull NSString *)token;
-+ (void)setPersonName:(nullable NSString *)name forToken:(nonnull NSString *)token;
-+ (void)setPersonEmail:(nullable NSString *)email forToken:(nonnull NSString *)token;
-+ (void)setLastPageviewTimestamp:(nonnull NSNumber *)timestamp forToken:(nonnull NSString *)token;
-+ (void)setLastTransactionTimestamp:(nonnull NSNumber *)timestamp forToken:(nonnull NSString *)token;
-+ (void)setReturning:(BOOL)isReturning forToken:(nonnull NSString *)token;
-
-+ (void)regenerateVisitorIdForToken:(NSString *)token;
+- (nonnull instancetype)initWithToken:(nonnull NSString *)token;
+- (void)regenerateVisitorId;
 
 @end

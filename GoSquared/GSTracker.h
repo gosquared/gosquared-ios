@@ -24,8 +24,8 @@
 @property (nonatomic) BOOL shouldTrackInBackground;
 @property GSLogLevel logLevel;
 
-@property (readonly, nullable) NSString *visitorId;
-@property (readonly, nullable) NSString *personId;
+@property (readonly, nonatomic, nullable) NSString *visitorId;
+@property (readonly, nonatomic, nullable) NSString *personId;
 @property (readonly, getter=isIdentified) BOOL identified;
 
 - (nonnull instancetype)initWithToken:(nonnull NSString *)token key:(nonnull NSString *)key;

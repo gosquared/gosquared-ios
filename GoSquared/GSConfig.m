@@ -18,9 +18,18 @@ static NSString * const kGSTransactionLastTimestampKey = @"com.gosquared.transac
 
 @implementation GSConfig
 
-+ (NSString *)visitorIdForToken:(NSString *)token
+- (instancetype)initWithToken:(NSString *)token
 {
-    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSVisitorIdKey, token];
+    self = [super init];
+    if (self) {
+        self.token = token;
+    }
+    return self;
+}
+
+- (NSString *)visitorId
+{
+    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSVisitorIdKey, self.token];
     NSString *visitorId = [[NSUserDefaults standardUserDefaults] objectForKey:key];
 
     if (visitorId == nil) {
@@ -30,88 +39,88 @@ static NSString * const kGSTransactionLastTimestampKey = @"com.gosquared.transac
     return visitorId;
 }
 
-+ (NSString *)personIdForToken:(NSString *)token
+- (NSString *)personId
 {
-    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPeoplePersonIdKey, token];
+    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPeoplePersonIdKey, self.token];
     return [[NSUserDefaults standardUserDefaults] objectForKey:key];
 }
 
-+ (NSString *)personNameForToken:(NSString *)token
+- (void)setPersonId:(NSString *)personId
 {
-    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPeoplePersonNameKey, token];
-    return [[NSUserDefaults standardUserDefaults] objectForKey:key];
-}
-
-+ (NSString *)personEmailForToken:(NSString *)token
-{
-    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPeoplePersonEmailKey, token];
-    return [[NSUserDefaults standardUserDefaults] objectForKey:key];
-}
-
-+ (NSNumber *)lastPageviewTimestampForToken:(NSString *)token
-{
-    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPageviewLastTimestampKey, token];
-    NSNumber *timestamp = [[NSUserDefaults standardUserDefaults] objectForKey:key];
-
-    if (timestamp == nil) {
-        timestamp = @0;
-    }
-
-    return timestamp;
-}
-
-+ (NSNumber *)lastTransactionTimestampForToken:(NSString *)token
-{
-    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSTransactionLastTimestampKey, token];
-    NSNumber *timestamp = [[NSUserDefaults standardUserDefaults] objectForKey:key];
-
-    if (timestamp == nil) {
-        timestamp = @0;
-    }
-
-    return timestamp;
-}
-
-+ (BOOL)isReturningForToken:(NSString *)token
-{
-    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPageviewReturningKey, token];
-    return [[NSUserDefaults standardUserDefaults] boolForKey:key];
-}
-
-+ (void)setPersonId:(NSString *)personId forToken:(NSString *)token
-{
-    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPeoplePersonIdKey, token];
+    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPeoplePersonIdKey, self.token];
     [[NSUserDefaults standardUserDefaults] setObject:personId forKey:key];
 }
 
-+ (void)setPersonName:(NSString *)name forToken:(NSString *)token
+- (NSString *)personName
 {
-    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPeoplePersonNameKey, token];
+    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPeoplePersonNameKey, self.token];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:key];
+}
+
+- (void)setPersonName:(NSString *)name
+{
+    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPeoplePersonNameKey, self.token];
     [[NSUserDefaults standardUserDefaults] setObject:name forKey:key];
 }
 
-+ (void)setPersonEmail:(NSString *)email forToken:(NSString *)token
+- (NSString *)personEmail
 {
-    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPeoplePersonEmailKey, token];
+    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPeoplePersonEmailKey, self.token];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:key];
+}
+
+- (void)setPersonEmail:(NSString *)email
+{
+    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPeoplePersonEmailKey, self.token];
     [[NSUserDefaults standardUserDefaults] setObject:email forKey:key];
 }
 
-+ (void)setLastPageviewTimestamp:(NSNumber *)timestamp forToken:(NSString *)token
+- (NSNumber *)lastPageviewTimestamp
 {
-    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPageviewLastTimestampKey, token];
+    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPageviewLastTimestampKey, self.token];
+    NSNumber *timestamp = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+
+    if (timestamp == nil) {
+        timestamp = @0;
+    }
+
+    return timestamp;
+}
+
+- (void)setLastPageviewTimestamp:(NSNumber *)timestamp
+{
+    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPageviewLastTimestampKey, self.token];
     [[NSUserDefaults standardUserDefaults] setObject:timestamp forKey:key];
 }
 
-+ (void)setLastTransactionTimestamp:(NSNumber *)timestamp forToken:(NSString *)token
+- (NSNumber *)lastTransactionTimestamp
 {
-    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSTransactionLastTimestampKey, token];
+    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSTransactionLastTimestampKey, self.token];
+    NSNumber *timestamp = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+
+    if (timestamp == nil) {
+        timestamp = @0;
+    }
+
+    return timestamp;
+}
+
+- (void)setLastTransactionTimestamp:(NSNumber *)timestamp
+{
+    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSTransactionLastTimestampKey, self.token];
     [[NSUserDefaults standardUserDefaults] setObject:timestamp forKey:key];
 }
 
-+ (void)setReturning:(BOOL)isReturning forToken:(NSString *)token
+- (BOOL)returning
 {
-    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPageviewReturningKey, token];
-    [[NSUserDefaults standardUserDefaults] setBool:isReturning forKey:key];
+    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPageviewReturningKey, self.token];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:key];
+}
+
+- (void)setReturning:(BOOL)returning
+{
+    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSPageviewReturningKey, self.token];
+    [[NSUserDefaults standardUserDefaults] setBool:returning forKey:key];
 }
 
 + (NSString *)generatePersistedUUIDforKey:(NSString *)key
@@ -121,9 +130,9 @@ static NSString * const kGSTransactionLastTimestampKey = @"com.gosquared.transac
     return UUID;
 }
 
-+ (void)regenerateVisitorIdForToken:(NSString *)token
+- (nonnull NSString *)generateVisitorId
 {
-    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSVisitorIdKey, token];
+    NSString *key = [NSString stringWithFormat:@"%@.%@", kGSVisitorIdKey, self.token];
     [GSConfig generatePersistedUUIDforKey:key];
 }
 
