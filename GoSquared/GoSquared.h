@@ -13,8 +13,16 @@
 #import "GSTransaction.h"
 #import "GSTransactionItem.h"
 
+/**
+ * GoSquared API
+ */
 @interface GoSquared : NSObject
 
+/**
+ Singleton shared instance of GSTracker for interacting with the GoSquared API
+
+ @return The shared instance of GSTracker
+ */
 + (nonnull GSTracker *)sharedTracker;
 
 @end

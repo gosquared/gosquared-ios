@@ -1,1 +1,1 @@
-../../../../../GoSquared+Chat/GSChatViewController.h
+../../../../../GoSquared/Chat/GSChatViewController.h

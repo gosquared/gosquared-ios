@@ -7,608 +7,194 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0128DEA53157B69C7B77779EAF318392 /* GSTransactionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 98362A643348F21595DF556AFE4476CE /* GSTransactionItem.m */; };
-		051A9752066A594EE01E937E280131A1 /* GoSquared+Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = E89D89A46032090F53019CD6ABCA0D7A /* GoSquared+Chat.m */; };
-		0BE414A817417FFF483AE1A9EE028EBF /* PINRemoteImageTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1229818DF68359CE20D9973AE416353D /* PINRemoteImageTask.m */; };
-		0D8FA51DB87D10BFAB3C32E45F2C5D05 /* PINRemoteImageMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DAE0A8B546B3ECBDF9E9F7D387D7D7D /* PINRemoteImageMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0DD2FCE50B1BB79A6512B13644DEE9A3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 120E20CAA9BF267D4EBF981F063C3B09 /* Foundation.framework */; };
-		0E1742A2483DFB193CA42BF7914F5B60 /* GSChatBubbleContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 777563CFB8DD14729D97D59FD7E9DCE3 /* GSChatBubbleContent.m */; };
-		0EEC219B337332ABC86B5F9B9CE9C8D2 /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C0FDF1C92BC0B46E90FD817704BF370D /* SRWebSocket.m */; };
-		11040F13E1D16D197C9EEDAB6BECCD75 /* PINRemoteImageCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 89751475A78A66CBD2DB37F308304B6E /* PINRemoteImageCallbacks.m */; };
-		13FE5277F2FA5A7E939C937A294D5816 /* NSData+ImageDetectors.m in Sources */ = {isa = PBXBuildFile; fileRef = 3301BBD5A00C392DAA9CC9766ECC59A4 /* NSData+ImageDetectors.m */; };
-		15006446081F0BC183A350939033DE34 /* PINImage+DecodedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3815E1FB9C5AB4E37657F007B05BF2 /* PINImage+DecodedImage.m */; };
-		1504D69F460494E6C8CD469ED4727F79 /* GSChatViewLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 117DF0878A59E4FEEF19A33B65EAEED7 /* GSChatViewLayout.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		1648AF0217C3EB3613F6BE9E79F2BF16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 120E20CAA9BF267D4EBF981F063C3B09 /* Foundation.framework */; };
-		1A61A9A5F37A1D272077E5A1A841B794 /* PINRemoteImageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDC3BF620B50C8A85517BE5B575634 /* PINRemoteImageManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1C0B20201438546119C3E9A47FBE052A /* PINImage+DecodedImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE2551DB07323AE855107C7831F61C6 /* PINImage+DecodedImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2334F56F8A47718270FBB417027C8C49 /* PINRemoteImageCallbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = 47C180BCE5902D99AD7463C51ECB88C1 /* PINRemoteImageCallbacks.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		23980575E2C315990F30427B11FE68DE /* PINRemoteImageProcessorTask.h in Headers */ = {isa = PBXBuildFile; fileRef = EEEB662CDD02F3B9CA707706338186D6 /* PINRemoteImageProcessorTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		26352A4C9AC7E74211FB2577B1C1099E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 202996AA42A5DBD1916530A2C4DC8939 /* Accelerate.framework */; };
-		26A521298F35984AE88813154001E856 /* PINDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EB16FA524A3DFAA4840044F94A0096E6 /* PINDiskCache.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		29845A04F9F9F6208068F73CC306B544 /* PINImageView+PINRemoteImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FAED96C809F69293DECC1F32DEC4F8 /* PINImageView+PINRemoteImage.m */; };
-		2A0A45E0B1671F10C0B4CC2A62C2BC40 /* GSChatComposeTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = DFB66DC856716B81C1A4DE0C8EB91D7B /* GSChatComposeTextView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		2A6C3DA6FA66288A2353E3FF561A94D1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBC32786BD2C58C2330319EAA918670 /* CFNetwork.framework */; };
-		2D1236C42088E8E42ED77A34346A7DF3 /* PINRemoteImageCategoryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 9BD030971F3A3297272CE5693711DCF6 /* PINRemoteImageCategoryManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2F1FB16BD3D1B92D1C923A425D3475EF /* GSChatViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C60AA749AAA3D0E4D071751B91E800 /* GSChatViewLayout.m */; };
-		2F302BF8E8008DB4E55BF1CB73D219FF /* NSData+ImageDetectors.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E523A85B4846C1F4E8DB2D225CE6AC /* NSData+ImageDetectors.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		304EC4D756F61E587F0FD374C78E18CF /* GSTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A36A6BF282FFB87B009A61EE8512B2C /* GSTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		395350032859589F9095A461D84F071F /* UIViewController+Chat.h in Headers */ = {isa = PBXBuildFile; fileRef = 97E2A42D355DD2D7BD8F420B71F1AE8B /* UIViewController+Chat.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3AB22390482E3342BE1D5DD587DC7978 /* GSChatManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 48F54EBD8844D12B5C795C00BCD03C66 /* GSChatManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		3D258E9A843C52C991E5E9455CB8DB51 /* FLAnimatedImage-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 084F48050FD1545602259C2CE8505922 /* FLAnimatedImage-dummy.m */; };
-		40B0863FE96357AD05147683DD095575 /* SocketRocket-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5CE715F89FAB147F3BD7217B1D74AF /* SocketRocket-dummy.m */; };
-		4200787F63239180BEB1ECE5CFC64EA2 /* GSChatMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 20F93F88F875BB8E3CAB0B654F3497BE /* GSChatMessage.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		449008750EA032882C1A9E3377CDB610 /* PINDataTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 479DE91E1F4C32CEEAFA80D3D5F16819 /* PINDataTaskOperation.m */; };
-		44E9D4F554F23B5BCF7487D838EFBCC8 /* GSChatBubbleContent.h in Headers */ = {isa = PBXBuildFile; fileRef = 154180925DA7A8624A9123AC21D79032 /* GSChatBubbleContent.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		46FC6E0D5C38F8CC897DFD5995E183A6 /* PINRemoteImageProcessorTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 636B761C1B188F05E00E7EC270D6DC6A /* PINRemoteImageProcessorTask.m */; };
-		483D17D4D03F45FB111CFC8F969B1A20 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 120E20CAA9BF267D4EBF981F063C3B09 /* Foundation.framework */; };
-		4CE6705FC449136404C3ED50D259841E /* GSChatViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 143747C811AC9CF286E2409A45F30FC7 /* GSChatViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55165EB91E6E9A1122ABE874D6D3AE80 /* FLAnimatedImageView+PINRemoteImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D530F2130AD38CEB180B11DE497F5461 /* FLAnimatedImageView+PINRemoteImage.m */; };
-		551FD2B27BE0BC3A47ACDDCC3E9092A2 /* GSChatTitleView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DDBA8760CE3631E8218609BDDB57321 /* GSChatTitleView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		5C6B3A54C4837195F56DBA79C088593E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 120E20CAA9BF267D4EBF981F063C3B09 /* Foundation.framework */; };
-		5C88B6B42B189F43A45795327772083A /* PINRemoteImageDownloadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 40FBC1DDEE8CA66D37F4C5D07B9330D6 /* PINRemoteImageDownloadTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5CB2647AF6082A9EB86F18C91E4077F8 /* GoSquared-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8434348AB41BA0F56D878E299B2A5982 /* GoSquared-dummy.m */; };
-		5FDB2940FB3CC255897153DB86AF8634 /* PINButton+PINRemoteImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC6C8FA1489CB159EECFC8F30E715F1 /* PINButton+PINRemoteImage.m */; };
-		6162ACE1E0761F48DDC00729F54CFCC7 /* GSDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F81BA9FFC2D1F7222ED9E39665846B1 /* GSDevice.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		62F90D418B8CB8A4FD58D4BFFBA3748B /* SRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = E19D3492C364D8567E2F92BFFFDF4A8A /* SRWebSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		63F9C101D31E81440A4C6DDA83A2CA36 /* GSChatConnectionStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = A2F0DF15FD50694287DE6CAA1974415F /* GSChatConnectionStatus.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		641E26A474A18D0B9870417013372F00 /* GSChatComposeView.h in Headers */ = {isa = PBXBuildFile; fileRef = F76AC76A475AAAE6E375227232C216FB /* GSChatComposeView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		65F99E3AF830534E78062372D8CD712B /* PINRemoteLock.h in Headers */ = {isa = PBXBuildFile; fileRef = 89935474D8CF92BF7C8B823C1B95F40F /* PINRemoteLock.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6636B847148A7B45B3787AA2DDF94B58 /* PINMemoryCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 9811A0BEBD895212E34527611CF6ECEE /* PINMemoryCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		67152547982774C6A0BE35091FC297EE /* NSString+Emojione.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC57D32171FE2F24A49D09E8F7AFBEA /* NSString+Emojione.m */; };
-		679BFA2CC72AB4D72B2E625159585220 /* GSTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = C1EF4A9D11EC5C779E16B4737AD6E9DF /* GSTracker.m */; };
-		6CAF263652A152793AE177789682D115 /* GSTrackerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 7494DBC14AF88FAD56E3C26B7994C3FD /* GSTrackerDelegate.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		70245D049664A47C10B1E989AC2C1715 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 120E20CAA9BF267D4EBF981F063C3B09 /* Foundation.framework */; };
-		718CCF66B84B4716B9927B92723AF717 /* Pods-Chat-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EDA4D6FFC0EA885772596D63D564FF3 /* Pods-Chat-dummy.m */; };
-		7343A7FEB56CE0113211A93A72634F53 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F57DEAE9B0F826A2A986FECC9EA2EDD /* ImageIO.framework */; };
-		7650DB74AD302A2175E94C4BFA96E427 /* GSChatBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = B7618563539E3D7DE8E72585D004FBCA /* GSChatBarButtonItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7699506F8720FA8387F50B2E3C2CFC6E /* PINCache-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 37CC6C527390F17A0D27855EE045FAD6 /* PINCache-dummy.m */; };
-		780DEF5FB809DDDB94D3FE059CABBB6B /* GSChatComposeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D9987FA56453CEB0BAB396DA131782 /* GSChatComposeView.m */; };
-		7853CD28E2141C7C341AD21FE6B7951A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D117126AC30186D83E3F85E18D0137CE /* QuartzCore.framework */; };
-		79A9C587FCAB654C7DA45201F744AB78 /* PINImageView+PINRemoteImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 80558FBA1DF90E0726AC3201E94C40CE /* PINImageView+PINRemoteImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7A98249350ACF05A542FBC230E60CFB8 /* GSChatHeaderEndView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FDD894786C95F6F7C79517B7F153C9 /* GSChatHeaderEndView.m */; };
-		7AE83DFAD9756ED1FB1CB5E36F9CF6EB /* FLAnimatedImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = F0012DBF0AE44C24CE65504B4BBB0048 /* FLAnimatedImageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7C983CA42C9AD143C7239B6C08F87BA6 /* PINButton+PINRemoteImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F12588462003B3A29E6068D0605AA14 /* PINButton+PINRemoteImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7DE1F017484A2B365EAD803EEBD45A19 /* GSChatConnectionStatusView.h in Headers */ = {isa = PBXBuildFile; fileRef = 40F30350F9B5657E03EEB91A1E00193F /* GSChatConnectionStatusView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		7F54BF2F9EDE923BC6E7687E03284C40 /* GSChatIceBreakerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B3389224041F6FFAD8B96DB548DBC /* GSChatIceBreakerView.m */; };
-		8226B333409181A4F87D582B26A7866E /* GSPageview.h in Headers */ = {isa = PBXBuildFile; fileRef = 35EED4F7D71E1E9BA6042F151AEB654E /* GSPageview.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		833C03DEC47E7A2682422D34FE3A44E4 /* GSTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = C6B5171797A8BA620FE3501BBC710E78 /* GSTransaction.m */; };
-		838883D037B2247550261AE80B3CA02A /* GSTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = E9D2ACD9665E9E39F583F65E0167EF48 /* GSTracker.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		84DD9235367A21DEA34042190EA142B8 /* PINCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 97A0754254C5B604B361CEC394A20585 /* PINCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		857EA26F2B302984F454EB7B82848565 /* GSPageview.m in Sources */ = {isa = PBXBuildFile; fileRef = C2D6FBDCD41E925C78550B4FAE99DE9F /* GSPageview.m */; };
-		85F7B69715A3E8205716FF3168FBC030 /* NSString+Emojione.h in Headers */ = {isa = PBXBuildFile; fileRef = D64EE40B5E3FC587EAA4D369F570601E /* NSString+Emojione.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		86B293780D7D442CABCDDDADD4457D35 /* PINImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = F166456C57E0A3DEBD1B5B60F6DF5B73 /* PINImage+WebP.m */; };
-		88C832E8F1566DF6BECEE8D0FF367631 /* PINRemoteImageManagerResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 34ABF6A43CBD61C4879404E94F04D4FC /* PINRemoteImageManagerResult.m */; };
-		8E80E74FCEBB30D58D7B7189F471140B /* PINRemoteImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB0A6D308500D4536AEFCD41DB2B5A45 /* PINRemoteImageManager.m */; };
-		97D3520C516B5E4E78BB8250509FD15A /* GSRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1563BDB3D321834EC7430B211B11A0 /* GSRequest.m */; };
-		9F349D9709DFF5E71DF322370199AA82 /* GSTrackerEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 19FE251B902A8AA4EB5A9889DFFB0DAB /* GSTrackerEvent.m */; };
-		9F7677DA4DF7CD3361AED8DA13949C0B /* GSChatIceBreakerView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A186E5C126A53C17345E98F0DABB5F9 /* GSChatIceBreakerView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		A00539BBC526D6073ED4C1769D244D22 /* GSDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1FBA2992E310FCA17C1F4D61E4AA29 /* GSDevice.m */; };
-		A2D4BD778AA169AF80F886C9D3481652 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50351C639B7A170904C2AC3D1CA9B241 /* CoreGraphics.framework */; };
-		A4DB94B293F80EABD1090683EC36D8B7 /* PINRemoteImageTask.h in Headers */ = {isa = PBXBuildFile; fileRef = B478BA81A72B15812ECA77000AA1BA36 /* PINRemoteImageTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A9C173097EE4AE79FDA2FEFFBC098FC1 /* GSChatBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FC8C62E8A8967F7D3027282CEF78CC /* GSChatBarButtonItem.m */; };
-		A9E15148626A5DF2527CF933F446103B /* PINRemoteImageCategoryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EA7A099C4E07926287D926D4280094D /* PINRemoteImageCategoryManager.m */; };
-		AB62A01095115E454D9BFDF0F5771759 /* PINMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A541F7EC2AC1F8201BEBC5AD04B472C /* PINMemoryCache.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		AF1C0FE9B00BDD79E2B8A4C285ACF8FC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57DBC80EDEF5502F5616898D9A8BAF9B /* MobileCoreServices.framework */; };
-		AFBE0CD6F9025CE5E9AB43609DB883A7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3CB414F59EB90239743CBAE1351CB62 /* Security.framework */; };
-		B04DC8ECC89BF35BFA2CF24A43D1EF55 /* PINRemoteImage-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A7B66ED100209DE8BA6ABA2831532ABC /* PINRemoteImage-dummy.m */; };
-		B11053C9F6C4031556BD3ACB9B1EBCDC /* GSChatBubbleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C421548252CF83DEEBD5C932C60F90F /* GSChatBubbleCell.m */; };
-		B14D4D006741BAB92A5C79A0A3885BCA /* GSTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 6AFC3AB16599DA4DAB5BDC71F6238F66 /* GSTransaction.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B154CFEF39C5C382C471245034E2381C /* GSChatConnectionStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F63025022AFE88F342CC59568A2C4 /* GSChatConnectionStatusView.m */; };
-		B1B5D872AA722F0B8D1B4AC04E15EF2B /* UIViewController+Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = C707A85CD8661353C0D59251D36CF8AC /* UIViewController+Chat.m */; };
-		B2C04AC91FAC119EA80EC4D6DDCE5DD2 /* UIColor+GoSquared.h in Headers */ = {isa = PBXBuildFile; fileRef = 839FE8E9FF9C1B27A3013E027940A77E /* UIColor+GoSquared.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		B3AA789E74DBAB167DAD0FDCA19690C7 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D17797E87B9656AC75AEB866A45F6D2 /* FLAnimatedImageView.m */; };
-		B424AC3BD12C5C280E579C50BE00F5EA /* UIColor+GoSquared.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BA261206F44CB13D469454C2CE877 /* UIColor+GoSquared.m */; };
-		B53C081F38BC491A1FF3B4593E1B9D7D /* GSChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 615C593806640D02142BAB9F4F28DD53 /* GSChatViewController.m */; };
-		B5E81251194E77EAB3E664AC4697192D /* PINImage+WebP.h in Headers */ = {isa = PBXBuildFile; fileRef = F85D0BB599B314741DCBDB1A758794B1 /* PINImage+WebP.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B68F35A152D092A3D695C01B560FF3A0 /* GSChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 007997FF8A598394AEC8399A977E036B /* GSChatMessage.m */; };
-		B6FF9F14A7B3FD709EE8DC2241D1D8B0 /* PINRemoteImageDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = FCCF1944F7F1477A13D2E5FFE6C831FB /* PINRemoteImageDownloadTask.m */; };
-		B7158086E9C839CB1A17F5AAA6CD8F55 /* GSChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 31C2DC29AB182FE1CFD7A19B85B5A992 /* GSChatManager.m */; };
-		B9834781308B5A0DBAF8F8CCF4BDCA9F /* PINRemoteLock.m in Sources */ = {isa = PBXBuildFile; fileRef = DE513A5FC7C2EBF3B8703499C33C67BD /* PINRemoteLock.m */; };
-		BA9D19928B5CFC78F187583E7D3D7D4F /* PINRemoteImageManagerResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 65BBE0BADF9BC1CBA76F5C24F2E6D5DD /* PINRemoteImageManagerResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BC530D041D26AF290060D28B /* GSConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = BC530D021D26AF290060D28B /* GSConfig.h */; };
-		BC530D051D26AF290060D28B /* GSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BC530D031D26AF290060D28B /* GSConfig.m */; };
-		C0A97BC74589A0C42FE42773CE10641D /* GSChatComposeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1002AC1831AE7E6882DC429F728F32 /* GSChatComposeTextView.m */; };
-		C154FF05A9B6B7AE12DC724D5814533B /* GSChatHeaderLoadingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B74E18341808E2FA46DEE17AEAADC29 /* GSChatHeaderLoadingView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		C34A306B7532B432190E2F44A6CF3B9E /* GSRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 882999D9F4E3D51AEACAD81AE11567A4 /* GSRequest.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		C8B7AD16070FB105BCCD5F46E97E0A0D /* PINCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E42945A68046A72DF6FA3B627087BD31 /* PINCache.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		CAB50B396D883AA9D745394E1ACBA28D /* GSTracker+Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A4317BA1863C3C0E800C386712FAC /* GSTracker+Chat.m */; };
-		CB04807E851208CC285A0A74018FC518 /* GSChatHeaderLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8328D8064E843A2EDDB7A0D56BE5431 /* GSChatHeaderLoadingView.m */; };
-		CEEFDAADA46ED2EA4A6DAD539A0A4DDC /* GoSquared.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B61A3F4309A224C314F3F7AC039DDEF /* GoSquared.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D0B8A7EF059BBB155E78E7B20153A840 /* PINURLSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E4ED8C88B74364F9B04AAF0D2AF5E5D /* PINURLSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D0DE43854ECF7BB3C94F82893F57EFF7 /* GSChatBubbleCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A1FDC49FA84B2FB6674E8A8E2371798E /* GSChatBubbleCell.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		D25C45DE77A3A80E0DFCDB3ED4AAF2B3 /* GSTracker+Chat.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CE47E6B160BA81B23474818AA9D7447 /* GSTracker+Chat.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D682AADEDBFCB8F41C892F5F36EC5C2E /* GSChatHeaderEndView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A77123306344F100A4996F6524B293A /* GSChatHeaderEndView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		DD14EF60CAC6F7A0636F49ACB07ED1A5 /* GSTransactionItem.h in Headers */ = {isa = PBXBuildFile; fileRef = B66323C64A4283EC8BC876CC701AD93F /* GSTransactionItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DE0B9F652AC371745EED41720B47D72A /* Nullability.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7FC3FB2E0B1B51DEEE7E1F46202EB /* Nullability.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DF7C0D30DAA75B3FC3DBC960496CE3C2 /* PINURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB21A3648FE323D92AF1A41642543544 /* PINURLSessionManager.m */; };
-		E4B19D0147C44FE18C16E0A8F2AD3870 /* PINRemoteImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 25F6BFCA726A57210197F96C7A0E203A /* PINRemoteImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E701F53278D8297E026567D4549B3BBB /* PINProgressiveImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FA30A77C8EC1737C1F482ACA11DF4A4 /* PINProgressiveImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E90EEDCC889ECEE23C97B25A7957B06F /* GSChatTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 332DDD760FF40D92DA2D8D741568AE46 /* GSChatTitleView.m */; };
-		E99CE64289F5FDD09B7E1188379AED41 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F3B0A5E49EA46DC668173C8F77A60A93 /* FLAnimatedImage.m */; };
-		EB1487A56E7EDBAD61BC4A13AC49263C /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F57DEAE9B0F826A2A986FECC9EA2EDD /* ImageIO.framework */; };
-		EF8AC28CC17198255DEDEF49E1D3545C /* GSTrackerEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 82608DBAC365438894B16B00CE7888EC /* GSTrackerEvent.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		F1C564824EB1FE65B02264421E5BD017 /* PINDiskCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D445E5583C31B4316E745C520EF4799 /* PINDiskCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F24931EE90ADC7DE89E0B8C51B7C1C1B /* FLAnimatedImageView+PINRemoteImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 984C52083E01BC488482CA7A68653D7A /* FLAnimatedImageView+PINRemoteImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F543C0EF590101D430818C0BAD233381 /* PINDataTaskOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 967402F0431F6A99B6BD62DE2809F5C7 /* PINDataTaskOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F6EACFBB03EF327B9CCEB2764FC59201 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 120E20CAA9BF267D4EBF981F063C3B09 /* Foundation.framework */; };
-		FB423EE72C2A6D0ED5DEFBEE9BE80A98 /* FLAnimatedImage.h in Headers */ = {isa = PBXBuildFile; fileRef = FA004E22EF83ACB06EA46E21C3EAD1D9 /* FLAnimatedImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FBCE62083D9EC4E9A561EBBCEA70D9EF /* PINProgressiveImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9036729816357D2211C64297A6E97135 /* PINProgressiveImage.m */; };
-		FC81D134B5BA8066069C71845284167B /* GoSquared+Chat.h in Headers */ = {isa = PBXBuildFile; fileRef = DA94B9A949993637B3A2F5D58C0EA2D4 /* GoSquared+Chat.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FDA2A8DD9913A7ED1E2C95F0F3EA45C4 /* GoSquared.m in Sources */ = {isa = PBXBuildFile; fileRef = E2C94480CDA6D8EAF416C26222570AAC /* GoSquared.m */; };
+		04BE0C47DE1BA91B40A5725DAF1F9DE9 /* GSTransactionItem.h in Headers */ = {isa = PBXBuildFile; fileRef = D9F5D617435D2E280678623DA084E94A /* GSTransactionItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04E2503D7B70CD6918BBD1980F6FA9D8 /* GSChatWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = B4C013794536BD5AD1DEAC4FA4D6475B /* GSChatWebView.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		0D3411625A2368A140262532FDF7D229 /* UIViewController+Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = B26972E6E257AAB282815D97861349BB /* UIViewController+Chat.m */; };
+		10555BBC6FA901947DA7FDB9EB1B4A21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B160F6609E6234C51167B6A9333928E3 /* UIKit.framework */; };
+		13E8BEF3DB29AC56957149C3C9DA3FB3 /* GSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = ACFAD2480D8DFA0F35FF48FB575D2D85 /* GSConfig.m */; };
+		1505BFC8529FA87C41C16246703A01BA /* GSChatViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B6C6C5B19A57C6D7C7F851F758E94369 /* GSChatViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		26C06060A58BC76FA0A38B9106166C29 /* GSChatComposeTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 23E226B6A12268E6412E10C314808389 /* GSChatComposeTextView.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		2BC4B1C92AFDA2336433E3F069C09ECB /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 783B2124A4A700B75FFEA9756D97B306 /* icons.xcassets */; };
+		2ECD8378A3546E61329734A87DB1FA07 /* GSTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BC06BD1DF13C2DCBE99ECDC10C542 /* GSTracker.m */; };
+		3373829C25316989A374220B9DE38AC8 /* GSTrackerEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A34621823491102E65BB0C82DF8901 /* GSTrackerEvent.m */; };
+		37C5740830CB4D52F4EFC40B0564A737 /* Pods-Chat-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EDA4D6FFC0EA885772596D63D564FF3 /* Pods-Chat-dummy.m */; };
+		415EE65F684DC761B465865B8AEC5706 /* GSChatManagerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 20AC6A97B578774C889E22C73574920A /* GSChatManagerDelegate.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		4DF91FD12BCE45869E8CFB257E27E80B /* GSTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC10D29A6E904D7B307764FC441E89E /* GSTracker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		51E3D23090E40BF10C2D523D7D17F649 /* GSTransactionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE1C3879F760DAF1AB08F10317EEBBF /* GSTransactionItem.m */; };
+		52904A5301F7BE10DFD0495376DD9B7B /* GSConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 373644FB9403E5DE0549AB6E657D6F4F /* GSConfig.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		58DD8BFBFA15D5BAA379131EC6EEC626 /* GSDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = EF22B8E1D0C1DC01113AA4500B443B2E /* GSDevice.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		5F79A5B2394032579935FD989BBC4690 /* GoSquared+Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B0734E1D191E69E0AA01095C831816 /* GoSquared+Chat.m */; };
+		60EF82E4C6E5E311B53AAA1B3850CF2F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF1F6D671C390DBB91C8E5A9AEC130 /* Foundation.framework */; };
+		656659B3C4937FABEE84AC7A8DE17317 /* GSTrackerEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 9BCA003A9744CAB63C3889F14DF638A8 /* GSTrackerEvent.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		6A3C9DC1A874B026DFDD2AA2A9AA23AC /* GSTrackerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 76B9F54C78D8AD2DB5AB75D1B30BA99E /* GSTrackerDelegate.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		6F945C804B2FFFBCC4C12751CA47BC5F /* GSChatTitleView.h in Headers */ = {isa = PBXBuildFile; fileRef = AD15264E92712301E42BC1AB26E3BA42 /* GSChatTitleView.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		83692009191A28B251B13ED142693372 /* GoSquared+Chat.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A7761A3B3FEBCC52168D93D8A48299A /* GoSquared+Chat.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		851DF11C3C115CECC71D402F11C6C481 /* GSChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F938ADE1ED9B38B1F1DBC89276071C7A /* GSChatViewController.m */; };
+		85A39C4FED7C7D0894A162DB63004F00 /* GSChatWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 624971617CF58B93C74585BE7E28F229 /* GSChatWebView.m */; };
+		93855B991D689E273DDAA3074B41A03D /* GSChatComposeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46383C447B6728EA0D1110C6CF2BACE3 /* GSChatComposeView.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		966E4A5DF15AF113C9716638EFF872CF /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 81860F041A4C1B948BF85F113FC1AD85 /* index.html */; };
+		A6E0EEE060E38B7EB07B012D09A8775C /* GSChatManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F9ED9CCDB2076B45146F2028BB5FDBBD /* GSChatManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		A815BA850BD37DC3059B0045AE40D784 /* GSChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A350066C362B4CCD677CDF2FC86CE0F /* GSChatManager.m */; };
+		A832DA504920BE161588F22981437F41 /* GSPageview.h in Headers */ = {isa = PBXBuildFile; fileRef = C7ED783EC20BB87C36A8EBE2A2CA1E50 /* GSPageview.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		B312AEE0DDAD772293DCEEDE94FF3F91 /* GSTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = A403A5CDA658BF3A1C93CB5686AC2757 /* GSTransaction.m */; };
+		B43E44E6E277DEBF4C2ED2713AC20BE2 /* GSTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = A8F17F2B3BE5D53989DCCABEE34D6ED8 /* GSTransaction.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B76ADF5B919178BA040BF35C61874BF1 /* GSPageview.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3BF9A8C1EC136832DEF1A859474D8F /* GSPageview.m */; };
+		BA4F76F4E14E507051F58C75D38C5414 /* GoSquared-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 346F7072FA80CB894949416D96E06286 /* GoSquared-dummy.m */; };
+		C27348EE676EBE8821A0D0DF65CFBD52 /* GoSquared.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9A59CCEA35D67537A13D4B22E2094C /* GoSquared.m */; };
+		C4C07DE5DD22B938705E3CA1DE0AC30E /* UIViewController+Chat.h in Headers */ = {isa = PBXBuildFile; fileRef = C1105A1146C9A8B7F4FEBFC5DA25232E /* UIViewController+Chat.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C58C973D8831F28CF5B31FF131EC0135 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF1F6D671C390DBB91C8E5A9AEC130 /* Foundation.framework */; };
+		C954EB42206B26D772E4C672FA79AA46 /* GSChatComposeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8C365F96DD4782C3A711BE70DE7A02 /* GSChatComposeTextView.m */; };
+		CF8473917EDF79B64593B4748DC6A1D0 /* GSTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = B19FB50327EAA8F2CCA0E93ACB78751F /* GSTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D064C78A647C0A3E8004B3F98DDE9516 /* GSChatTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3D60DB860F6BDD294F9541000AA3E8 /* GSChatTitleView.m */; };
+		DC6F2186C33FBF110B1EFD21C5C72F7F /* GSDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 081F2C3D2121BF7FF8DDE55363D89C61 /* GSDevice.m */; };
+		E36658B96563C7295203BFCFC2A516B6 /* GSChatComposeViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = A5E8AF9F6074B85A3E121B8453C9333C /* GSChatComposeViewDelegate.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		E91622E032823637BED9936B727B5661 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDD3A1838491CCD00DBC7211D9F6A0D7 /* WebKit.framework */; };
+		EF025D2E49A918BF5C1971AA46E3AE65 /* GoSquared.h in Headers */ = {isa = PBXBuildFile; fileRef = B221378A7327F310FAE247BBB6B70BCB /* GoSquared.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F21C74C218D06D6D7ED86F692E40FFAD /* GSRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F490C551CF0ADA59D9F9F0761894058 /* GSRequest.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		F5A4D53211F165647FE6E9AFD6A124A0 /* GSRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C98107E5431986C626D06B8FA77E1D73 /* GSRequest.m */; };
+		FC145004DE3FBDDA82755B9C67888E11 /* chat.js in Resources */ = {isa = PBXBuildFile; fileRef = 0379AC41CFE8233D36DEDFD08EAB45DE /* chat.js */; };
+		FD64C9DA7A05966366C512AC2525B6C9 /* GSChatComposeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E798F02F9C438358C3ADC598581E221 /* GSChatComposeView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1163ADA28268893BDA6511EAF98D59D1 /* PBXContainerItemProxy */ = {
+		3DBA37C10842BECD584CC01644FA267B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 84F346E504637FDA28739AF18C19BE50;
-			remoteInfo = PINRemoteImage;
-		};
-		27C621F922601CE4DCB54410D6C22CFC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C7B43C3866CE60FDD7B5C9ED9473FF63;
-			remoteInfo = PINCache;
-		};
-		507C98DA6D93C1577462966EBAC3BDA5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1A79BA86DB198181905CBBFC1F1E6701;
-			remoteInfo = FLAnimatedImage;
-		};
-		8A18C6BC05A0C3E6689CBE6FDF11053A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C7B43C3866CE60FDD7B5C9ED9473FF63;
-			remoteInfo = PINCache;
-		};
-		9EFB5CD953ABA5815EBB163B63D07188 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F609D0CCEB8200F771D982D82C0ED90E;
+			remoteGlobalIDString = 289536357B78CB144605B69973E1CB60;
 			remoteInfo = GoSquared;
 		};
-		9F372AF6FF68651131DE44619C9A004C /* PBXContainerItemProxy */ = {
+		58E991DF5C355567A0995938972BE045 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = FFA25DD347B4CC8211BAAFFC83776829;
-			remoteInfo = SocketRocket;
-		};
-		B7305D003AB4FF7EDD01C3892057C07B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 84F346E504637FDA28739AF18C19BE50;
-			remoteInfo = PINRemoteImage;
-		};
-		C71087B28CD1962036CCE6F6D457EE39 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1A79BA86DB198181905CBBFC1F1E6701;
-			remoteInfo = FLAnimatedImage;
-		};
-		F0553D598A68A12D89618DDD26665422 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FFA25DD347B4CC8211BAAFFC83776829;
-			remoteInfo = SocketRocket;
+			remoteGlobalIDString = A7749FEFC5BFCCD200920893566164D5;
+			remoteInfo = "GoSquared-GSChatEmbed";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		007997FF8A598394AEC8399A977E036B /* GSChatMessage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatMessage.m; sourceTree = "<group>"; };
+		0379AC41CFE8233D36DEDFD08EAB45DE /* chat.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; path = chat.js; sourceTree = "<group>"; };
 		0683A31F9EFD144EC772817B7C614A24 /* Pods-Chat-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Chat-acknowledgements.markdown"; sourceTree = "<group>"; };
-		084F48050FD1545602259C2CE8505922 /* FLAnimatedImage-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FLAnimatedImage-dummy.m"; sourceTree = "<group>"; };
-		0A186E5C126A53C17345E98F0DABB5F9 /* GSChatIceBreakerView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatIceBreakerView.h; sourceTree = "<group>"; };
-		0CE47E6B160BA81B23474818AA9D7447 /* GSTracker+Chat.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GSTracker+Chat.h"; sourceTree = "<group>"; };
-		0D1002AC1831AE7E6882DC429F728F32 /* GSChatComposeTextView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatComposeTextView.m; sourceTree = "<group>"; };
-		0E1FBA2992E310FCA17C1F4D61E4AA29 /* GSDevice.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSDevice.m; sourceTree = "<group>"; };
-		117DF0878A59E4FEEF19A33B65EAEED7 /* GSChatViewLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatViewLayout.h; sourceTree = "<group>"; };
-		120E20CAA9BF267D4EBF981F063C3B09 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		1229818DF68359CE20D9973AE416353D /* PINRemoteImageTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINRemoteImageTask.m; path = Pod/Classes/PINRemoteImageTask.m; sourceTree = "<group>"; };
-		143747C811AC9CF286E2409A45F30FC7 /* GSChatViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatViewController.h; sourceTree = "<group>"; };
-		154180925DA7A8624A9123AC21D79032 /* GSChatBubbleContent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatBubbleContent.h; sourceTree = "<group>"; };
-		1726EAF264D43CD3176E6BC208F27799 /* GoSquared.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoSquared.xcconfig; sourceTree = "<group>"; };
-		19FE251B902A8AA4EB5A9889DFFB0DAB /* GSTrackerEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSTrackerEvent.m; sourceTree = "<group>"; };
-		1B5D974AAAE5E035F4BE1ACE45D7ED91 /* GoSquared-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoSquared-prefix.pch"; sourceTree = "<group>"; };
-		1D5A4317BA1863C3C0E800C386712FAC /* GSTracker+Chat.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GSTracker+Chat.m"; sourceTree = "<group>"; };
-		1DD62E3B2D4607E003F363143F94DA01 /* libSocketRocket.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSocketRocket.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		202996AA42A5DBD1916530A2C4DC8939 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Accelerate.framework; sourceTree = DEVELOPER_DIR; };
-		20C6F1E14924B6D152C7A188DBD71729 /* PINRemoteImage-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PINRemoteImage-prefix.pch"; sourceTree = "<group>"; };
-		20E91D518F48289AD44E7FACD080766C /* SocketRocket-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SocketRocket-prefix.pch"; sourceTree = "<group>"; };
-		20F93F88F875BB8E3CAB0B654F3497BE /* GSChatMessage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatMessage.h; sourceTree = "<group>"; };
-		24D9987FA56453CEB0BAB396DA131782 /* GSChatComposeView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatComposeView.m; sourceTree = "<group>"; };
-		25F6BFCA726A57210197F96C7A0E203A /* PINRemoteImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINRemoteImage.h; path = Pod/Classes/PINRemoteImage.h; sourceTree = "<group>"; };
-		2E710B7B462274F2289398C5E35E695F /* FLAnimatedImage-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FLAnimatedImage-prefix.pch"; sourceTree = "<group>"; };
-		2FA30A77C8EC1737C1F482ACA11DF4A4 /* PINProgressiveImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINProgressiveImage.h; path = Pod/Classes/PINProgressiveImage.h; sourceTree = "<group>"; };
-		31C2DC29AB182FE1CFD7A19B85B5A992 /* GSChatManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatManager.m; sourceTree = "<group>"; };
-		32FAED96C809F69293DECC1F32DEC4F8 /* PINImageView+PINRemoteImage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "PINImageView+PINRemoteImage.m"; path = "Pod/Classes/Image Categories/PINImageView+PINRemoteImage.m"; sourceTree = "<group>"; };
-		3301BBD5A00C392DAA9CC9766ECC59A4 /* NSData+ImageDetectors.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSData+ImageDetectors.m"; path = "Pod/Classes/Categories/NSData+ImageDetectors.m"; sourceTree = "<group>"; };
-		332DDD760FF40D92DA2D8D741568AE46 /* GSChatTitleView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatTitleView.m; sourceTree = "<group>"; };
-		34ABF6A43CBD61C4879404E94F04D4FC /* PINRemoteImageManagerResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINRemoteImageManagerResult.m; path = Pod/Classes/PINRemoteImageManagerResult.m; sourceTree = "<group>"; };
-		35EED4F7D71E1E9BA6042F151AEB654E /* GSPageview.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSPageview.h; sourceTree = "<group>"; };
+		081F2C3D2121BF7FF8DDE55363D89C61 /* GSDevice.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSDevice.m; sourceTree = "<group>"; };
+		0C3BF9A8C1EC136832DEF1A859474D8F /* GSPageview.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSPageview.m; sourceTree = "<group>"; };
+		1AC10D29A6E904D7B307764FC441E89E /* GSTracker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSTracker.h; sourceTree = "<group>"; };
+		1F490C551CF0ADA59D9F9F0761894058 /* GSRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSRequest.h; sourceTree = "<group>"; };
+		20AC6A97B578774C889E22C73574920A /* GSChatManagerDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatManagerDelegate.h; sourceTree = "<group>"; };
+		23E226B6A12268E6412E10C314808389 /* GSChatComposeTextView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatComposeTextView.h; sourceTree = "<group>"; };
+		30AF1F6D671C390DBB91C8E5A9AEC130 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		346F7072FA80CB894949416D96E06286 /* GoSquared-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GoSquared-dummy.m"; sourceTree = "<group>"; };
 		36263BC803886FE49A833ED103355E05 /* Pods-Chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Chat.debug.xcconfig"; sourceTree = "<group>"; };
-		37CC6C527390F17A0D27855EE045FAD6 /* PINCache-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PINCache-dummy.m"; sourceTree = "<group>"; };
-		3A5CE715F89FAB147F3BD7217B1D74AF /* SocketRocket-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SocketRocket-dummy.m"; sourceTree = "<group>"; };
-		3CBC32786BD2C58C2330319EAA918670 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
-		3DDBA8760CE3631E8218609BDDB57321 /* GSChatTitleView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatTitleView.h; sourceTree = "<group>"; };
-		3E4ED8C88B74364F9B04AAF0D2AF5E5D /* PINURLSessionManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINURLSessionManager.h; path = Pod/Classes/PINURLSessionManager.h; sourceTree = "<group>"; };
-		3F12588462003B3A29E6068D0605AA14 /* PINButton+PINRemoteImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PINButton+PINRemoteImage.h"; path = "Pod/Classes/Image Categories/PINButton+PINRemoteImage.h"; sourceTree = "<group>"; };
-		40F30350F9B5657E03EEB91A1E00193F /* GSChatConnectionStatusView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatConnectionStatusView.h; sourceTree = "<group>"; };
-		40FBC1DDEE8CA66D37F4C5D07B9330D6 /* PINRemoteImageDownloadTask.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINRemoteImageDownloadTask.h; path = Pod/Classes/PINRemoteImageDownloadTask.h; sourceTree = "<group>"; };
-		41FDD894786C95F6F7C79517B7F153C9 /* GSChatHeaderEndView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatHeaderEndView.m; sourceTree = "<group>"; };
-		4527CDA735ABC67077BA2CC06671DF70 /* libPINRemoteImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPINRemoteImage.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		479DE91E1F4C32CEEAFA80D3D5F16819 /* PINDataTaskOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINDataTaskOperation.m; path = Pod/Classes/PINDataTaskOperation.m; sourceTree = "<group>"; };
-		47C180BCE5902D99AD7463C51ECB88C1 /* PINRemoteImageCallbacks.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINRemoteImageCallbacks.h; path = Pod/Classes/PINRemoteImageCallbacks.h; sourceTree = "<group>"; };
-		48F54EBD8844D12B5C795C00BCD03C66 /* GSChatManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatManager.h; sourceTree = "<group>"; };
-		4C421548252CF83DEEBD5C932C60F90F /* GSChatBubbleCell.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatBubbleCell.m; sourceTree = "<group>"; };
+		373644FB9403E5DE0549AB6E657D6F4F /* GSConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSConfig.h; sourceTree = "<group>"; };
+		46383C447B6728EA0D1110C6CF2BACE3 /* GSChatComposeView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatComposeView.h; sourceTree = "<group>"; };
+		4A7761A3B3FEBCC52168D93D8A48299A /* GoSquared+Chat.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoSquared+Chat.h"; sourceTree = "<group>"; };
 		4EDA4D6FFC0EA885772596D63D564FF3 /* Pods-Chat-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Chat-dummy.m"; sourceTree = "<group>"; };
-		4F8987133B1DB50C9C2C51ABEE40CA4A /* PINCache-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PINCache-prefix.pch"; sourceTree = "<group>"; };
-		50351C639B7A170904C2AC3D1CA9B241 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
-		50DFBF41A3DF1941CC93A31523FDC6CF /* libPINCache.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPINCache.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		50E523A85B4846C1F4E8DB2D225CE6AC /* NSData+ImageDetectors.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSData+ImageDetectors.h"; path = "Pod/Classes/Categories/NSData+ImageDetectors.h"; sourceTree = "<group>"; };
-		57DBC80EDEF5502F5616898D9A8BAF9B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
-		5831A8F58E75907C615CAE0206164AB3 /* libPods-Chat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Chat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5A541F7EC2AC1F8201BEBC5AD04B472C /* PINMemoryCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINMemoryCache.m; path = PINCache/PINMemoryCache.m; sourceTree = "<group>"; };
-		5B9FA20389BA7620AF2A9AE56DDA4545 /* SocketRocket.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SocketRocket.xcconfig; sourceTree = "<group>"; };
-		5D445E5583C31B4316E745C520EF4799 /* PINDiskCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINDiskCache.h; path = PINCache/PINDiskCache.h; sourceTree = "<group>"; };
-		5DAE0A8B546B3ECBDF9E9F7D387D7D7D /* PINRemoteImageMacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINRemoteImageMacros.h; path = Pod/Classes/PINRemoteImageMacros.h; sourceTree = "<group>"; };
-		5EFDC3BF620B50C8A85517BE5B575634 /* PINRemoteImageManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINRemoteImageManager.h; path = Pod/Classes/PINRemoteImageManager.h; sourceTree = "<group>"; };
-		615C593806640D02142BAB9F4F28DD53 /* GSChatViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatViewController.m; sourceTree = "<group>"; };
-		636B761C1B188F05E00E7EC270D6DC6A /* PINRemoteImageProcessorTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINRemoteImageProcessorTask.m; path = Pod/Classes/PINRemoteImageProcessorTask.m; sourceTree = "<group>"; };
-		65BBE0BADF9BC1CBA76F5C24F2E6D5DD /* PINRemoteImageManagerResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINRemoteImageManagerResult.h; path = Pod/Classes/PINRemoteImageManagerResult.h; sourceTree = "<group>"; };
-		6AFC3AB16599DA4DAB5BDC71F6238F66 /* GSTransaction.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSTransaction.h; sourceTree = "<group>"; };
-		6D17797E87B9656AC75AEB866A45F6D2 /* FLAnimatedImageView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLAnimatedImageView.m; path = FLAnimatedImage/FLAnimatedImageView.m; sourceTree = "<group>"; };
-		6DC6C8FA1489CB159EECFC8F30E715F1 /* PINButton+PINRemoteImage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "PINButton+PINRemoteImage.m"; path = "Pod/Classes/Image Categories/PINButton+PINRemoteImage.m"; sourceTree = "<group>"; };
-		6EA7A099C4E07926287D926D4280094D /* PINRemoteImageCategoryManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINRemoteImageCategoryManager.m; path = Pod/Classes/PINRemoteImageCategoryManager.m; sourceTree = "<group>"; };
+		56B0734E1D191E69E0AA01095C831816 /* GoSquared+Chat.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GoSquared+Chat.m"; sourceTree = "<group>"; };
+		624971617CF58B93C74585BE7E28F229 /* GSChatWebView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatWebView.m; sourceTree = "<group>"; };
+		6A350066C362B4CCD677CDF2FC86CE0F /* GSChatManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatManager.m; sourceTree = "<group>"; };
 		74918B4A4D654CE201E2012ED622996A /* Pods-Chat-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Chat-resources.sh"; sourceTree = "<group>"; };
-		7494DBC14AF88FAD56E3C26B7994C3FD /* GSTrackerDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSTrackerDelegate.h; sourceTree = "<group>"; };
-		777563CFB8DD14729D97D59FD7E9DCE3 /* GSChatBubbleContent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatBubbleContent.m; sourceTree = "<group>"; };
-		7A36A6BF282FFB87B009A61EE8512B2C /* GSTypes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSTypes.h; sourceTree = "<group>"; };
-		7B61A3F4309A224C314F3F7AC039DDEF /* GoSquared.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GoSquared.h; sourceTree = "<group>"; };
-		7B74E18341808E2FA46DEE17AEAADC29 /* GSChatHeaderLoadingView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatHeaderLoadingView.h; sourceTree = "<group>"; };
-		7C7F63025022AFE88F342CC59568A2C4 /* GSChatConnectionStatusView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatConnectionStatusView.m; sourceTree = "<group>"; };
-		80558FBA1DF90E0726AC3201E94C40CE /* PINImageView+PINRemoteImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PINImageView+PINRemoteImage.h"; path = "Pod/Classes/Image Categories/PINImageView+PINRemoteImage.h"; sourceTree = "<group>"; };
-		82608DBAC365438894B16B00CE7888EC /* GSTrackerEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSTrackerEvent.h; sourceTree = "<group>"; };
-		839FE8E9FF9C1B27A3013E027940A77E /* UIColor+GoSquared.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIColor+GoSquared.h"; sourceTree = "<group>"; };
-		8434348AB41BA0F56D878E299B2A5982 /* GoSquared-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GoSquared-dummy.m"; sourceTree = "<group>"; };
-		85B4CB3CF47F2B80C42EE048A17B6CE2 /* PINCache.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PINCache.xcconfig; sourceTree = "<group>"; };
-		882999D9F4E3D51AEACAD81AE11567A4 /* GSRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSRequest.h; sourceTree = "<group>"; };
-		89751475A78A66CBD2DB37F308304B6E /* PINRemoteImageCallbacks.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINRemoteImageCallbacks.m; path = Pod/Classes/PINRemoteImageCallbacks.m; sourceTree = "<group>"; };
-		89935474D8CF92BF7C8B823C1B95F40F /* PINRemoteLock.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINRemoteLock.h; path = Pod/Classes/PINRemoteLock.h; sourceTree = "<group>"; };
-		8A77123306344F100A4996F6524B293A /* GSChatHeaderEndView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatHeaderEndView.h; sourceTree = "<group>"; };
-		9036729816357D2211C64297A6E97135 /* PINProgressiveImage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINProgressiveImage.m; path = Pod/Classes/PINProgressiveImage.m; sourceTree = "<group>"; };
-		915B3389224041F6FFAD8B96DB548DBC /* GSChatIceBreakerView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatIceBreakerView.m; sourceTree = "<group>"; };
+		76B9F54C78D8AD2DB5AB75D1B30BA99E /* GSTrackerDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSTrackerDelegate.h; sourceTree = "<group>"; };
+		783B2124A4A700B75FFEA9756D97B306 /* icons.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = icons.xcassets; sourceTree = "<group>"; };
+		791BC06BD1DF13C2DCBE99ECDC10C542 /* GSTracker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSTracker.m; sourceTree = "<group>"; };
+		7A8C365F96DD4782C3A711BE70DE7A02 /* GSChatComposeTextView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatComposeTextView.m; sourceTree = "<group>"; };
+		81860F041A4C1B948BF85F113FC1AD85 /* index.html */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		8E798F02F9C438358C3ADC598581E221 /* GSChatComposeView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatComposeView.m; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		967402F0431F6A99B6BD62DE2809F5C7 /* PINDataTaskOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINDataTaskOperation.h; path = Pod/Classes/PINDataTaskOperation.h; sourceTree = "<group>"; };
-		97A0754254C5B604B361CEC394A20585 /* PINCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINCache.h; path = PINCache/PINCache.h; sourceTree = "<group>"; };
-		97E2A42D355DD2D7BD8F420B71F1AE8B /* UIViewController+Chat.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Chat.h"; sourceTree = "<group>"; };
-		9811A0BEBD895212E34527611CF6ECEE /* PINMemoryCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINMemoryCache.h; path = PINCache/PINMemoryCache.h; sourceTree = "<group>"; };
-		98362A643348F21595DF556AFE4476CE /* GSTransactionItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSTransactionItem.m; sourceTree = "<group>"; };
-		984C52083E01BC488482CA7A68653D7A /* FLAnimatedImageView+PINRemoteImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FLAnimatedImageView+PINRemoteImage.h"; path = "Pod/Classes/Image Categories/FLAnimatedImageView+PINRemoteImage.h"; sourceTree = "<group>"; };
-		9A4D2FB70405EF7F4ADECF1304055AE4 /* libGoSquared.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGoSquared.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		9AE2551DB07323AE855107C7831F61C6 /* PINImage+DecodedImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PINImage+DecodedImage.h"; path = "Pod/Classes/Categories/PINImage+DecodedImage.h"; sourceTree = "<group>"; };
-		9BD030971F3A3297272CE5693711DCF6 /* PINRemoteImageCategoryManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINRemoteImageCategoryManager.h; path = Pod/Classes/PINRemoteImageCategoryManager.h; sourceTree = "<group>"; };
+		9BCA003A9744CAB63C3889F14DF638A8 /* GSTrackerEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSTrackerEvent.h; sourceTree = "<group>"; };
 		9E26978B7A434E53D8D9AC6B3E20B82F /* Pods-Chat-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Chat-frameworks.sh"; sourceTree = "<group>"; };
-		9F57DEAE9B0F826A2A986FECC9EA2EDD /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/ImageIO.framework; sourceTree = DEVELOPER_DIR; };
-		9F81BA9FFC2D1F7222ED9E39665846B1 /* GSDevice.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSDevice.h; sourceTree = "<group>"; };
-		A1FDC49FA84B2FB6674E8A8E2371798E /* GSChatBubbleCell.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatBubbleCell.h; sourceTree = "<group>"; };
-		A2F0DF15FD50694287DE6CAA1974415F /* GSChatConnectionStatus.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatConnectionStatus.h; sourceTree = "<group>"; };
-		A687B39AA906298EB555E862CA2DF4A6 /* FLAnimatedImage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FLAnimatedImage.xcconfig; sourceTree = "<group>"; };
-		A6C7FC3FB2E0B1B51DEEE7E1F46202EB /* Nullability.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Nullability.h; path = PINCache/Nullability.h; sourceTree = "<group>"; };
-		A7B66ED100209DE8BA6ABA2831532ABC /* PINRemoteImage-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PINRemoteImage-dummy.m"; sourceTree = "<group>"; };
-		AB21A3648FE323D92AF1A41642543544 /* PINURLSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINURLSessionManager.m; path = Pod/Classes/PINURLSessionManager.m; sourceTree = "<group>"; };
-		ACC57D32171FE2F24A49D09E8F7AFBEA /* NSString+Emojione.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emojione.m"; sourceTree = "<group>"; };
-		B10BA261206F44CB13D469454C2CE877 /* UIColor+GoSquared.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIColor+GoSquared.m"; sourceTree = "<group>"; };
-		B3CB414F59EB90239743CBAE1351CB62 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
-		B478BA81A72B15812ECA77000AA1BA36 /* PINRemoteImageTask.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINRemoteImageTask.h; path = Pod/Classes/PINRemoteImageTask.h; sourceTree = "<group>"; };
-		B66323C64A4283EC8BC876CC701AD93F /* GSTransactionItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSTransactionItem.h; sourceTree = "<group>"; };
-		B7618563539E3D7DE8E72585D004FBCA /* GSChatBarButtonItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatBarButtonItem.h; sourceTree = "<group>"; };
-		B7C60AA749AAA3D0E4D071751B91E800 /* GSChatViewLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatViewLayout.m; sourceTree = "<group>"; };
-		BBACDEBA08DC653173C4D36811D8D1B3 /* PINRemoteImage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PINRemoteImage.xcconfig; sourceTree = "<group>"; };
-		BC3815E1FB9C5AB4E37657F007B05BF2 /* PINImage+DecodedImage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "PINImage+DecodedImage.m"; path = "Pod/Classes/Categories/PINImage+DecodedImage.m"; sourceTree = "<group>"; };
-		BC530D021D26AF290060D28B /* GSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSConfig.h; sourceTree = "<group>"; };
-		BC530D031D26AF290060D28B /* GSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSConfig.m; sourceTree = "<group>"; };
-		C0FDF1C92BC0B46E90FD817704BF370D /* SRWebSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SRWebSocket.m; path = SocketRocket/SRWebSocket.m; sourceTree = "<group>"; };
-		C1EF4A9D11EC5C779E16B4737AD6E9DF /* GSTracker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSTracker.m; sourceTree = "<group>"; };
-		C2D6FBDCD41E925C78550B4FAE99DE9F /* GSPageview.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSPageview.m; sourceTree = "<group>"; };
-		C4FC8C62E8A8967F7D3027282CEF78CC /* GSChatBarButtonItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatBarButtonItem.m; sourceTree = "<group>"; };
-		C6B5171797A8BA620FE3501BBC710E78 /* GSTransaction.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSTransaction.m; sourceTree = "<group>"; };
-		C707A85CD8661353C0D59251D36CF8AC /* UIViewController+Chat.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Chat.m"; sourceTree = "<group>"; };
+		9F3D60DB860F6BDD294F9541000AA3E8 /* GSChatTitleView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatTitleView.m; sourceTree = "<group>"; };
+		A403A5CDA658BF3A1C93CB5686AC2757 /* GSTransaction.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSTransaction.m; sourceTree = "<group>"; };
+		A5E8AF9F6074B85A3E121B8453C9333C /* GSChatComposeViewDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatComposeViewDelegate.h; sourceTree = "<group>"; };
+		A8F17F2B3BE5D53989DCCABEE34D6ED8 /* GSTransaction.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSTransaction.h; sourceTree = "<group>"; };
+		ACFAD2480D8DFA0F35FF48FB575D2D85 /* GSConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSConfig.m; sourceTree = "<group>"; };
+		AD15264E92712301E42BC1AB26E3BA42 /* GSChatTitleView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatTitleView.h; sourceTree = "<group>"; };
+		B160F6609E6234C51167B6A9333928E3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		B19FB50327EAA8F2CCA0E93ACB78751F /* GSTypes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSTypes.h; sourceTree = "<group>"; };
+		B221378A7327F310FAE247BBB6B70BCB /* GoSquared.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GoSquared.h; sourceTree = "<group>"; };
+		B26972E6E257AAB282815D97861349BB /* UIViewController+Chat.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Chat.m"; sourceTree = "<group>"; };
+		B4C013794536BD5AD1DEAC4FA4D6475B /* GSChatWebView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatWebView.h; sourceTree = "<group>"; };
+		B6A5494606C035D53CA611BD807550C7 /* GSChatEmbed.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GSChatEmbed.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6C6C5B19A57C6D7C7F851F758E94369 /* GSChatViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatViewController.h; sourceTree = "<group>"; };
+		C1105A1146C9A8B7F4FEBFC5DA25232E /* UIViewController+Chat.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Chat.h"; sourceTree = "<group>"; };
+		C680F9D324DC241C088FB4858C0ED763 /* GoSquared-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoSquared-prefix.pch"; sourceTree = "<group>"; };
+		C7A34621823491102E65BB0C82DF8901 /* GSTrackerEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSTrackerEvent.m; sourceTree = "<group>"; };
+		C7ED783EC20BB87C36A8EBE2A2CA1E50 /* GSPageview.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSPageview.h; sourceTree = "<group>"; };
+		C98107E5431986C626D06B8FA77E1D73 /* GSRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSRequest.m; sourceTree = "<group>"; };
+		CBC4B96211E189554BBFEC766AE6B062 /* libPods-Chat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Chat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D06654A73BC58926BE68F9714EF175D6 /* Pods-Chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Chat.release.xcconfig"; sourceTree = "<group>"; };
-		D117126AC30186D83E3F85E18D0137CE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
-		D530F2130AD38CEB180B11DE497F5461 /* FLAnimatedImageView+PINRemoteImage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "FLAnimatedImageView+PINRemoteImage.m"; path = "Pod/Classes/Image Categories/FLAnimatedImageView+PINRemoteImage.m"; sourceTree = "<group>"; };
-		D64EE40B5E3FC587EAA4D369F570601E /* NSString+Emojione.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSString+Emojione.h"; sourceTree = "<group>"; };
-		DA94B9A949993637B3A2F5D58C0EA2D4 /* GoSquared+Chat.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoSquared+Chat.h"; sourceTree = "<group>"; };
-		DE513A5FC7C2EBF3B8703499C33C67BD /* PINRemoteLock.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINRemoteLock.m; path = Pod/Classes/PINRemoteLock.m; sourceTree = "<group>"; };
-		DFB66DC856716B81C1A4DE0C8EB91D7B /* GSChatComposeTextView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatComposeTextView.h; sourceTree = "<group>"; };
-		E03986A458749DB65A3CDC0820C48875 /* libFLAnimatedImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFLAnimatedImage.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		E19D3492C364D8567E2F92BFFFDF4A8A /* SRWebSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SRWebSocket.h; path = SocketRocket/SRWebSocket.h; sourceTree = "<group>"; };
-		E2C94480CDA6D8EAF416C26222570AAC /* GoSquared.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GoSquared.m; sourceTree = "<group>"; };
-		E42945A68046A72DF6FA3B627087BD31 /* PINCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINCache.m; path = PINCache/PINCache.m; sourceTree = "<group>"; };
-		E89D89A46032090F53019CD6ABCA0D7A /* GoSquared+Chat.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GoSquared+Chat.m"; sourceTree = "<group>"; };
-		E9D2ACD9665E9E39F583F65E0167EF48 /* GSTracker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSTracker.h; sourceTree = "<group>"; };
-		EB16FA524A3DFAA4840044F94A0096E6 /* PINDiskCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINDiskCache.m; path = PINCache/PINDiskCache.m; sourceTree = "<group>"; };
-		EEEB662CDD02F3B9CA707706338186D6 /* PINRemoteImageProcessorTask.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINRemoteImageProcessorTask.h; path = Pod/Classes/PINRemoteImageProcessorTask.h; sourceTree = "<group>"; };
-		F0012DBF0AE44C24CE65504B4BBB0048 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLAnimatedImageView.h; path = FLAnimatedImage/FLAnimatedImageView.h; sourceTree = "<group>"; };
-		F166456C57E0A3DEBD1B5B60F6DF5B73 /* PINImage+WebP.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "PINImage+WebP.m"; path = "Pod/Classes/Categories/PINImage+WebP.m"; sourceTree = "<group>"; };
-		F3B0A5E49EA46DC668173C8F77A60A93 /* FLAnimatedImage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLAnimatedImage.m; path = FLAnimatedImage/FLAnimatedImage.m; sourceTree = "<group>"; };
-		F76AC76A475AAAE6E375227232C216FB /* GSChatComposeView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatComposeView.h; sourceTree = "<group>"; };
-		F8328D8064E843A2EDDB7A0D56BE5431 /* GSChatHeaderLoadingView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatHeaderLoadingView.m; sourceTree = "<group>"; };
-		F85D0BB599B314741DCBDB1A758794B1 /* PINImage+WebP.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PINImage+WebP.h"; path = "Pod/Classes/Categories/PINImage+WebP.h"; sourceTree = "<group>"; };
-		FA004E22EF83ACB06EA46E21C3EAD1D9 /* FLAnimatedImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLAnimatedImage.h; path = FLAnimatedImage/FLAnimatedImage.h; sourceTree = "<group>"; };
-		FA1563BDB3D321834EC7430B211B11A0 /* GSRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSRequest.m; sourceTree = "<group>"; };
+		D19BEC7FC223169F0C9C8A269151A0D8 /* GoSquared.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoSquared.xcconfig; sourceTree = "<group>"; };
+		D9F5D617435D2E280678623DA084E94A /* GSTransactionItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSTransactionItem.h; sourceTree = "<group>"; };
+		DDD3A1838491CCD00DBC7211D9F6A0D7 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/WebKit.framework; sourceTree = DEVELOPER_DIR; };
+		E46F42685E1BF1CE9EF64217D439B2DB /* libGoSquared.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGoSquared.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8359A93BF906BD8835D18B2D10B33F5 /* ResourceBundle-GSChatEmbed-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-GSChatEmbed-Info.plist"; sourceTree = "<group>"; };
+		EF22B8E1D0C1DC01113AA4500B443B2E /* GSDevice.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSDevice.h; sourceTree = "<group>"; };
+		EF9A59CCEA35D67537A13D4B22E2094C /* GoSquared.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GoSquared.m; sourceTree = "<group>"; };
+		EFE1C3879F760DAF1AB08F10317EEBBF /* GSTransactionItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSTransactionItem.m; sourceTree = "<group>"; };
+		F938ADE1ED9B38B1F1DBC89276071C7A /* GSChatViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = GSChatViewController.m; sourceTree = "<group>"; };
+		F9ED9CCDB2076B45146F2028BB5FDBBD /* GSChatManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GSChatManager.h; sourceTree = "<group>"; };
 		FA2B746644ABFC4FC7E22C3AA5A6E8FA /* Pods-Chat-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Chat-acknowledgements.plist"; sourceTree = "<group>"; };
-		FB0A6D308500D4536AEFCD41DB2B5A45 /* PINRemoteImageManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINRemoteImageManager.m; path = Pod/Classes/PINRemoteImageManager.m; sourceTree = "<group>"; };
-		FCCF1944F7F1477A13D2E5FFE6C831FB /* PINRemoteImageDownloadTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINRemoteImageDownloadTask.m; path = Pod/Classes/PINRemoteImageDownloadTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		0EB1B39B44BF7F51264FC8F58FCE6D2E /* Frameworks */ = {
+		2257A2C92454537EC78F1C7AE7034C9C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				483D17D4D03F45FB111CFC8F969B1A20 /* Foundation.framework in Frameworks */,
+				C58C973D8831F28CF5B31FF131EC0135 /* Foundation.framework in Frameworks */,
+				10555BBC6FA901947DA7FDB9EB1B4A21 /* UIKit.framework in Frameworks */,
+				E91622E032823637BED9936B727B5661 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		456E3D8CBA16CC53451C696545611E92 /* Frameworks */ = {
+		2EE0BBA033BAA716704E12CC0EFB6A03 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2D4BD778AA169AF80F886C9D3481652 /* CoreGraphics.framework in Frameworks */,
-				1648AF0217C3EB3613F6BE9E79F2BF16 /* Foundation.framework in Frameworks */,
-				EB1487A56E7EDBAD61BC4A13AC49263C /* ImageIO.framework in Frameworks */,
-				AF1C0FE9B00BDD79E2B8A4C285ACF8FC /* MobileCoreServices.framework in Frameworks */,
-				7853CD28E2141C7C341AD21FE6B7951A /* QuartzCore.framework in Frameworks */,
+				60EF82E4C6E5E311B53AAA1B3850CF2F /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7059B84FC6C2B65C545700FA07673A0D /* Frameworks */ = {
+		E0BDF4F9CB7949926AF7CD01DAEE4454 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0DD2FCE50B1BB79A6512B13644DEE9A3 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C3AF8063D670811DE15CCF878F9087CB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				70245D049664A47C10B1E989AC2C1715 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CFB00B628D17F50B8C6CBC4185856B56 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				26352A4C9AC7E74211FB2577B1C1099E /* Accelerate.framework in Frameworks */,
-				5C6B3A54C4837195F56DBA79C088593E /* Foundation.framework in Frameworks */,
-				7343A7FEB56CE0113211A93A72634F53 /* ImageIO.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F30D64D66833925BF4E235945506786E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2A6C3DA6FA66288A2353E3FF561A94D1 /* CFNetwork.framework in Frameworks */,
-				F6EACFBB03EF327B9CCEB2764FC59201 /* Foundation.framework in Frameworks */,
-				AFBE0CD6F9025CE5E9AB43609DB883A7 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0C456992688B6C4F61BF06E0100ABB73 /* Core */ = {
+		1133C755E07AD6B48E9C152C81361073 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				50E523A85B4846C1F4E8DB2D225CE6AC /* NSData+ImageDetectors.h */,
-				3301BBD5A00C392DAA9CC9766ECC59A4 /* NSData+ImageDetectors.m */,
-				3F12588462003B3A29E6068D0605AA14 /* PINButton+PINRemoteImage.h */,
-				6DC6C8FA1489CB159EECFC8F30E715F1 /* PINButton+PINRemoteImage.m */,
-				967402F0431F6A99B6BD62DE2809F5C7 /* PINDataTaskOperation.h */,
-				479DE91E1F4C32CEEAFA80D3D5F16819 /* PINDataTaskOperation.m */,
-				9AE2551DB07323AE855107C7831F61C6 /* PINImage+DecodedImage.h */,
-				BC3815E1FB9C5AB4E37657F007B05BF2 /* PINImage+DecodedImage.m */,
-				F85D0BB599B314741DCBDB1A758794B1 /* PINImage+WebP.h */,
-				F166456C57E0A3DEBD1B5B60F6DF5B73 /* PINImage+WebP.m */,
-				80558FBA1DF90E0726AC3201E94C40CE /* PINImageView+PINRemoteImage.h */,
-				32FAED96C809F69293DECC1F32DEC4F8 /* PINImageView+PINRemoteImage.m */,
-				2FA30A77C8EC1737C1F482ACA11DF4A4 /* PINProgressiveImage.h */,
-				9036729816357D2211C64297A6E97135 /* PINProgressiveImage.m */,
-				25F6BFCA726A57210197F96C7A0E203A /* PINRemoteImage.h */,
-				47C180BCE5902D99AD7463C51ECB88C1 /* PINRemoteImageCallbacks.h */,
-				89751475A78A66CBD2DB37F308304B6E /* PINRemoteImageCallbacks.m */,
-				9BD030971F3A3297272CE5693711DCF6 /* PINRemoteImageCategoryManager.h */,
-				6EA7A099C4E07926287D926D4280094D /* PINRemoteImageCategoryManager.m */,
-				40FBC1DDEE8CA66D37F4C5D07B9330D6 /* PINRemoteImageDownloadTask.h */,
-				FCCF1944F7F1477A13D2E5FFE6C831FB /* PINRemoteImageDownloadTask.m */,
-				5DAE0A8B546B3ECBDF9E9F7D387D7D7D /* PINRemoteImageMacros.h */,
-				5EFDC3BF620B50C8A85517BE5B575634 /* PINRemoteImageManager.h */,
-				FB0A6D308500D4536AEFCD41DB2B5A45 /* PINRemoteImageManager.m */,
-				65BBE0BADF9BC1CBA76F5C24F2E6D5DD /* PINRemoteImageManagerResult.h */,
-				34ABF6A43CBD61C4879404E94F04D4FC /* PINRemoteImageManagerResult.m */,
-				EEEB662CDD02F3B9CA707706338186D6 /* PINRemoteImageProcessorTask.h */,
-				636B761C1B188F05E00E7EC270D6DC6A /* PINRemoteImageProcessorTask.m */,
-				B478BA81A72B15812ECA77000AA1BA36 /* PINRemoteImageTask.h */,
-				1229818DF68359CE20D9973AE416353D /* PINRemoteImageTask.m */,
-				89935474D8CF92BF7C8B823C1B95F40F /* PINRemoteLock.h */,
-				DE513A5FC7C2EBF3B8703499C33C67BD /* PINRemoteLock.m */,
-				3E4ED8C88B74364F9B04AAF0D2AF5E5D /* PINURLSessionManager.h */,
-				AB21A3648FE323D92AF1A41642543544 /* PINURLSessionManager.m */,
-			);
-			name = Core;
-			sourceTree = "<group>";
-		};
-		1050E8284DAA60860CAFDEBAE31AC812 /* Chat */ = {
-			isa = PBXGroup;
-			children = (
-				14AB2EA7BE3471FB370A5D103AEB8A4C /* GoSquared+Chat */,
+				56D88F3FA248F4C94BA43BD5C38832F1 /* GoSquared */,
+				350CE52F4B872213E1472416A54E8AE1 /* Resources */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
 		};
-		11AF54EABC5ACC55D7D4B165D0739414 /* FLAnimatedImage */ = {
+		122DA2E5084A4393C29BE363C764795C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FA004E22EF83ACB06EA46E21C3EAD1D9 /* FLAnimatedImage.h */,
-				F3B0A5E49EA46DC668173C8F77A60A93 /* FLAnimatedImage.m */,
-				F0012DBF0AE44C24CE65504B4BBB0048 /* FLAnimatedImageView.h */,
-				6D17797E87B9656AC75AEB866A45F6D2 /* FLAnimatedImageView.m */,
-				5D8D8DB5A95FCDB1EAC427ACE26633AA /* Support Files */,
-			);
-			path = FLAnimatedImage;
-			sourceTree = "<group>";
-		};
-		14AB2EA7BE3471FB370A5D103AEB8A4C /* GoSquared+Chat */ = {
-			isa = PBXGroup;
-			children = (
-				DA94B9A949993637B3A2F5D58C0EA2D4 /* GoSquared+Chat.h */,
-				E89D89A46032090F53019CD6ABCA0D7A /* GoSquared+Chat.m */,
-				B7618563539E3D7DE8E72585D004FBCA /* GSChatBarButtonItem.h */,
-				C4FC8C62E8A8967F7D3027282CEF78CC /* GSChatBarButtonItem.m */,
-				143747C811AC9CF286E2409A45F30FC7 /* GSChatViewController.h */,
-				615C593806640D02142BAB9F4F28DD53 /* GSChatViewController.m */,
-				117DF0878A59E4FEEF19A33B65EAEED7 /* GSChatViewLayout.h */,
-				B7C60AA749AAA3D0E4D071751B91E800 /* GSChatViewLayout.m */,
-				0CE47E6B160BA81B23474818AA9D7447 /* GSTracker+Chat.h */,
-				1D5A4317BA1863C3C0E800C386712FAC /* GSTracker+Chat.m */,
-				97E2A42D355DD2D7BD8F420B71F1AE8B /* UIViewController+Chat.h */,
-				C707A85CD8661353C0D59251D36CF8AC /* UIViewController+Chat.m */,
-				84DB166F2520F5264654CCBCB1CCC0A7 /* Categories */,
-				1E8BF58CA1378A3F9330E185A0728662 /* Models */,
-				97D75A69FB24A30F72358BF4089B67B7 /* Views */,
-			);
-			path = "GoSquared+Chat";
-			sourceTree = "<group>";
-		};
-		1E8BF58CA1378A3F9330E185A0728662 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				A2F0DF15FD50694287DE6CAA1974415F /* GSChatConnectionStatus.h */,
-				48F54EBD8844D12B5C795C00BCD03C66 /* GSChatManager.h */,
-				31C2DC29AB182FE1CFD7A19B85B5A992 /* GSChatManager.m */,
-				20F93F88F875BB8E3CAB0B654F3497BE /* GSChatMessage.h */,
-				007997FF8A598394AEC8399A977E036B /* GSChatMessage.m */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		29408DFE207A3081C4765C6E6B0A0330 /* PINRemoteImage */ = {
-			isa = PBXGroup;
-			children = (
-				0C456992688B6C4F61BF06E0100ABB73 /* Core */,
-				AD095958F1A937BFB0CD49FB0E665C22 /* FLAnimatedImage */,
-				97338582A58DC1D857154DD4AE29B973 /* Support Files */,
-			);
-			path = PINRemoteImage;
-			sourceTree = "<group>";
-		};
-		2E89EBB01418F2A482C03169FE737DC5 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				65900ADE73B4D2A5CAAE2238CB1BCCF6 /* GoSquared */,
-			);
-			name = Core;
-			sourceTree = "<group>";
-		};
-		4F59D121C607E532FCA12C32973250F2 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				85B4CB3CF47F2B80C42EE048A17B6CE2 /* PINCache.xcconfig */,
-				37CC6C527390F17A0D27855EE045FAD6 /* PINCache-dummy.m */,
-				4F8987133B1DB50C9C2C51ABEE40CA4A /* PINCache-prefix.pch */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/PINCache";
-			sourceTree = "<group>";
-		};
-		528460FB27B9A924D08E3BB793DDE8B8 /* PINCache */ = {
-			isa = PBXGroup;
-			children = (
-				A6C7FC3FB2E0B1B51DEEE7E1F46202EB /* Nullability.h */,
-				97A0754254C5B604B361CEC394A20585 /* PINCache.h */,
-				E42945A68046A72DF6FA3B627087BD31 /* PINCache.m */,
-				5D445E5583C31B4316E745C520EF4799 /* PINDiskCache.h */,
-				EB16FA524A3DFAA4840044F94A0096E6 /* PINDiskCache.m */,
-				9811A0BEBD895212E34527611CF6ECEE /* PINMemoryCache.h */,
-				5A541F7EC2AC1F8201BEBC5AD04B472C /* PINMemoryCache.m */,
-				4F59D121C607E532FCA12C32973250F2 /* Support Files */,
-			);
-			path = PINCache;
-			sourceTree = "<group>";
-		};
-		56F0459377F71CD98BC72E46E1292827 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				202996AA42A5DBD1916530A2C4DC8939 /* Accelerate.framework */,
-				3CBC32786BD2C58C2330319EAA918670 /* CFNetwork.framework */,
-				50351C639B7A170904C2AC3D1CA9B241 /* CoreGraphics.framework */,
-				120E20CAA9BF267D4EBF981F063C3B09 /* Foundation.framework */,
-				9F57DEAE9B0F826A2A986FECC9EA2EDD /* ImageIO.framework */,
-				57DBC80EDEF5502F5616898D9A8BAF9B /* MobileCoreServices.framework */,
-				D117126AC30186D83E3F85E18D0137CE /* QuartzCore.framework */,
-				B3CB414F59EB90239743CBAE1351CB62 /* Security.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		5D8D8DB5A95FCDB1EAC427ACE26633AA /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				A687B39AA906298EB555E862CA2DF4A6 /* FLAnimatedImage.xcconfig */,
-				084F48050FD1545602259C2CE8505922 /* FLAnimatedImage-dummy.m */,
-				2E710B7B462274F2289398C5E35E695F /* FLAnimatedImage-prefix.pch */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/FLAnimatedImage";
-			sourceTree = "<group>";
-		};
-		65900ADE73B4D2A5CAAE2238CB1BCCF6 /* GoSquared */ = {
-			isa = PBXGroup;
-			children = (
-				7B61A3F4309A224C314F3F7AC039DDEF /* GoSquared.h */,
-				E2C94480CDA6D8EAF416C26222570AAC /* GoSquared.m */,
-				9F81BA9FFC2D1F7222ED9E39665846B1 /* GSDevice.h */,
-				0E1FBA2992E310FCA17C1F4D61E4AA29 /* GSDevice.m */,
-				35EED4F7D71E1E9BA6042F151AEB654E /* GSPageview.h */,
-				C2D6FBDCD41E925C78550B4FAE99DE9F /* GSPageview.m */,
-				882999D9F4E3D51AEACAD81AE11567A4 /* GSRequest.h */,
-				FA1563BDB3D321834EC7430B211B11A0 /* GSRequest.m */,
-				E9D2ACD9665E9E39F583F65E0167EF48 /* GSTracker.h */,
-				C1EF4A9D11EC5C779E16B4737AD6E9DF /* GSTracker.m */,
-				BC530D021D26AF290060D28B /* GSConfig.h */,
-				BC530D031D26AF290060D28B /* GSConfig.m */,
-				7494DBC14AF88FAD56E3C26B7994C3FD /* GSTrackerDelegate.h */,
-				82608DBAC365438894B16B00CE7888EC /* GSTrackerEvent.h */,
-				19FE251B902A8AA4EB5A9889DFFB0DAB /* GSTrackerEvent.m */,
-				6AFC3AB16599DA4DAB5BDC71F6238F66 /* GSTransaction.h */,
-				C6B5171797A8BA620FE3501BBC710E78 /* GSTransaction.m */,
-				B66323C64A4283EC8BC876CC701AD93F /* GSTransactionItem.h */,
-				98362A643348F21595DF556AFE4476CE /* GSTransactionItem.m */,
-				7A36A6BF282FFB87B009A61EE8512B2C /* GSTypes.h */,
-			);
-			path = GoSquared;
-			sourceTree = "<group>";
-		};
-		785553737B06AFC3DA711DDEB7D56194 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				56F0459377F71CD98BC72E46E1292827 /* iOS */,
+				F9EF718253E53076B84220C209CCBFE2 /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		350CE52F4B872213E1472416A54E8AE1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D38967BEA1A933E89DF794EA19A1C787 /* GoSquared */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		56D88F3FA248F4C94BA43BD5C38832F1 /* GoSquared */ = {
+			isa = PBXGroup;
+			children = (
+				F8F997E4D5C9AF5DF941AF22AE582C3B /* Chat */,
+			);
+			path = GoSquared;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -616,89 +202,51 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				FF3AFF9C112D6DC11BB8E873A6E2EA87 /* Development Pods */,
-				785553737B06AFC3DA711DDEB7D56194 /* Frameworks */,
-				C611437C9715073F4F9BF09100A4F783 /* Pods */,
-				E59B5C657598587C6EBEE7C5756C3814 /* Products */,
+				122DA2E5084A4393C29BE363C764795C /* Frameworks */,
+				E2F66FD0D53D6A83C938C4AD337FE09F /* Products */,
 				C7675F03BD5D78DA0509416EF679E551 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		84DB166F2520F5264654CCBCB1CCC0A7 /* Categories */ = {
+		A16EA0B30CC63502623F52A0BB58CA0B /* GoSquared */ = {
 			isa = PBXGroup;
 			children = (
-				D64EE40B5E3FC587EAA4D369F570601E /* NSString+Emojione.h */,
-				ACC57D32171FE2F24A49D09E8F7AFBEA /* NSString+Emojione.m */,
-				839FE8E9FF9C1B27A3013E027940A77E /* UIColor+GoSquared.h */,
-				B10BA261206F44CB13D469454C2CE877 /* UIColor+GoSquared.m */,
-			);
-			path = Categories;
-			sourceTree = "<group>";
-		};
-		8EAE34CFA3C40D992DC3DC243C925E6B /* GoSquared */ = {
-			isa = PBXGroup;
-			children = (
-				1050E8284DAA60860CAFDEBAE31AC812 /* Chat */,
-				2E89EBB01418F2A482C03169FE737DC5 /* Core */,
-				D8E33DC2F3DE0A509AA43B1DB7EF7F53 /* Support Files */,
+				1133C755E07AD6B48E9C152C81361073 /* Chat */,
+				A18EC724996483BB16522B90E5851E56 /* Core */,
+				C680EA8B24E0FB8970071AF63DEB7DD3 /* Support Files */,
 			);
 			name = GoSquared;
 			path = ../..;
 			sourceTree = "<group>";
 		};
-		97338582A58DC1D857154DD4AE29B973 /* Support Files */ = {
+		A18EC724996483BB16522B90E5851E56 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				BBACDEBA08DC653173C4D36811D8D1B3 /* PINRemoteImage.xcconfig */,
-				A7B66ED100209DE8BA6ABA2831532ABC /* PINRemoteImage-dummy.m */,
-				20C6F1E14924B6D152C7A188DBD71729 /* PINRemoteImage-prefix.pch */,
+				EF2BC2673973006A94CE4450AA14FF68 /* GoSquared */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		BA44A8E1481677D34442037834ABCC18 /* Embed */ = {
+			isa = PBXGroup;
+			children = (
+				0379AC41CFE8233D36DEDFD08EAB45DE /* chat.js */,
+				783B2124A4A700B75FFEA9756D97B306 /* icons.xcassets */,
+				81860F041A4C1B948BF85F113FC1AD85 /* index.html */,
+			);
+			path = Embed;
+			sourceTree = "<group>";
+		};
+		C680EA8B24E0FB8970071AF63DEB7DD3 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				D19BEC7FC223169F0C9C8A269151A0D8 /* GoSquared.xcconfig */,
+				346F7072FA80CB894949416D96E06286 /* GoSquared-dummy.m */,
+				C680F9D324DC241C088FB4858C0ED763 /* GoSquared-prefix.pch */,
+				E8359A93BF906BD8835D18B2D10B33F5 /* ResourceBundle-GSChatEmbed-Info.plist */,
 			);
 			name = "Support Files";
-			path = "../Target Support Files/PINRemoteImage";
-			sourceTree = "<group>";
-		};
-		97D75A69FB24A30F72358BF4089B67B7 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				A1FDC49FA84B2FB6674E8A8E2371798E /* GSChatBubbleCell.h */,
-				4C421548252CF83DEEBD5C932C60F90F /* GSChatBubbleCell.m */,
-				154180925DA7A8624A9123AC21D79032 /* GSChatBubbleContent.h */,
-				777563CFB8DD14729D97D59FD7E9DCE3 /* GSChatBubbleContent.m */,
-				DFB66DC856716B81C1A4DE0C8EB91D7B /* GSChatComposeTextView.h */,
-				0D1002AC1831AE7E6882DC429F728F32 /* GSChatComposeTextView.m */,
-				F76AC76A475AAAE6E375227232C216FB /* GSChatComposeView.h */,
-				24D9987FA56453CEB0BAB396DA131782 /* GSChatComposeView.m */,
-				40F30350F9B5657E03EEB91A1E00193F /* GSChatConnectionStatusView.h */,
-				7C7F63025022AFE88F342CC59568A2C4 /* GSChatConnectionStatusView.m */,
-				8A77123306344F100A4996F6524B293A /* GSChatHeaderEndView.h */,
-				41FDD894786C95F6F7C79517B7F153C9 /* GSChatHeaderEndView.m */,
-				7B74E18341808E2FA46DEE17AEAADC29 /* GSChatHeaderLoadingView.h */,
-				F8328D8064E843A2EDDB7A0D56BE5431 /* GSChatHeaderLoadingView.m */,
-				0A186E5C126A53C17345E98F0DABB5F9 /* GSChatIceBreakerView.h */,
-				915B3389224041F6FFAD8B96DB548DBC /* GSChatIceBreakerView.m */,
-				3DDBA8760CE3631E8218609BDDB57321 /* GSChatTitleView.h */,
-				332DDD760FF40D92DA2D8D741568AE46 /* GSChatTitleView.m */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		AD095958F1A937BFB0CD49FB0E665C22 /* FLAnimatedImage */ = {
-			isa = PBXGroup;
-			children = (
-				984C52083E01BC488482CA7A68653D7A /* FLAnimatedImageView+PINRemoteImage.h */,
-				D530F2130AD38CEB180B11DE497F5461 /* FLAnimatedImageView+PINRemoteImage.m */,
-			);
-			name = FLAnimatedImage;
-			sourceTree = "<group>";
-		};
-		C611437C9715073F4F9BF09100A4F783 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				11AF54EABC5ACC55D7D4B165D0739414 /* FLAnimatedImage */,
-				528460FB27B9A924D08E3BB793DDE8B8 /* PINCache */,
-				29408DFE207A3081C4765C6E6B0A0330 /* PINRemoteImage */,
-				D6D0058D1D15CC09BB04BDDE9F5A8515 /* SocketRocket */,
-			);
-			name = Pods;
+			path = "Example/Pods/Target Support Files/GoSquared";
 			sourceTree = "<group>";
 		};
 		C7675F03BD5D78DA0509416EF679E551 /* Targets Support Files */ = {
@@ -724,55 +272,90 @@
 			path = "Target Support Files/Pods-Chat";
 			sourceTree = "<group>";
 		};
-		D6D0058D1D15CC09BB04BDDE9F5A8515 /* SocketRocket */ = {
+		D38967BEA1A933E89DF794EA19A1C787 /* GoSquared */ = {
 			isa = PBXGroup;
 			children = (
-				E19D3492C364D8567E2F92BFFFDF4A8A /* SRWebSocket.h */,
-				C0FDF1C92BC0B46E90FD817704BF370D /* SRWebSocket.m */,
-				F23ABE093F7CC02608137042D9371CF6 /* Support Files */,
+				BA44A8E1481677D34442037834ABCC18 /* Embed */,
 			);
-			path = SocketRocket;
+			path = GoSquared;
 			sourceTree = "<group>";
 		};
-		D8E33DC2F3DE0A509AA43B1DB7EF7F53 /* Support Files */ = {
+		E2F66FD0D53D6A83C938C4AD337FE09F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1726EAF264D43CD3176E6BC208F27799 /* GoSquared.xcconfig */,
-				8434348AB41BA0F56D878E299B2A5982 /* GoSquared-dummy.m */,
-				1B5D974AAAE5E035F4BE1ACE45D7ED91 /* GoSquared-prefix.pch */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/GoSquared";
-			sourceTree = "<group>";
-		};
-		E59B5C657598587C6EBEE7C5756C3814 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E03986A458749DB65A3CDC0820C48875 /* libFLAnimatedImage.a */,
-				9A4D2FB70405EF7F4ADECF1304055AE4 /* libGoSquared.a */,
-				50DFBF41A3DF1941CC93A31523FDC6CF /* libPINCache.a */,
-				4527CDA735ABC67077BA2CC06671DF70 /* libPINRemoteImage.a */,
-				5831A8F58E75907C615CAE0206164AB3 /* libPods-Chat.a */,
-				1DD62E3B2D4607E003F363143F94DA01 /* libSocketRocket.a */,
+				B6A5494606C035D53CA611BD807550C7 /* GSChatEmbed.bundle */,
+				E46F42685E1BF1CE9EF64217D439B2DB /* libGoSquared.a */,
+				CBC4B96211E189554BBFEC766AE6B062 /* libPods-Chat.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F23ABE093F7CC02608137042D9371CF6 /* Support Files */ = {
+		EF2BC2673973006A94CE4450AA14FF68 /* GoSquared */ = {
 			isa = PBXGroup;
 			children = (
-				5B9FA20389BA7620AF2A9AE56DDA4545 /* SocketRocket.xcconfig */,
-				3A5CE715F89FAB147F3BD7217B1D74AF /* SocketRocket-dummy.m */,
-				20E91D518F48289AD44E7FACD080766C /* SocketRocket-prefix.pch */,
+				B221378A7327F310FAE247BBB6B70BCB /* GoSquared.h */,
+				EF9A59CCEA35D67537A13D4B22E2094C /* GoSquared.m */,
+				373644FB9403E5DE0549AB6E657D6F4F /* GSConfig.h */,
+				ACFAD2480D8DFA0F35FF48FB575D2D85 /* GSConfig.m */,
+				EF22B8E1D0C1DC01113AA4500B443B2E /* GSDevice.h */,
+				081F2C3D2121BF7FF8DDE55363D89C61 /* GSDevice.m */,
+				C7ED783EC20BB87C36A8EBE2A2CA1E50 /* GSPageview.h */,
+				0C3BF9A8C1EC136832DEF1A859474D8F /* GSPageview.m */,
+				1F490C551CF0ADA59D9F9F0761894058 /* GSRequest.h */,
+				C98107E5431986C626D06B8FA77E1D73 /* GSRequest.m */,
+				1AC10D29A6E904D7B307764FC441E89E /* GSTracker.h */,
+				791BC06BD1DF13C2DCBE99ECDC10C542 /* GSTracker.m */,
+				76B9F54C78D8AD2DB5AB75D1B30BA99E /* GSTrackerDelegate.h */,
+				9BCA003A9744CAB63C3889F14DF638A8 /* GSTrackerEvent.h */,
+				C7A34621823491102E65BB0C82DF8901 /* GSTrackerEvent.m */,
+				A8F17F2B3BE5D53989DCCABEE34D6ED8 /* GSTransaction.h */,
+				A403A5CDA658BF3A1C93CB5686AC2757 /* GSTransaction.m */,
+				D9F5D617435D2E280678623DA084E94A /* GSTransactionItem.h */,
+				EFE1C3879F760DAF1AB08F10317EEBBF /* GSTransactionItem.m */,
+				B19FB50327EAA8F2CCA0E93ACB78751F /* GSTypes.h */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/SocketRocket";
+			path = GoSquared;
+			sourceTree = "<group>";
+		};
+		F8F997E4D5C9AF5DF941AF22AE582C3B /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				4A7761A3B3FEBCC52168D93D8A48299A /* GoSquared+Chat.h */,
+				56B0734E1D191E69E0AA01095C831816 /* GoSquared+Chat.m */,
+				23E226B6A12268E6412E10C314808389 /* GSChatComposeTextView.h */,
+				7A8C365F96DD4782C3A711BE70DE7A02 /* GSChatComposeTextView.m */,
+				46383C447B6728EA0D1110C6CF2BACE3 /* GSChatComposeView.h */,
+				8E798F02F9C438358C3ADC598581E221 /* GSChatComposeView.m */,
+				A5E8AF9F6074B85A3E121B8453C9333C /* GSChatComposeViewDelegate.h */,
+				F9ED9CCDB2076B45146F2028BB5FDBBD /* GSChatManager.h */,
+				6A350066C362B4CCD677CDF2FC86CE0F /* GSChatManager.m */,
+				20AC6A97B578774C889E22C73574920A /* GSChatManagerDelegate.h */,
+				AD15264E92712301E42BC1AB26E3BA42 /* GSChatTitleView.h */,
+				9F3D60DB860F6BDD294F9541000AA3E8 /* GSChatTitleView.m */,
+				B6C6C5B19A57C6D7C7F851F758E94369 /* GSChatViewController.h */,
+				F938ADE1ED9B38B1F1DBC89276071C7A /* GSChatViewController.m */,
+				B4C013794536BD5AD1DEAC4FA4D6475B /* GSChatWebView.h */,
+				624971617CF58B93C74585BE7E28F229 /* GSChatWebView.m */,
+				C1105A1146C9A8B7F4FEBFC5DA25232E /* UIViewController+Chat.h */,
+				B26972E6E257AAB282815D97861349BB /* UIViewController+Chat.m */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		F9EF718253E53076B84220C209CCBFE2 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				30AF1F6D671C390DBB91C8E5A9AEC130 /* Foundation.framework */,
+				B160F6609E6234C51167B6A9333928E3 /* UIKit.framework */,
+				DDD3A1838491CCD00DBC7211D9F6A0D7 /* WebKit.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 		FF3AFF9C112D6DC11BB8E873A6E2EA87 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				8EAE34CFA3C40D992DC3DC243C925E6B /* GoSquared */,
+				A16EA0B30CC63502623F52A0BB58CA0B /* GoSquared */,
 			);
 			name = "Development Pods";
 			sourceTree = "<group>";
@@ -780,209 +363,87 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		0926064EA426EA054A72E3D8FAF76492 /* Headers */ = {
+		C6F5E561D116B47B8B096887E4008991 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62F90D418B8CB8A4FD58D4BFFBA3748B /* SRWebSocket.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7D199E5C25957C96C6F9145BE32DB272 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F24931EE90ADC7DE89E0B8C51B7C1C1B /* FLAnimatedImageView+PINRemoteImage.h in Headers */,
-				2F302BF8E8008DB4E55BF1CB73D219FF /* NSData+ImageDetectors.h in Headers */,
-				7C983CA42C9AD143C7239B6C08F87BA6 /* PINButton+PINRemoteImage.h in Headers */,
-				F543C0EF590101D430818C0BAD233381 /* PINDataTaskOperation.h in Headers */,
-				1C0B20201438546119C3E9A47FBE052A /* PINImage+DecodedImage.h in Headers */,
-				B5E81251194E77EAB3E664AC4697192D /* PINImage+WebP.h in Headers */,
-				79A9C587FCAB654C7DA45201F744AB78 /* PINImageView+PINRemoteImage.h in Headers */,
-				E701F53278D8297E026567D4549B3BBB /* PINProgressiveImage.h in Headers */,
-				E4B19D0147C44FE18C16E0A8F2AD3870 /* PINRemoteImage.h in Headers */,
-				2334F56F8A47718270FBB417027C8C49 /* PINRemoteImageCallbacks.h in Headers */,
-				2D1236C42088E8E42ED77A34346A7DF3 /* PINRemoteImageCategoryManager.h in Headers */,
-				5C88B6B42B189F43A45795327772083A /* PINRemoteImageDownloadTask.h in Headers */,
-				0D8FA51DB87D10BFAB3C32E45F2C5D05 /* PINRemoteImageMacros.h in Headers */,
-				1A61A9A5F37A1D272077E5A1A841B794 /* PINRemoteImageManager.h in Headers */,
-				BA9D19928B5CFC78F187583E7D3D7D4F /* PINRemoteImageManagerResult.h in Headers */,
-				23980575E2C315990F30427B11FE68DE /* PINRemoteImageProcessorTask.h in Headers */,
-				A4DB94B293F80EABD1090683EC36D8B7 /* PINRemoteImageTask.h in Headers */,
-				65F99E3AF830534E78062372D8CD712B /* PINRemoteLock.h in Headers */,
-				D0B8A7EF059BBB155E78E7B20153A840 /* PINURLSessionManager.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B4CFBE8528C234236204CA6488B8A721 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FC81D134B5BA8066069C71845284167B /* GoSquared+Chat.h in Headers */,
-				CEEFDAADA46ED2EA4A6DAD539A0A4DDC /* GoSquared.h in Headers */,
-				7650DB74AD302A2175E94C4BFA96E427 /* GSChatBarButtonItem.h in Headers */,
-				D0DE43854ECF7BB3C94F82893F57EFF7 /* GSChatBubbleCell.h in Headers */,
-				BC530D041D26AF290060D28B /* GSConfig.h in Headers */,
-				44E9D4F554F23B5BCF7487D838EFBCC8 /* GSChatBubbleContent.h in Headers */,
-				2A0A45E0B1671F10C0B4CC2A62C2BC40 /* GSChatComposeTextView.h in Headers */,
-				641E26A474A18D0B9870417013372F00 /* GSChatComposeView.h in Headers */,
-				63F9C101D31E81440A4C6DDA83A2CA36 /* GSChatConnectionStatus.h in Headers */,
-				7DE1F017484A2B365EAD803EEBD45A19 /* GSChatConnectionStatusView.h in Headers */,
-				D682AADEDBFCB8F41C892F5F36EC5C2E /* GSChatHeaderEndView.h in Headers */,
-				C154FF05A9B6B7AE12DC724D5814533B /* GSChatHeaderLoadingView.h in Headers */,
-				9F7677DA4DF7CD3361AED8DA13949C0B /* GSChatIceBreakerView.h in Headers */,
-				3AB22390482E3342BE1D5DD587DC7978 /* GSChatManager.h in Headers */,
-				4200787F63239180BEB1ECE5CFC64EA2 /* GSChatMessage.h in Headers */,
-				551FD2B27BE0BC3A47ACDDCC3E9092A2 /* GSChatTitleView.h in Headers */,
-				4CE6705FC449136404C3ED50D259841E /* GSChatViewController.h in Headers */,
-				1504D69F460494E6C8CD469ED4727F79 /* GSChatViewLayout.h in Headers */,
-				6162ACE1E0761F48DDC00729F54CFCC7 /* GSDevice.h in Headers */,
-				8226B333409181A4F87D582B26A7866E /* GSPageview.h in Headers */,
-				C34A306B7532B432190E2F44A6CF3B9E /* GSRequest.h in Headers */,
-				D25C45DE77A3A80E0DFCDB3ED4AAF2B3 /* GSTracker+Chat.h in Headers */,
-				838883D037B2247550261AE80B3CA02A /* GSTracker.h in Headers */,
-				6CAF263652A152793AE177789682D115 /* GSTrackerDelegate.h in Headers */,
-				EF8AC28CC17198255DEDEF49E1D3545C /* GSTrackerEvent.h in Headers */,
-				B14D4D006741BAB92A5C79A0A3885BCA /* GSTransaction.h in Headers */,
-				DD14EF60CAC6F7A0636F49ACB07ED1A5 /* GSTransactionItem.h in Headers */,
-				304EC4D756F61E587F0FD374C78E18CF /* GSTypes.h in Headers */,
-				85F7B69715A3E8205716FF3168FBC030 /* NSString+Emojione.h in Headers */,
-				B2C04AC91FAC119EA80EC4D6DDCE5DD2 /* UIColor+GoSquared.h in Headers */,
-				395350032859589F9095A461D84F071F /* UIViewController+Chat.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E05CC4716A156A2C9AB33A4FC677DAB4 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DE0B9F652AC371745EED41720B47D72A /* Nullability.h in Headers */,
-				84DD9235367A21DEA34042190EA142B8 /* PINCache.h in Headers */,
-				F1C564824EB1FE65B02264421E5BD017 /* PINDiskCache.h in Headers */,
-				6636B847148A7B45B3787AA2DDF94B58 /* PINMemoryCache.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F6746889C4A73BAD8B783E1DD0879CBF /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FB423EE72C2A6D0ED5DEFBEE9BE80A98 /* FLAnimatedImage.h in Headers */,
-				7AE83DFAD9756ED1FB1CB5E36F9CF6EB /* FLAnimatedImageView.h in Headers */,
+				83692009191A28B251B13ED142693372 /* GoSquared+Chat.h in Headers */,
+				EF025D2E49A918BF5C1971AA46E3AE65 /* GoSquared.h in Headers */,
+				26C06060A58BC76FA0A38B9106166C29 /* GSChatComposeTextView.h in Headers */,
+				93855B991D689E273DDAA3074B41A03D /* GSChatComposeView.h in Headers */,
+				E36658B96563C7295203BFCFC2A516B6 /* GSChatComposeViewDelegate.h in Headers */,
+				A6E0EEE060E38B7EB07B012D09A8775C /* GSChatManager.h in Headers */,
+				415EE65F684DC761B465865B8AEC5706 /* GSChatManagerDelegate.h in Headers */,
+				6F945C804B2FFFBCC4C12751CA47BC5F /* GSChatTitleView.h in Headers */,
+				1505BFC8529FA87C41C16246703A01BA /* GSChatViewController.h in Headers */,
+				04E2503D7B70CD6918BBD1980F6FA9D8 /* GSChatWebView.h in Headers */,
+				52904A5301F7BE10DFD0495376DD9B7B /* GSConfig.h in Headers */,
+				58DD8BFBFA15D5BAA379131EC6EEC626 /* GSDevice.h in Headers */,
+				A832DA504920BE161588F22981437F41 /* GSPageview.h in Headers */,
+				F21C74C218D06D6D7ED86F692E40FFAD /* GSRequest.h in Headers */,
+				4DF91FD12BCE45869E8CFB257E27E80B /* GSTracker.h in Headers */,
+				6A3C9DC1A874B026DFDD2AA2A9AA23AC /* GSTrackerDelegate.h in Headers */,
+				656659B3C4937FABEE84AC7A8DE17317 /* GSTrackerEvent.h in Headers */,
+				B43E44E6E277DEBF4C2ED2713AC20BE2 /* GSTransaction.h in Headers */,
+				04BE0C47DE1BA91B40A5725DAF1F9DE9 /* GSTransactionItem.h in Headers */,
+				CF8473917EDF79B64593B4748DC6A1D0 /* GSTypes.h in Headers */,
+				C4C07DE5DD22B938705E3CA1DE0AC30E /* UIViewController+Chat.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1A79BA86DB198181905CBBFC1F1E6701 /* FLAnimatedImage */ = {
+		289536357B78CB144605B69973E1CB60 /* GoSquared */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7CCD7F601F55B0AB6E88DCCFF6374DB5 /* Build configuration list for PBXNativeTarget "FLAnimatedImage" */;
+			buildConfigurationList = ACD33D14A0B8713FE1B2EA8BAA80619C /* Build configuration list for PBXNativeTarget "GoSquared" */;
 			buildPhases = (
-				BA051833E256E1799D7759FE76438EDC /* Sources */,
-				456E3D8CBA16CC53451C696545611E92 /* Frameworks */,
-				F6746889C4A73BAD8B783E1DD0879CBF /* Headers */,
+				EFCD12E22F2432030E43C3F2E5945656 /* Sources */,
+				2257A2C92454537EC78F1C7AE7034C9C /* Frameworks */,
+				C6F5E561D116B47B8B096887E4008991 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-			);
-			name = FLAnimatedImage;
-			productName = FLAnimatedImage;
-			productReference = E03986A458749DB65A3CDC0820C48875 /* libFLAnimatedImage.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		84F346E504637FDA28739AF18C19BE50 /* PINRemoteImage */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9D06D589D6AE968381FB4A7D77934BD0 /* Build configuration list for PBXNativeTarget "PINRemoteImage" */;
-			buildPhases = (
-				A0133FB833E1D5C2C22C7C5E84CFF9E5 /* Sources */,
-				CFB00B628D17F50B8C6CBC4185856B56 /* Frameworks */,
-				7D199E5C25957C96C6F9145BE32DB272 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				34276B71F8C33AE42F76D52D5CD1CD02 /* PBXTargetDependency */,
-				2DDFFAA54694CEC3F1DC95180CAE3372 /* PBXTargetDependency */,
-			);
-			name = PINRemoteImage;
-			productName = PINRemoteImage;
-			productReference = 4527CDA735ABC67077BA2CC06671DF70 /* libPINRemoteImage.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		C7B43C3866CE60FDD7B5C9ED9473FF63 /* PINCache */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F68FFC52A5D49499F2BCF0C83455A3E6 /* Build configuration list for PBXNativeTarget "PINCache" */;
-			buildPhases = (
-				FCB4C2CFE1ABAA3FA00D68AFF9E4AF52 /* Sources */,
-				7059B84FC6C2B65C545700FA07673A0D /* Frameworks */,
-				E05CC4716A156A2C9AB33A4FC677DAB4 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = PINCache;
-			productName = PINCache;
-			productReference = 50DFBF41A3DF1941CC93A31523FDC6CF /* libPINCache.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		E24209FEC87B3EDC5D81B46CEC49D589 /* Pods-Chat */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FE0876080ADA923E298AF29DD241313F /* Build configuration list for PBXNativeTarget "Pods-Chat" */;
-			buildPhases = (
-				113F739E9277A2FEA024532C0382B915 /* Sources */,
-				C3AF8063D670811DE15CCF878F9087CB /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7B0E8B8CE29951DA3CC28E1CAB957E20 /* PBXTargetDependency */,
-				6E32966D99B641D863BF1AAE5EF581BB /* PBXTargetDependency */,
-				32359334D16DC4D74FE2DCB1C5E14BDC /* PBXTargetDependency */,
-				21DA373D56F633A34E19EFEF37196142 /* PBXTargetDependency */,
-				D9FCE2372410176A536A3D6319951586 /* PBXTargetDependency */,
-			);
-			name = "Pods-Chat";
-			productName = "Pods-Chat";
-			productReference = 5831A8F58E75907C615CAE0206164AB3 /* libPods-Chat.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		F609D0CCEB8200F771D982D82C0ED90E /* GoSquared */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D744EBC0CD68B2D1E9B3D7A7DA365350 /* Build configuration list for PBXNativeTarget "GoSquared" */;
-			buildPhases = (
-				3C892EFA0DD8EBCFDFC4E223AB76E56F /* Sources */,
-				0EB1B39B44BF7F51264FC8F58FCE6D2E /* Frameworks */,
-				B4CFBE8528C234236204CA6488B8A721 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				12C55F9C8085F9A6E737F4AFBE14A7F8 /* PBXTargetDependency */,
-				5A8A9AC496E5C1ED7AEF8742DD80AC16 /* PBXTargetDependency */,
+				3F2CE4B61BE8C6D2AE243172D3F59C85 /* PBXTargetDependency */,
 			);
 			name = GoSquared;
 			productName = GoSquared;
-			productReference = 9A4D2FB70405EF7F4ADECF1304055AE4 /* libGoSquared.a */;
+			productReference = E46F42685E1BF1CE9EF64217D439B2DB /* libGoSquared.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		FFA25DD347B4CC8211BAAFFC83776829 /* SocketRocket */ = {
+		A7749FEFC5BFCCD200920893566164D5 /* GoSquared-GSChatEmbed */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 02BFA77FEC2B63C7E41C2B4E12F3E1B0 /* Build configuration list for PBXNativeTarget "SocketRocket" */;
+			buildConfigurationList = 624C00E67B140933C4A264325D8FD4A7 /* Build configuration list for PBXNativeTarget "GoSquared-GSChatEmbed" */;
 			buildPhases = (
-				B0E6A8295A683EA8C1582E669D69BBEB /* Sources */,
-				F30D64D66833925BF4E235945506786E /* Frameworks */,
-				0926064EA426EA054A72E3D8FAF76492 /* Headers */,
+				FFB85109805F4C06F4386EF65878AAD7 /* Sources */,
+				E0BDF4F9CB7949926AF7CD01DAEE4454 /* Frameworks */,
+				1A61ACFB9DA980757D667D0660BC65A1 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = SocketRocket;
-			productName = SocketRocket;
-			productReference = 1DD62E3B2D4607E003F363143F94DA01 /* libSocketRocket.a */;
+			name = "GoSquared-GSChatEmbed";
+			productName = "GoSquared-GSChatEmbed";
+			productReference = B6A5494606C035D53CA611BD807550C7 /* GSChatEmbed.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+		F14F9F370B6A01EED1681C09020B1D6A /* Pods-Chat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFB6B856BDED40561A973DA83DAFC71E /* Build configuration list for PBXNativeTarget "Pods-Chat" */;
+			buildPhases = (
+				C54BF6684963ADA9E5C05708BF620034 /* Sources */,
+				2EE0BBA033BAA716704E12CC0EFB6A03 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				093D3B44151D046CD1AE53C50C68A56A /* PBXTargetDependency */,
+			);
+			name = "Pods-Chat";
+			productName = "Pods-Chat";
+			productReference = CBC4B96211E189554BBFEC766AE6B062 /* libPods-Chat.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -1002,211 +463,101 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = E59B5C657598587C6EBEE7C5756C3814 /* Products */;
+			productRefGroup = E2F66FD0D53D6A83C938C4AD337FE09F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1A79BA86DB198181905CBBFC1F1E6701 /* FLAnimatedImage */,
-				F609D0CCEB8200F771D982D82C0ED90E /* GoSquared */,
-				C7B43C3866CE60FDD7B5C9ED9473FF63 /* PINCache */,
-				84F346E504637FDA28739AF18C19BE50 /* PINRemoteImage */,
-				E24209FEC87B3EDC5D81B46CEC49D589 /* Pods-Chat */,
-				FFA25DD347B4CC8211BAAFFC83776829 /* SocketRocket */,
+				289536357B78CB144605B69973E1CB60 /* GoSquared */,
+				A7749FEFC5BFCCD200920893566164D5 /* GoSquared-GSChatEmbed */,
+				F14F9F370B6A01EED1681C09020B1D6A /* Pods-Chat */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		1A61ACFB9DA980757D667D0660BC65A1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FC145004DE3FBDDA82755B9C67888E11 /* chat.js in Resources */,
+				2BC4B1C92AFDA2336433E3F069C09ECB /* icons.xcassets in Resources */,
+				966E4A5DF15AF113C9716638EFF872CF /* index.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
-		113F739E9277A2FEA024532C0382B915 /* Sources */ = {
+		C54BF6684963ADA9E5C05708BF620034 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				718CCF66B84B4716B9927B92723AF717 /* Pods-Chat-dummy.m in Sources */,
+				37C5740830CB4D52F4EFC40B0564A737 /* Pods-Chat-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3C892EFA0DD8EBCFDFC4E223AB76E56F /* Sources */ = {
+		EFCD12E22F2432030E43C3F2E5945656 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				051A9752066A594EE01E937E280131A1 /* GoSquared+Chat.m in Sources */,
-				5CB2647AF6082A9EB86F18C91E4077F8 /* GoSquared-dummy.m in Sources */,
-				FDA2A8DD9913A7ED1E2C95F0F3EA45C4 /* GoSquared.m in Sources */,
-				A9C173097EE4AE79FDA2FEFFBC098FC1 /* GSChatBarButtonItem.m in Sources */,
-				B11053C9F6C4031556BD3ACB9B1EBCDC /* GSChatBubbleCell.m in Sources */,
-				0E1742A2483DFB193CA42BF7914F5B60 /* GSChatBubbleContent.m in Sources */,
-				C0A97BC74589A0C42FE42773CE10641D /* GSChatComposeTextView.m in Sources */,
-				780DEF5FB809DDDB94D3FE059CABBB6B /* GSChatComposeView.m in Sources */,
-				B154CFEF39C5C382C471245034E2381C /* GSChatConnectionStatusView.m in Sources */,
-				7A98249350ACF05A542FBC230E60CFB8 /* GSChatHeaderEndView.m in Sources */,
-				CB04807E851208CC285A0A74018FC518 /* GSChatHeaderLoadingView.m in Sources */,
-				7F54BF2F9EDE923BC6E7687E03284C40 /* GSChatIceBreakerView.m in Sources */,
-				B7158086E9C839CB1A17F5AAA6CD8F55 /* GSChatManager.m in Sources */,
-				B68F35A152D092A3D695C01B560FF3A0 /* GSChatMessage.m in Sources */,
-				E90EEDCC889ECEE23C97B25A7957B06F /* GSChatTitleView.m in Sources */,
-				B53C081F38BC491A1FF3B4593E1B9D7D /* GSChatViewController.m in Sources */,
-				2F1FB16BD3D1B92D1C923A425D3475EF /* GSChatViewLayout.m in Sources */,
-				A00539BBC526D6073ED4C1769D244D22 /* GSDevice.m in Sources */,
-				857EA26F2B302984F454EB7B82848565 /* GSPageview.m in Sources */,
-				97D3520C516B5E4E78BB8250509FD15A /* GSRequest.m in Sources */,
-				CAB50B396D883AA9D745394E1ACBA28D /* GSTracker+Chat.m in Sources */,
-				679BFA2CC72AB4D72B2E625159585220 /* GSTracker.m in Sources */,
-				BC530D051D26AF290060D28B /* GSConfig.m in Sources */,
-				9F349D9709DFF5E71DF322370199AA82 /* GSTrackerEvent.m in Sources */,
-				833C03DEC47E7A2682422D34FE3A44E4 /* GSTransaction.m in Sources */,
-				0128DEA53157B69C7B77779EAF318392 /* GSTransactionItem.m in Sources */,
-				67152547982774C6A0BE35091FC297EE /* NSString+Emojione.m in Sources */,
-				B424AC3BD12C5C280E579C50BE00F5EA /* UIColor+GoSquared.m in Sources */,
-				B1B5D872AA722F0B8D1B4AC04E15EF2B /* UIViewController+Chat.m in Sources */,
+				5F79A5B2394032579935FD989BBC4690 /* GoSquared+Chat.m in Sources */,
+				BA4F76F4E14E507051F58C75D38C5414 /* GoSquared-dummy.m in Sources */,
+				C27348EE676EBE8821A0D0DF65CFBD52 /* GoSquared.m in Sources */,
+				C954EB42206B26D772E4C672FA79AA46 /* GSChatComposeTextView.m in Sources */,
+				FD64C9DA7A05966366C512AC2525B6C9 /* GSChatComposeView.m in Sources */,
+				A815BA850BD37DC3059B0045AE40D784 /* GSChatManager.m in Sources */,
+				D064C78A647C0A3E8004B3F98DDE9516 /* GSChatTitleView.m in Sources */,
+				851DF11C3C115CECC71D402F11C6C481 /* GSChatViewController.m in Sources */,
+				85A39C4FED7C7D0894A162DB63004F00 /* GSChatWebView.m in Sources */,
+				13E8BEF3DB29AC56957149C3C9DA3FB3 /* GSConfig.m in Sources */,
+				DC6F2186C33FBF110B1EFD21C5C72F7F /* GSDevice.m in Sources */,
+				B76ADF5B919178BA040BF35C61874BF1 /* GSPageview.m in Sources */,
+				F5A4D53211F165647FE6E9AFD6A124A0 /* GSRequest.m in Sources */,
+				2ECD8378A3546E61329734A87DB1FA07 /* GSTracker.m in Sources */,
+				3373829C25316989A374220B9DE38AC8 /* GSTrackerEvent.m in Sources */,
+				B312AEE0DDAD772293DCEEDE94FF3F91 /* GSTransaction.m in Sources */,
+				51E3D23090E40BF10C2D523D7D17F649 /* GSTransactionItem.m in Sources */,
+				0D3411625A2368A140262532FDF7D229 /* UIViewController+Chat.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A0133FB833E1D5C2C22C7C5E84CFF9E5 /* Sources */ = {
+		FFB85109805F4C06F4386EF65878AAD7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55165EB91E6E9A1122ABE874D6D3AE80 /* FLAnimatedImageView+PINRemoteImage.m in Sources */,
-				13FE5277F2FA5A7E939C937A294D5816 /* NSData+ImageDetectors.m in Sources */,
-				5FDB2940FB3CC255897153DB86AF8634 /* PINButton+PINRemoteImage.m in Sources */,
-				449008750EA032882C1A9E3377CDB610 /* PINDataTaskOperation.m in Sources */,
-				15006446081F0BC183A350939033DE34 /* PINImage+DecodedImage.m in Sources */,
-				86B293780D7D442CABCDDDADD4457D35 /* PINImage+WebP.m in Sources */,
-				29845A04F9F9F6208068F73CC306B544 /* PINImageView+PINRemoteImage.m in Sources */,
-				FBCE62083D9EC4E9A561EBBCEA70D9EF /* PINProgressiveImage.m in Sources */,
-				B04DC8ECC89BF35BFA2CF24A43D1EF55 /* PINRemoteImage-dummy.m in Sources */,
-				11040F13E1D16D197C9EEDAB6BECCD75 /* PINRemoteImageCallbacks.m in Sources */,
-				A9E15148626A5DF2527CF933F446103B /* PINRemoteImageCategoryManager.m in Sources */,
-				B6FF9F14A7B3FD709EE8DC2241D1D8B0 /* PINRemoteImageDownloadTask.m in Sources */,
-				8E80E74FCEBB30D58D7B7189F471140B /* PINRemoteImageManager.m in Sources */,
-				88C832E8F1566DF6BECEE8D0FF367631 /* PINRemoteImageManagerResult.m in Sources */,
-				46FC6E0D5C38F8CC897DFD5995E183A6 /* PINRemoteImageProcessorTask.m in Sources */,
-				0BE414A817417FFF483AE1A9EE028EBF /* PINRemoteImageTask.m in Sources */,
-				B9834781308B5A0DBAF8F8CCF4BDCA9F /* PINRemoteLock.m in Sources */,
-				DF7C0D30DAA75B3FC3DBC960496CE3C2 /* PINURLSessionManager.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B0E6A8295A683EA8C1582E669D69BBEB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				40B0863FE96357AD05147683DD095575 /* SocketRocket-dummy.m in Sources */,
-				0EEC219B337332ABC86B5F9B9CE9C8D2 /* SRWebSocket.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BA051833E256E1799D7759FE76438EDC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3D258E9A843C52C991E5E9455CB8DB51 /* FLAnimatedImage-dummy.m in Sources */,
-				E99CE64289F5FDD09B7E1188379AED41 /* FLAnimatedImage.m in Sources */,
-				B3AA789E74DBAB167DAD0FDCA19690C7 /* FLAnimatedImageView.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FCB4C2CFE1ABAA3FA00D68AFF9E4AF52 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7699506F8720FA8387F50B2E3C2CFC6E /* PINCache-dummy.m in Sources */,
-				C8B7AD16070FB105BCCD5F46E97E0A0D /* PINCache.m in Sources */,
-				26A521298F35984AE88813154001E856 /* PINDiskCache.m in Sources */,
-				AB62A01095115E454D9BFDF0F5771759 /* PINMemoryCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		12C55F9C8085F9A6E737F4AFBE14A7F8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PINRemoteImage;
-			target = 84F346E504637FDA28739AF18C19BE50 /* PINRemoteImage */;
-			targetProxy = 1163ADA28268893BDA6511EAF98D59D1 /* PBXContainerItemProxy */;
-		};
-		21DA373D56F633A34E19EFEF37196142 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PINRemoteImage;
-			target = 84F346E504637FDA28739AF18C19BE50 /* PINRemoteImage */;
-			targetProxy = B7305D003AB4FF7EDD01C3892057C07B /* PBXContainerItemProxy */;
-		};
-		2DDFFAA54694CEC3F1DC95180CAE3372 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PINCache;
-			target = C7B43C3866CE60FDD7B5C9ED9473FF63 /* PINCache */;
-			targetProxy = 8A18C6BC05A0C3E6689CBE6FDF11053A /* PBXContainerItemProxy */;
-		};
-		32359334D16DC4D74FE2DCB1C5E14BDC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PINCache;
-			target = C7B43C3866CE60FDD7B5C9ED9473FF63 /* PINCache */;
-			targetProxy = 27C621F922601CE4DCB54410D6C22CFC /* PBXContainerItemProxy */;
-		};
-		34276B71F8C33AE42F76D52D5CD1CD02 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FLAnimatedImage;
-			target = 1A79BA86DB198181905CBBFC1F1E6701 /* FLAnimatedImage */;
-			targetProxy = 507C98DA6D93C1577462966EBAC3BDA5 /* PBXContainerItemProxy */;
-		};
-		5A8A9AC496E5C1ED7AEF8742DD80AC16 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SocketRocket;
-			target = FFA25DD347B4CC8211BAAFFC83776829 /* SocketRocket */;
-			targetProxy = 9F372AF6FF68651131DE44619C9A004C /* PBXContainerItemProxy */;
-		};
-		6E32966D99B641D863BF1AAE5EF581BB /* PBXTargetDependency */ = {
+		093D3B44151D046CD1AE53C50C68A56A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = GoSquared;
-			target = F609D0CCEB8200F771D982D82C0ED90E /* GoSquared */;
-			targetProxy = 9EFB5CD953ABA5815EBB163B63D07188 /* PBXContainerItemProxy */;
+			target = 289536357B78CB144605B69973E1CB60 /* GoSquared */;
+			targetProxy = 3DBA37C10842BECD584CC01644FA267B /* PBXContainerItemProxy */;
 		};
-		7B0E8B8CE29951DA3CC28E1CAB957E20 /* PBXTargetDependency */ = {
+		3F2CE4B61BE8C6D2AE243172D3F59C85 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = FLAnimatedImage;
-			target = 1A79BA86DB198181905CBBFC1F1E6701 /* FLAnimatedImage */;
-			targetProxy = C71087B28CD1962036CCE6F6D457EE39 /* PBXContainerItemProxy */;
-		};
-		D9FCE2372410176A536A3D6319951586 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SocketRocket;
-			target = FFA25DD347B4CC8211BAAFFC83776829 /* SocketRocket */;
-			targetProxy = F0553D598A68A12D89618DDD26665422 /* PBXContainerItemProxy */;
+			name = "GoSquared-GSChatEmbed";
+			target = A7749FEFC5BFCCD200920893566164D5 /* GoSquared-GSChatEmbed */;
+			targetProxy = 58E991DF5C355567A0995938972BE045 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		16D28245C3D3DFE695569C7943E819C3 /* Debug */ = {
+		00288EE78A06E102799A5D2F011E11A0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 36263BC803886FE49A833ED103355E05 /* Pods-Chat.debug.xcconfig */;
+			baseConfigurationReference = D19BEC7FC223169F0C9C8A269151A0D8 /* GoSquared.xcconfig */;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		1DDE43616B68A3C04823184A16115DA3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A687B39AA906298EB555E862CA2DF4A6 /* FLAnimatedImage.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/FLAnimatedImage/FLAnimatedImage-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				GCC_PREFIX_HEADER = "Target Support Files/GoSquared/GoSquared-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1218,28 +569,7 @@
 			};
 			name = Release;
 		};
-		37DD5AE1E875C01EF59F8F461BC19A50 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D06654A73BC58926BE68F9714EF175D6 /* Pods-Chat.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		3FA2475660FFC880302AD18E29B2E5FC /* Debug */ = {
+		015A368F878AC3E2CEAE21DDE8026304 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1257,6 +587,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1274,161 +605,32 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Debug;
 		};
-		436A2856FED4F3908B6D5C40A60F8F5A /* Debug */ = {
+		4150F38C0385D2AFF5192CDB58A8A521 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B9FA20389BA7620AF2A9AE56DDA4545 /* SocketRocket.xcconfig */;
+			baseConfigurationReference = D19BEC7FC223169F0C9C8A269151A0D8 /* GoSquared.xcconfig */;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoSquared";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/SocketRocket/SocketRocket-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
+				INFOPLIST_FILE = "Target Support Files/GoSquared/ResourceBundle-GSChatEmbed-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_NAME = GSChatEmbed;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
-		4ED55EA382095AA6B03AFC1205681676 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BBACDEBA08DC653173C4D36811D8D1B3 /* PINRemoteImage.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/PINRemoteImage/PINRemoteImage-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		9AC9555382E4E3E1367313D529BC470A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B9FA20389BA7620AF2A9AE56DDA4545 /* SocketRocket.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/SocketRocket/SocketRocket-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		B4E1337452D151685D201C259CA0CEF4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A687B39AA906298EB555E862CA2DF4A6 /* FLAnimatedImage.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/FLAnimatedImage/FLAnimatedImage-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		C983FF9853F14CFA9CF75618DECC33F2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 85B4CB3CF47F2B80C42EE048A17B6CE2 /* PINCache.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/PINCache/PINCache-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		E15C9DEF91490D81B940D7E6987E3315 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1726EAF264D43CD3176E6BC208F27799 /* GoSquared.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/GoSquared/GoSquared-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		F048CED87529D3A5D6F24F2AECE733D3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1726EAF264D43CD3176E6BC208F27799 /* GoSquared.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/GoSquared/GoSquared-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		F325026B55060D3B22BEC0BAB5FA7344 /* Release */ = {
+		44CDBB6D11DE06DB64D6268622BDC47E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1446,6 +648,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1459,23 +662,26 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SYMROOT = "${SRCROOT}/../build";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		F8EF03C43E1408A8AD276E8E0F7AF644 /* Debug */ = {
+		580250452E1915FDAD9A046B9A69603D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BBACDEBA08DC653173C4D36811D8D1B3 /* PINRemoteImage.xcconfig */;
+			baseConfigurationReference = D19BEC7FC223169F0C9C8A269151A0D8 /* GoSquared.xcconfig */;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/PINRemoteImage/PINRemoteImage-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				GCC_PREFIX_HEADER = "Target Support Files/GoSquared/GoSquared-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1487,89 +693,104 @@
 			};
 			name = Debug;
 		};
-		FF1959759B1137061C3DB6B2CA7C6B32 /* Debug */ = {
+		666DD80F06F54247700A46E26260412A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 85B4CB3CF47F2B80C42EE048A17B6CE2 /* PINCache.xcconfig */;
+			baseConfigurationReference = 36263BC803886FE49A833ED103355E05 /* Pods-Chat.debug.xcconfig */;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/PINCache/PINCache-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
+		};
+		E5E3F465B1A8DB62700D8FAD7F146623 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D06654A73BC58926BE68F9714EF175D6 /* Pods-Chat.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		EA6849BEB86D7C9447F6FE6423B1909B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D19BEC7FC223169F0C9C8A269151A0D8 /* GoSquared.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoSquared";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/GoSquared/ResourceBundle-GSChatEmbed-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_NAME = GSChatEmbed;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		02BFA77FEC2B63C7E41C2B4E12F3E1B0 /* Build configuration list for PBXNativeTarget "SocketRocket" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				436A2856FED4F3908B6D5C40A60F8F5A /* Debug */,
-				9AC9555382E4E3E1367313D529BC470A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3FA2475660FFC880302AD18E29B2E5FC /* Debug */,
-				F325026B55060D3B22BEC0BAB5FA7344 /* Release */,
+				015A368F878AC3E2CEAE21DDE8026304 /* Debug */,
+				44CDBB6D11DE06DB64D6268622BDC47E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7CCD7F601F55B0AB6E88DCCFF6374DB5 /* Build configuration list for PBXNativeTarget "FLAnimatedImage" */ = {
+		624C00E67B140933C4A264325D8FD4A7 /* Build configuration list for PBXNativeTarget "GoSquared-GSChatEmbed" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B4E1337452D151685D201C259CA0CEF4 /* Debug */,
-				1DDE43616B68A3C04823184A16115DA3 /* Release */,
+				4150F38C0385D2AFF5192CDB58A8A521 /* Debug */,
+				EA6849BEB86D7C9447F6FE6423B1909B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9D06D589D6AE968381FB4A7D77934BD0 /* Build configuration list for PBXNativeTarget "PINRemoteImage" */ = {
+		ACD33D14A0B8713FE1B2EA8BAA80619C /* Build configuration list for PBXNativeTarget "GoSquared" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F8EF03C43E1408A8AD276E8E0F7AF644 /* Debug */,
-				4ED55EA382095AA6B03AFC1205681676 /* Release */,
+				580250452E1915FDAD9A046B9A69603D /* Debug */,
+				00288EE78A06E102799A5D2F011E11A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D744EBC0CD68B2D1E9B3D7A7DA365350 /* Build configuration list for PBXNativeTarget "GoSquared" */ = {
+		BFB6B856BDED40561A973DA83DAFC71E /* Build configuration list for PBXNativeTarget "Pods-Chat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F048CED87529D3A5D6F24F2AECE733D3 /* Debug */,
-				E15C9DEF91490D81B940D7E6987E3315 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F68FFC52A5D49499F2BCF0C83455A3E6 /* Build configuration list for PBXNativeTarget "PINCache" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FF1959759B1137061C3DB6B2CA7C6B32 /* Debug */,
-				C983FF9853F14CFA9CF75618DECC33F2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FE0876080ADA923E298AF29DD241313F /* Build configuration list for PBXNativeTarget "Pods-Chat" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				16D28245C3D3DFE695569C7943E819C3 /* Debug */,
-				37DD5AE1E875C01EF59F8F461BC19A50 /* Release */,
+				666DD80F06F54247700A46E26260412A /* Debug */,
+				E5E3F465B1A8DB62700D8FAD7F146623 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>GoSquared Chat</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1.0, width=device-width">
+    </head>
+    <body>
+        <script>
+            // Tell the manager that the page is ready
+            window.webkit.messageHandlers.index_ready.postMessage(true)
+            
+            var chatLoaded = false;
+            var embedded_config = {};
+            
+            // Load chat js
+            function loadChat() {
+                if (chatLoaded) {
+                    receiveFromSDK('config_updated');
+                    return false;
+                }
+
+                var js = document.createElement("script")
+                js.type = "text/javascript"
+                js.src = "./GSChat_chat.js?random=" + Math.random()
+                
+                document.body.appendChild(js)
+                chatLoaded = true;
+
+                window.webkit.messageHandlers.chat_ready.postMessage({})
+            }
+        
+        </script>
+    </body>
+</html>

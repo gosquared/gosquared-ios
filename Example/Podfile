@@ -1,8 +1,8 @@
-platform :ios, '7.0'
+platform :ios, '8.0'
 
 target 'Chat' do
 
-  pod 'GoSquared', :path => '../'
-  pod 'GoSquared/Chat', :path => '../'
+    pod 'GoSquared/Core', :path => '../'
+    pod 'GoSquared/Chat', :path => '../'
 
 end

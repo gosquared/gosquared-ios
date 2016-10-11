@@ -1,37 +1,19 @@
 PODS:
-  - FLAnimatedImage (1.0.12)
-  - GoSquared (0.6.2):
-    - GoSquared/Core (= 0.6.2)
-  - GoSquared/Chat (0.6.2):
+  - GoSquared/Chat (1.0.0):
     - GoSquared/Core
-    - PINRemoteImage (= 2.1.3)
-    - SocketRocket (= 0.4.2)
-  - GoSquared/Core (0.6.2)
-  - PINCache (2.2.2)
-  - PINRemoteImage (2.1.3):
-    - PINRemoteImage/FLAnimatedImage (= 2.1.3)
-  - PINRemoteImage/Core (2.1.3):
-    - PINCache (>= 2.1)
-  - PINRemoteImage/FLAnimatedImage (2.1.3):
-    - FLAnimatedImage (>= 1.0)
-    - PINRemoteImage/Core
-  - SocketRocket (0.4.2)
+  - GoSquared/Core (1.0.0)
 
 DEPENDENCIES:
-  - GoSquared (from `../`)
   - GoSquared/Chat (from `../`)
+  - GoSquared/Core (from `../`)
 
 EXTERNAL SOURCES:
   GoSquared:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
-  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
-  GoSquared: 43d50d4fa562f1953a722d88d1d3c1744b5ca788
-  PINCache: 078426d356ab95ef875e9e62e5c35a2ea3333c28
-  PINRemoteImage: b8fb531016f3603016dd105a6139bf36c92b4316
-  SocketRocket: ffe08119b00ef982f6c37052a4705a057c8494ad
+  GoSquared: 4b7dd1e56800713bf9f1f6b7f955b31d79d44090
 
-PODFILE CHECKSUM: a93c79954781824a3f84034c5b911d16e95aeb5f
+PODFILE CHECKSUM: 570a00b3065357fe30f4b9a7ec49c67f85acc9ce
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.0.rc.2

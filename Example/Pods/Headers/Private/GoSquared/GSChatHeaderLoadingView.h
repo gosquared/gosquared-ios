@@ -1,1 +1,0 @@
-../../../../../GoSquared+Chat/Views/GSChatHeaderLoadingView.h

@@ -18,14 +18,35 @@
     [self gs_presentChatViewController];
 }
 
+- (IBAction)identify:(id)sender {
+    
+    [[GoSquared sharedTracker] identifyWithProperties:@{
+                                                        @"id": @"12345",
+                                                        @"name": @"Example User",
+                                                        @"email": @"email@example.com"
+                                                        }];
+}
+
+- (IBAction)unidentify:(id)sender {
+    [[GoSquared sharedTracker] unidentify];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.title = @"Chat Example";
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateUnreadCount:)
                                                  name:GSUnreadMessageNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleNewMesage:)
+                                                 name:GSMessageNotification
+                                               object:nil];
+
 }
 
 - (void)updateUnreadCount:(NSNotification *)notification
@@ -37,6 +58,11 @@
     } else {
         [self.button setTitle:[NSString stringWithFormat:@"Chat with GoSquared (%@)", count] forState:UIControlStateNormal];
     }
+}
+
+- (void)handleNewMesage:(NSNotification *)notification
+{
+    NSLog(@"Received GoSquared Chat message: %@", notification.userInfo);
 }
 
 @end

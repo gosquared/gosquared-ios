@@ -1,1 +1,0 @@
-../../../../../GoSquared+Chat/Categories/NSString+Emojione.h

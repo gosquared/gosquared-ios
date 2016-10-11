@@ -25,6 +25,6 @@
 + (void)setLastTransactionTimestamp:(nonnull NSNumber *)timestamp forToken:(nonnull NSString *)token;
 + (void)setReturning:(BOOL)isReturning forToken:(nonnull NSString *)token;
 
-+ (void)regenerateVisitorIdForToken:(NSString *)token;
++ (void)regenerateVisitorIdForToken:(nonnull NSString *)token;
 
 @end

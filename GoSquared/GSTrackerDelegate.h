@@ -12,5 +12,6 @@
 
 - (void)didIdentifyPerson;
 - (void)didUnidentifyPerson;
+- (void)didTrackPageview;
 
 @end

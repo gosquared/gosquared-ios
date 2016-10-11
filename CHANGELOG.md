@@ -1,5 +1,11 @@
 # GoSquared iOS Change Log
 
+## 2016-10-11, [v1.0.0]
+
+### Added
+- Added Chat as part of the GoSquared SDK by default
+- Added improved chat via WKWebView implementation for the message feed and connection logic
+
 ## 2016-08-15, [v0.7.4]
 
 ### Fixed

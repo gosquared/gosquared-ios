@@ -8,6 +8,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CommonCrypto/CommonHMAC.h>
 #import "GSTracker.h"
 #import "GSTrackerDelegate.h"
 #import "GSDevice.h"
@@ -18,10 +19,11 @@
 #import "GSTrackerEvent.h"
 #import "GSPageview.h"
 #import "GSConfig.h"
+#import "GSTrackerDelegate.h"
 
 
 // tracker default config
-static NSString * const kGSTrackerVersion        = @"ios-0.7.4";
+static NSString * const kGSTrackerVersion        = @"ios-1.0.0";
 static NSString * const kGSTrackerDefaultTitle   = @"Unknown";
 static NSString * const kGSTrackerDefaultPath    = @"";
 static const float kGSTrackerDefaultPingInterval = 20.0f;
@@ -33,6 +35,9 @@ static NSString * const kGSTrackerEventPath       = @"/tracking/v1/event?%@";
 static NSString * const kGSTrackerTransactionPath = @"/tracking/v1/transaction?%@";
 static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
+// chat url formats
+static NSString * const chatManifestURLFormat = @"https://js.gs-chat.com/manifest.json?timestamp=%ld";
+static NSString * const chatScriptURLFormat   = @"https://js.gs-chat.com/chat-embedded-%@.js";
 
 @interface GSTracker()
 
@@ -48,6 +53,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 @property (getter=isPageviewPingTimerValid) BOOL pageviewPingTimerValid;
 
 @property GSPageview *pageview;
+@property NSDictionary *currentPageviewData;
 @property NSTimer *pageviewPingTimer;
 @property NSNumber *lastPageview;
 @property NSNumber *lastTransaction;
@@ -146,6 +152,21 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     }
 }
 
+- (NSString *)signature {
+    if (_signature == nil) {
+        NSData *secret = [self.secret dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *person = [self.personId dataUsingEncoding:NSUTF8StringEncoding];
+
+        if (secret == nil || person == nil) return nil;
+
+        NSMutableData* hash = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH];
+
+        CCHmac(kCCHmacAlgSHA256, secret.bytes, secret.length, person.bytes, person.length, hash.mutableBytes);
+
+        _signature = [GSTracker hexStringWithData:hash];
+    }
+    return _signature;
+}
 
 #pragma mark Public - Pageview tracking
 
@@ -156,7 +177,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
 - (void)trackScreenWithTitle:(NSString *)title path:(NSString *)path
 {
-    [self verifyCredsAreSet];
+    [self assertCredentialsSet];
     [self invalidatePingTimer];
 
     // set default title if missing or empty
@@ -177,6 +198,13 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     NSNumber *pageIndex = self.pageview.index ?: @0;
 
     self.pageview = [GSPageview pageviewWithTitle:title URLString:URLString index:pageIndex];
+
+    self.currentPageviewData = @{
+                         @"title": self.pageview.title,
+                         @"URLString": self.pageview.URLString
+                         };
+
+    [self.delegate didTrackPageview];
 
     [self startPingTimer];
     [self trackPageview:self.pageview];
@@ -233,7 +261,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
             NSNumber *index = data[@"index"];
 
-            if (index != nil && [index isKindOfClass:NSNull.class] == NO) {
+            if (index != nil && [index isKindOfClass:[NSNull class]] == NO) {
                 weakself.pageview.index = index;
 
                 // call identify with cached properties after initial pageview
@@ -303,7 +331,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
 - (void)trackEventWithName:(NSString *)name properties:(GSPropertyDictionary *)properties
 {
-    [self verifyCredsAreSet];
+    [self assertCredentialsSet];
 
     NSString *path = [NSString stringWithFormat:kGSTrackerEventPath, self.trackingAPIParams];
 
@@ -335,7 +363,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
 - (void)trackTransaction:(GSTransaction *)transaction
 {
-    [self verifyCredsAreSet];
+    [self assertCredentialsSet];
 
     NSString *path = [NSString stringWithFormat:kGSTrackerTransactionPath, self.trackingAPIParams];
 
@@ -356,7 +384,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
 - (void)identifyWithProperties:(GSPropertyDictionary *)properties
 {
-    [self verifyCredsAreSet];
+    [self assertCredentialsSet];
 
     NSString *personId = properties[@"id"] ?: properties[@"person_id"];
     NSString *personEmail = properties[@"email"];
@@ -400,7 +428,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 
 - (void)unidentify
 {
-    [self verifyCredsAreSet];
+    [self assertCredentialsSet];
 
     // wipe the current anon ID
     [GSConfig regenerateVisitorIdForToken:self.token];
@@ -420,9 +448,7 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
     [GSConfig setPersonEmail:nil forToken:self.token];
 }
 
-#pragma mark Private - Assertion methods
-
-- (void)verifyCredsAreSet
+- (void)assertCredentialsSet
 {
     NSAssert((self.token != nil), @"You must set a token before calling any tracking methods");
     NSAssert((self.key != nil), @"You must an API key before calling any tracking methods");
@@ -451,6 +477,134 @@ static NSString * const kGSTrackerIdentifyPath    = @"/tracking/v1/identify?%@";
 {
     [request setLogLevel:self.logLevel];
     [request sendWithCompletionHandler:completionHandler];
+}
+
+
+#pragma mark Chat related methods
+
++ (NSString *)hexStringWithData:(NSData *)data
+{
+    NSUInteger capacity = data.length * 2;
+    NSMutableString *sbuf = [NSMutableString stringWithCapacity:capacity];
+    const unsigned char *buf = data.bytes;
+    NSInteger i;
+    for (i = 0; i < data.length; ++i) {
+        [sbuf appendFormat:@"%02X", (unsigned int)buf[i]];
+    }
+    return [sbuf lowercaseString];
+}
+
++ (NSString *)chatVersion
+{
+    NSString *version = [[NSUserDefaults standardUserDefaults] stringForKey:@"com.gosquared.chat.version"];
+    if (version == nil) {
+        return @"0.0.0";
+    } else {
+        return version;
+    }
+}
+
++ (void)prepareDocumentsDirectory
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+
+    NSString *indexSrc = [[NSBundle bundleForClass:self.class].resourcePath stringByAppendingPathComponent:@"GSChatEmbed.bundle/index.html"];
+    NSString *indexDest = [documentPath stringByAppendingPathComponent:@"GSChat_index.html"];
+    [fileManager removeItemAtPath:indexDest error:nil];
+    [fileManager copyItemAtPath:indexSrc toPath:indexDest error:nil];
+
+    NSString *scriptSrc = [[NSBundle bundleForClass:self.class].resourcePath stringByAppendingPathComponent:@"GSChatEmbed.bundle/chat.js"];
+    NSString *scriptDest = [documentPath stringByAppendingPathComponent:@"GSChat_chat.js"];
+
+    if (![fileManager fileExistsAtPath:scriptDest]) {
+        NSLog(@"GSChat: Copying Script");
+
+        NSError *err;
+        [fileManager copyItemAtPath:scriptSrc toPath:scriptDest error:&err];
+
+        if (err != nil) {
+            NSLog(@"GSChat: Copy Script Error: %@", err);
+        }
+    }
+}
+
++ (void)checkAvailableChatVersionWithCompletionHandler:(void (^)(NSString *version))completionHandler
+{
+    NSString *urlString = [NSString stringWithFormat:chatManifestURLFormat, (long)[NSDate new]];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLSession *session = [NSURLSession sharedSession];
+
+    NSURLSessionDataTask *task = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSDictionary *manifest;
+        if (data != nil) {
+            manifest = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        } else {
+            return completionHandler(nil);
+        }
+
+        NSString *version;
+        if (manifest != nil) {
+            version = manifest[@"version"];
+        } else {
+            return completionHandler(nil);
+        }
+
+        if ([version isKindOfClass:[NSNull class]]) {
+            version = nil;
+        }
+
+        completionHandler(version);
+    }];
+
+    [task resume];
+}
+
++ (void)updateChatClientWithVersion:(NSString *)version
+{
+    NSString *urlString = [NSString stringWithFormat:chatScriptURLFormat, version];
+
+    [GSTracker updateChatClientWithUrlString:urlString completionHandler:^{
+        [[NSUserDefaults standardUserDefaults] setObject:version forKey:@"com.gosquared.chat.version"];
+        NSLog(@"Updated chat.js to v%@", version);
+    }];
+}
+
++ (void)updateChatClientWithUrlString:(NSString *)urlString completionHandler:(void (^)())completionHandler
+{
+    NSString *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    NSURLSessionDownloadTask *task = [session downloadTaskWithURL:url completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+        if (location == nil || documentPath == nil) {
+            return;
+        }
+
+        NSHTTPURLResponse *res = (NSHTTPURLResponse *)response;
+
+        if (res.statusCode < 200 || res.statusCode >= 300) {
+            return;
+        }
+
+        NSURL *scriptSrc = location;
+        NSURL *scriptDst = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/GSChat_chat.js", documentPath]];
+
+        NSError *err;
+        [fileManager replaceItemAtURL:scriptDst
+                        withItemAtURL:scriptSrc
+                       backupItemName:nil
+                              options:0
+                     resultingItemURL:nil
+                                error:&err];
+
+        if (err == nil) {
+            completionHandler();
+        }
+    }];
+
+    [task resume];
 }
 
 

@@ -1,1 +1,0 @@
-../../../../../GoSquared+Chat/Models/GSChatConnectionStatus.h

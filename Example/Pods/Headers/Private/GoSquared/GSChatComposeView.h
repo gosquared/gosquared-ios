@@ -1,1 +1,1 @@
-../../../../../GoSquared+Chat/Views/GSChatComposeView.h
+../../../../../GoSquared/Chat/GSChatComposeView.h

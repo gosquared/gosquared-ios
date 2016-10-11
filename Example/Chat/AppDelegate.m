@@ -22,7 +22,7 @@
     [GoSquared sharedTracker].key    = @"XXXXXXXXXXXXXXXX";
     [GoSquared sharedTracker].secret = @"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 
-    [GoSquared sharedChatViewController].title = @"Chatting with Example App";
+    [[GoSquared sharedChatViewController] openConnection];
 
     [[GoSquared sharedTracker] identifyWithProperties:@{
                                                         @"id": @"2388975",

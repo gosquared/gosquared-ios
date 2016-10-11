@@ -6,12 +6,24 @@
 
 ### Installing with CocoaPods (Recommended)
 
-1. Install [CocoaPods](https://cocoapods.org) using `gem install cocoapods`.
-2. Create a new Podfile using `pod init`.
-3. There are two options for adding GoSquared to your Podfile:
+You should be familiar with installing through [CocoaPods](https://cocoapods.org/). Your Podfile should include the following two lines for the target you're wishing to install Chat with:
+
+There are two options for adding GoSquared to your Podfile:
  - If you want automatic tracking of your views, add `pod 'GoSquared/Autoload'`
- - If you dont not want this, add `pod 'GoSquared'` to your Podfile.
-4. Run `pod install` to install. This will generate a new Xcode workspace for you to open and use.
+ - If you don't want this, add `pod 'GoSquared'` to your Podfile.
+
+To use GoSquared Chat add `pod GoSquared/Chat` to your Podfile
+
+```ruby
+pod 'GoSquared'
+pod 'GoSquared/Chat'
+
+# optional if you want to automatically track view controllers
+# if not added, you must manually call `trackScreen:` yourself
+pod 'GoSquared/Autoload'
+```
+
+Then simply run `pod install`
 
 ### Installing with Carthage
 
@@ -23,10 +35,13 @@ For instructions using Carthage, [please read their documentation](https://githu
 
 Make sure you initialise the library with your project token before calling any tracking / people methods otherwise the library will throw an exception. It is recommended to add the below line to your UIApplication's `didFinishLaunchingWithOptions` method.
 
+**Note:** As of iOS 10 (Xcode 8), Apple requires that the `NSPhotoLibraryUsageDescription` key is included in your `info.plist` when accessing the photo library. If you would like the ability for users to send images over chat then you must add this key with a short description to be displayed when Chat accesses the Photo Library. If this is omitted previous to iOS 10 then the upload button will simply be hidden.
+
 **Objective-C:**
 
 ```objc
 #import <GoSquared/GoSquared.h>
+#import <GoSquared/GoSquared+Chat.h> //Remove if you are not using chat
 
 // ...
 
@@ -35,12 +50,34 @@ Make sure you initialise the library with your project token before calling any 
     [GoSquared sharedTracker].token = @"your-project-token";
     [GoSquared sharedTracker].key   = @"your-api-key";
 
-    // optionally set logging level: Debug, Quiet (Default), Silent
-    [GoSquared sharedTracker].logLevel = GSLogLevelDebug;
+    // this is required for Chat and can be generated from:
+    // https://www.gosquared.com/setup/general
+    [GoSquared sharedTracker].secret = @"your-secure-secret";
+
+
+    // ===========================================================
+    // this is where we will configure the Chat view controller...
+    // ===========================================================
+
+    // this opens the connection for chat, showing the user as online, and
+    // loading messages they missed while the app was closed
+    [[GoSquared sharedChatViewController] openConnection];
+
+    // [OPTIONAL] override the title at the top of the view controller (by default
+    // it will use the name set at https://www.gosquared.com/setup/chat)
+    // [GoSquared sharedChatViewController].title = @"Chatting with Support";
+
+
+    // ===========================================================
+    // Other options...
+    // ===========================================================
+
+    // [OPTIONAL] set logging level: Debug, Quiet (Default), Silent
+    // [GoSquared sharedTracker].logLevel = GSLogLevelDebug;
 
     // if your app primarily runs in the background and you want visitors to show in
     // your Now dashboard, you should set the following to `YES` (default: NO)
-    [GoSquared sharedTracker].shouldTrackInBackground = YES;
+    // [GoSquared sharedTracker].shouldTrackInBackground = YES;
 
     return YES;
 }
@@ -58,12 +95,30 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     GoSquared.sharedTracker().token = "your-project-token"
     GoSquared.sharedTracker().key   = "your-api-key"
 
-    // optionally set logging level: Debug, Quiet (Default), Silent
-    GoSquared.sharedTracker().logLevel = .Debug
+    // this is required for Chat and can be generated from:
+    // https://www.gosquared.com/setup/general
+    GoSquared.sharedTracker().secret = "your-secure-secret"
 
-    // if your app primarily runs in the background and you want visitors to show in
-    // your Now dashboard, you should set the following to `true` (default: false)
-    GoSquared.sharedTracker().shouldTrackInBackground = true
+    // ===========================================================
+    // this is where we will configure the Chat view controller...
+    // ===========================================================
+
+    // this opens the connection for chat, showing the user as online, and
+    // loading messages they missed while the app was closed
+    GoSquared.sharedChatViewController().openConnection();
+
+    // [OPTIONAL] override the title at the top of the view controller (by default
+    // it will use the name set at https://www.gosquared.com/setup/chat)
+    // GoSquared.sharedChatViewController().title = "Chatting with Support";
+
+
+    // [OPTIONAL] set logging level: Debug, Quiet (Default), Silent
+    // GoSquared.sharedTracker().logLevel = .Debug
+
+    // [OPTIONAL] if your app primarily runs in the background and you want
+    // visitors to show in your Now dashboard, you should set the following to
+    // `true` (default: false)
+    // GoSquared.sharedTracker().shouldTrackInBackground = true
 
     return true
 }
@@ -77,7 +132,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
 Make sure you're using the `GoSquared/Autoload` subspec in your Podfile. Configure your Project Token and API Key as described above, and you're good to go!
 
-If needed, you can disable tracking on indiviual ViewControllers, or set a custom title:
+If needed, you can disable tracking on individual ViewControllers, or set a custom title:
 
 **Objective-C:**
 
@@ -271,6 +326,144 @@ GSTransactionItem *coke = [GSTransactionItem transactionItemWithName:@"Coca Cola
 let coke = GSTransactionItem(name: "Coca Cola", price: 0.99, quantity: 6)
 
 GoSquared.sharedTracker().trackTransaction(id: "unique-id", items: [coke])
+```
+
+## Displaying Chat
+
+#### Objective-C
+
+```objc
+#import <GoSquared/GoSquared.h>
+#import <GoSquared/GoSquared+Chat.h>
+#import <GoSquared/UIViewController+Chat.h>
+
+// from within a UIViewController
+
+// open from storyboard action
+- (IBAction)buttonWasTapped:(id)sender
+{
+    [self gs_presentChatViewController];
+}
+
+```
+
+#### Swift
+
+```swift
+import GoSquared
+
+// from within a UIViewController
+
+// open from storyboard action
+@IBAction func buttonWasTapped(sender: AnyObject) {
+    self.gs_presentChatViewController();
+}
+```
+
+## Displaying Number of Unread Messages
+
+Often you'll want to display the number of unread messages from a chat somewhere (on the button which opens chat, is usually a sensible option).
+
+#### Objective-C
+
+```objc
+#import <GoSquared/GoSquared.h>
+#import <GoSquared/GoSquared+Chat.h>
+
+// add a notification observer for `GSUnreadMessageNotification`
+- (void)someSetupMethod
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(unreadNotificationHandler:)
+                                                 name:GSUnreadMessageNotification
+                                               object:nil];
+}
+
+// method for handling notification
+- (void)unreadNotificationHandler:(NSNotification *)notification
+{
+    NSUInteger count = ((NSNumber *)notification.userInfo[GSUnreadMessageNotificationCount]).unsignedIntegerValue;
+    // update ui with count
+}
+```
+
+#### Swift
+
+```swift
+import GoSquared
+
+// add a notification obsever for `GSUnreadMessageNotification`
+func someSetupFunction() {
+    let notifCenter = NSNotificationCenter.defaultCenter()
+    let notifHandler = #selector(CustomUIButton.unreadNotificationHandler(_:))
+
+    notifCenter.addObserver(self, selector: notifHandler, name: GSUnreadMessageNotification, object:nil)
+}
+
+// function for handling notification
+func unreadNotificationHandler(notification: NSNotification) {
+    let count = notification.userInfo![GSUnreadMessageNotificationCount]
+    // update ui with count
+}
+
+```
+
+## Displaying In-App Notification For New Messages
+
+We currently don't provide any UI for displaying an in-app notification for new messages, however we do allow you to build and display your own.
+
+#### Objective-C
+
+```objc
+#import <GoSquared/GoSquared.h>
+#import <GoSquared/GoSquared+Chat.h>
+
+// add a notification observer for `GSMessageNotification`
+- (void)someSetupMethod
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(newMessageHandler:)
+                                                 name:GSMessageNotification
+                                               object:nil];
+}
+
+// method for handling notification
+- (void)newMessageHandler:(NSNotification *)notification
+{
+    NSDictionary *messageInfo = notification.userInfo;
+
+    NSString *senderName = messageInfo[GSMessageNotificationAuthor];
+    NSString *senderAvatar = messageInfo[GSMessageNotificationAvatar];
+    NSString *messageBody = messageInfo[GSMessageNotificationBody];
+
+    // build and display ui for message notification
+}
+```
+
+#### Swift
+
+```swift
+import GoSquared
+
+// add a notification obsever for `GSMessageNotification`
+func someSetupFunction() {
+    let notifCenter = NSNotificationCenter.defaultCenter()
+    let notifHandler = #selector(CustomUIButton.newMessageHandler(_:))
+
+    notifCenter.addObserver(self, selector: notifHandler, name: GSMessageNotification, object:nil)
+}
+
+// function for handling notification
+func newMessageHandler(notification: NSNotification) {
+    let messageInfo = notification.userInfo!
+
+    let senderName = messageInfo[GSMessageNotificationAuthor]
+    let senderAvatar = messageInfo[GSMessageNotificationAvatar]
+    let messageBody = messageInfo[GSMessageNotificationBody]
+
+    // build and display ui for message notification
+}
+
 ```
 
 ## Code of Conduct

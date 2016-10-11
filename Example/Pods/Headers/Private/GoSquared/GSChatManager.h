@@ -1,1 +1,1 @@
-../../../../../GoSquared+Chat/Models/GSChatManager.h
+../../../../../GoSquared/Chat/GSChatManager.h

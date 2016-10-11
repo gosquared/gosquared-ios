@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nzL-A6-c3N">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nzL-A6-c3N">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -30,26 +32,45 @@
                         <viewControllerLayoutGuide type="bottom" id="8Ty-Rb-cSo"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3FO-FG-cTy">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bph-Ys-WVk">
+                                <state key="normal" title="Identify"/>
+                                <connections>
+                                    <action selector="identify:" destination="FOw-f9-Y2w" eventType="touchUpInside" id="lnf-Mj-bez"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JNx-Vg-AXN">
+                                <state key="normal" title="Unidentify"/>
+                                <connections>
+                                    <action selector="unidentify:" destination="FOw-f9-Y2w" eventType="touchUpInside" id="dN0-W7-rjG"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Jz-QD-8Wg">
-                                <rect key="frame" x="227" y="285" width="147" height="30"/>
                                 <state key="normal" title="Chat with GoSquared"/>
                                 <connections>
                                     <action selector="presentChat:" destination="FOw-f9-Y2w" eventType="touchUpInside" id="fl7-KD-VLa"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="7Jz-QD-8Wg" firstAttribute="centerY" secondItem="3FO-FG-cTy" secondAttribute="centerY" id="0KR-CP-IKs"/>
-                            <constraint firstItem="7Jz-QD-8Wg" firstAttribute="centerX" secondItem="3FO-FG-cTy" secondAttribute="centerX" id="aKD-ci-laD"/>
+                            <constraint firstItem="7Jz-QD-8Wg" firstAttribute="top" secondItem="gfR-co-FzN" secondAttribute="bottom" constant="114" id="C1U-pZ-IEQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="JNx-Vg-AXN" secondAttribute="trailing" constant="135" id="CIy-xZ-puK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Bph-Ys-WVk" secondAttribute="trailing" constant="145" id="CTP-Q6-pGk"/>
+                            <constraint firstItem="Bph-Ys-WVk" firstAttribute="top" secondItem="7Jz-QD-8Wg" secondAttribute="bottom" constant="37.5" id="DcZ-ar-Wsd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="7Jz-QD-8Wg" secondAttribute="trailing" constant="98" id="EzY-Da-bON"/>
+                            <constraint firstItem="Bph-Ys-WVk" firstAttribute="leading" secondItem="3FO-FG-cTy" secondAttribute="leadingMargin" constant="146" id="IUn-2S-tDF"/>
+                            <constraint firstItem="7Jz-QD-8Wg" firstAttribute="leading" secondItem="3FO-FG-cTy" secondAttribute="leadingMargin" constant="98" id="Vb6-fa-CQu"/>
+                            <constraint firstItem="JNx-Vg-AXN" firstAttribute="top" secondItem="Bph-Ys-WVk" secondAttribute="bottom" constant="42" id="m07-lC-6Zb"/>
+                            <constraint firstItem="JNx-Vg-AXN" firstAttribute="leading" secondItem="3FO-FG-cTy" secondAttribute="leadingMargin" constant="137" id="tJT-qc-bWE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="fT2-RD-Vy1"/>
                     <connections>
                         <outlet property="button" destination="7Jz-QD-8Wg" id="UaW-D2-rCK"/>
+                        <outlet property="identifyButton" destination="Bph-Ys-WVk" id="ceT-0E-hYH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0FT-um-QSd" userLabel="First Responder" sceneMemberID="firstResponder"/>

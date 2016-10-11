@@ -1,1 +1,1 @@
-../../../../../GoSquared+Chat/UIViewController+Chat.h
+../../../../../GoSquared/Chat/UIViewController+Chat.h
