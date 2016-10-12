@@ -253,6 +253,7 @@
 - Rename `GSEvent` to `GSTrackerEvent` (`GSEvent` is already an existing thing <http://iphonedevwiki.net/index.php/GSEvent>)
 
 
+[v1.0.0]: https://github.com/gosquared/gosquared-ios/compare/v0.7.4...v1.0.0
 [v0.7.4]: https://github.com/gosquared/gosquared-ios/compare/v0.7.3...v0.7.4
 [v0.7.3]: https://github.com/gosquared/gosquared-ios/compare/v0.7.2...v0.7.3
 [v0.7.2]: https://github.com/gosquared/gosquared-ios/compare/v0.7.1...v0.7.2
