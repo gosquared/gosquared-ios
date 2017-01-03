@@ -56,6 +56,7 @@ Make sure you initialise the library with your Project Token (the unique identif
     // this enables Secure Mode and is required for Live Chat. 
     // generate a Secure Mode Secret from your Project Settings here:
     // https://www.gosquared.com/setup/general
+    // [NOTE] If you are using the same project token on a website, you will also need to implement Secure Mode on your site too.
     [GoSquared sharedTracker].secret = @"your-secure-secret";
 
 
@@ -102,6 +103,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     // this enables Secure Mode and is required for Live Chat. 
     // generate a Secure Mode Secret from your Project Settings here:
     // https://www.gosquared.com/setup/general
+    // [NOTE] If you are using the same project token on a website, you will also need to implement Secure Mode on your site too.
     GoSquared.sharedTracker().secret = "your-secure-secret"
 
     // ===========================================================
