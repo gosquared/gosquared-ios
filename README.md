@@ -2,6 +2,9 @@
 
 **This is an early beta, please open an issue if you find anything not working, or to leave feedback for improvement. You can also get in touch directly: <ben@gosquared.com>.**
 
+This guide is for adding GoSquared Analytics, People CRM and Live Chat to your native iOS app. You'll need to generate an API key with 'Write Tracking' permission. You can do this from your[Account Settings here](https://www.gosquared.com/settings/api).
+
+
 ## Installation
 
 ### Installing with CocoaPods (Recommended)
@@ -12,7 +15,7 @@ There are two options for adding GoSquared to your Podfile:
  - If you want automatic tracking of your views, add `pod 'GoSquared/Autoload'`
  - If you don't want this, add `pod 'GoSquared'` to your Podfile.
 
-To use GoSquared Chat add `pod GoSquared/Chat` to your Podfile
+To use GoSquared Live Chat add `pod GoSquared/Chat` to your Podfile
 
 ```ruby
 pod 'GoSquared'
@@ -33,7 +36,7 @@ For instructions using Carthage, [please read their documentation](https://githu
 
 ## Configuration
 
-Make sure you initialise the library with your project token before calling any tracking / people methods otherwise the library will throw an exception. It is recommended to add the below line to your UIApplication's `didFinishLaunchingWithOptions` method.
+Make sure you initialise the library with your Project Token (the unique identifier for your GoSquared Project – you can find it in your [Project Settings](https://www.gosquared.com/setup/general)) before calling any tracking / people methods otherwise the library will throw an exception. It is recommended to add the below line to your UIApplication's `didFinishLaunchingWithOptions` method.
 
 **Note:** As of iOS 10 (Xcode 8), Apple requires that the `NSPhotoLibraryUsageDescription` key is included in your `info.plist` when accessing the photo library. If you would like the ability for users to send images over chat then you must add this key with a short description to be displayed when Chat accesses the Photo Library. If this is omitted previous to iOS 10 then the upload button will simply be hidden.
 
@@ -50,16 +53,17 @@ Make sure you initialise the library with your project token before calling any 
     [GoSquared sharedTracker].token = @"your-project-token";
     [GoSquared sharedTracker].key   = @"your-api-key";
 
-    // this is required for Chat and can be generated from:
+    // this enables Secure Mode and is required for Live Chat. 
+    // generate a Secure Mode Secret from your Project Settings here:
     // https://www.gosquared.com/setup/general
     [GoSquared sharedTracker].secret = @"your-secure-secret";
 
 
     // ===========================================================
-    // this is where we will configure the Chat view controller...
+    // this is where we will configure the Live Chat view controller...
     // ===========================================================
 
-    // this opens the connection for chat, showing the user as online, and
+    // this opens the connection for Live chat, showing the user as online, and
     // loading messages they missed while the app was closed
     [[GoSquared sharedChatViewController] openConnection];
 
@@ -95,7 +99,8 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     GoSquared.sharedTracker().token = "your-project-token"
     GoSquared.sharedTracker().key   = "your-api-key"
 
-    // this is required for Chat and can be generated from:
+    // this enables Secure Mode and is required for Live Chat. 
+    // generate a Secure Mode Secret from your Project Settings here:
     // https://www.gosquared.com/setup/general
     GoSquared.sharedTracker().secret = "your-secure-secret"
 
@@ -328,7 +333,7 @@ let coke = GSTransactionItem(name: "Coca Cola", price: 0.99, quantity: 6)
 GoSquared.sharedTracker().trackTransaction(id: "unique-id", items: [coke])
 ```
 
-## Displaying Chat
+## Displaying Live Chat
 
 #### Objective-C
 
@@ -362,7 +367,7 @@ import GoSquared
 
 ## Displaying Number of Unread Messages
 
-Often you'll want to display the number of unread messages from a chat somewhere (on the button which opens chat, is usually a sensible option).
+Often you'll want to display the number of unread messages from a live chat somewhere (on the button which opens chat, is usually a sensible option).
 
 #### Objective-C
 
