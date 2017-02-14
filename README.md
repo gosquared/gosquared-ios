@@ -155,7 +155,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
 We know every app is deisgned differently, so rather than providing our own in-app chat button, it's up to you to choose how/when/where you provide the option to chat. Live chat could be part of help menu or have it's own dedicated icon in the UI. All you need to do is use the methods avaliable in our SDK to trigger live chat to open when your desired UI element is tapped.
 
-In our own app we've used a question mark icon to trigger chat open:
+In our own app we've used a question mark icon to trigger chat to open:
 
 ![iOS live chat](https://static.gosquared.com/images/liquidicity/16_10_12_ios_sdk_1.gif)
 
@@ -304,7 +304,9 @@ func newMessageHandler(notification: NSNotification) {
 
 ## Create and update People profiles
 
-If your app requires a user to login, you can pass back their details (id, email address, etc) to GoSquared. This creates a profile for them in People CRM. This is useful for tracking their in app activity and identifying who you are talking with when the user starts a live chat.
+If your app requires a user to login, you can pass back their details (id, email address, etc) to GoSquared. This creates a profile for them in People CRM any any tracked actions from the seeion will be attributed to them. This is also very useful for identifying who you are talking to when the user starts a live chat.
+
+> **Note:** to track the user's device information (iOS version, IP address/location, screen size etc) you need to implement [page/screen view tracking](https://github.com/gosquared/gosquared-ios#page-view-screen-tracking) as currently this is the only way to update this info.
 
 Any events or custom properties you track during a session will then be attributed to this user.
 
@@ -384,9 +386,12 @@ GoSquared.sharedTracker().unidentify();
 ``` 
 
 
-## Page View (screen) Tracking
+## Pageview (screen) Tracking
 
 When the user navigates between different screens/views in your app, we can track them as pageviews in GoSquared. These will show up in the Now and Trends dashboards. If you are identifying your users, they will also form part of that user's activtiy feed.
+
+> **Note:** Tracking a page/screen view will also automatically track the user's device info (iOS version, IP address/location, screen size etc)
+
 
 ### Automatic Page View Tracking (Recommended)
 
