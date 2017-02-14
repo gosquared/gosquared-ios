@@ -1,8 +1,11 @@
 # GoSquared iOS
 
-**This is an early beta, please open an issue if you find anything not working, or to leave feedback for improvement. You can also get in touch directly: <ben@gosquared.com>.**
+**This is an early beta, please open an issue if you find anything not working, or to leave feedback for improvement. You can also get in touch directly: <leo@gosquared.com>.**
 
 This guide is for adding GoSquared Analytics, People CRM and Live Chat to your native iOS app. You'll need to generate an API key with 'Write Tracking' permission. You can do this from your [Account Settings here](https://www.gosquared.com/settings/api).
+
+
+If you'd like to see our live chat SDK in action, we use it in our own app. Download the GoSquared [Inbox iOS app](https://itunes.apple.com/gb/app/inbox-live-chat-by-gosquared/id1069741072?mt=8) and start a support conversation with us!
 
 
 ## Installation
@@ -129,6 +132,150 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
     return true
 }
+```
+
+## Displaying Live Chat
+
+We know every app is deisgned differently, so rather than providing our own in-app chat button, it's up to you to choose how/when/where you provide the option to chat. Live chat could be part of help menu or have it's own dedicated icon in the UI. All you need to do is use the methods avaliable in our SDK to trigger live chat to open when your desired UI element is tapped.
+
+In our own app we've used a question mark icon to trigger chat open:
+
+![iOS live chat](https://static.gosquared.com/images/liquidicity/16_10_12_ios_sdk_1.gif)
+
+#### Objective-C
+
+```objc
+#import <GoSquared/GoSquared.h>
+#import <GoSquared/GoSquared+Chat.h>
+#import <GoSquared/UIViewController+Chat.h>
+
+// from within a UIViewController
+
+// open from storyboard action
+- (IBAction)buttonWasTapped:(id)sender
+{
+    [self gs_presentChatViewController];
+}
+
+```
+
+#### Swift
+
+```swift
+import GoSquared
+
+// from within a UIViewController
+
+// open from storyboard action
+@IBAction func buttonWasTapped(sender: AnyObject) {
+    self.gs_presentChatViewController();
+}
+```
+
+## Displaying Number of Unread Messages
+
+Often you'll want to display the number of unread messages from a live chat somewhere (on the button which opens chat, is usually a sensible option).
+
+#### Objective-C
+
+```objc
+#import <GoSquared/GoSquared.h>
+#import <GoSquared/GoSquared+Chat.h>
+
+// add a notification observer for `GSUnreadMessageNotification`
+- (void)someSetupMethod
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(unreadNotificationHandler:)
+                                                 name:GSUnreadMessageNotification
+                                               object:nil];
+}
+
+// method for handling notification
+- (void)unreadNotificationHandler:(NSNotification *)notification
+{
+    NSUInteger count = ((NSNumber *)notification.userInfo[GSUnreadMessageNotificationCount]).unsignedIntegerValue;
+    // update ui with count
+}
+```
+
+#### Swift
+
+```swift
+import GoSquared
+
+// add a notification obsever for `GSUnreadMessageNotification`
+func someSetupFunction() {
+    let notifCenter = NSNotificationCenter.defaultCenter()
+    let notifHandler = #selector(CustomUIButton.unreadNotificationHandler(_:))
+
+    notifCenter.addObserver(self, selector: notifHandler, name: GSUnreadMessageNotification, object:nil)
+}
+
+// function for handling notification
+func unreadNotificationHandler(notification: NSNotification) {
+    let count = notification.userInfo![GSUnreadMessageNotificationCount]
+    // update ui with count
+}
+
+```
+
+## Displaying In-App Notification For New Messages
+
+We currently don't provide any UI for displaying an in-app notification for new messages, however we do allow you to build and display your own.
+
+#### Objective-C
+
+```objc
+#import <GoSquared/GoSquared.h>
+#import <GoSquared/GoSquared+Chat.h>
+
+// add a notification observer for `GSMessageNotification`
+- (void)someSetupMethod
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(newMessageHandler:)
+                                                 name:GSMessageNotification
+                                               object:nil];
+}
+
+// method for handling notification
+- (void)newMessageHandler:(NSNotification *)notification
+{
+    NSDictionary *messageInfo = notification.userInfo;
+
+    NSString *senderName = messageInfo[GSMessageNotificationAuthor];
+    NSString *senderAvatar = messageInfo[GSMessageNotificationAvatar];
+    NSString *messageBody = messageInfo[GSMessageNotificationBody];
+
+    // build and display ui for message notification
+}
+```
+
+#### Swift
+
+```swift
+import GoSquared
+
+// add a notification obsever for `GSMessageNotification`
+func someSetupFunction() {
+    let notifCenter = NSNotificationCenter.defaultCenter()
+    let notifHandler = #selector(CustomUIButton.newMessageHandler(_:))
+
+    notifCenter.addObserver(self, selector: notifHandler, name: GSMessageNotification, object:nil)
+}
+
+// function for handling notification
+func newMessageHandler(notification: NSNotification) {
+    let messageInfo = notification.userInfo!
+
+    let senderName = messageInfo[GSMessageNotificationAuthor]
+    let senderAvatar = messageInfo[GSMessageNotificationAvatar]
+    let messageBody = messageInfo[GSMessageNotificationBody]
+
+    // build and display ui for message notification
+}
+
 ```
 
 ## Page View Tracking
@@ -333,144 +480,6 @@ GSTransactionItem *coke = [GSTransactionItem transactionItemWithName:@"Coca Cola
 let coke = GSTransactionItem(name: "Coca Cola", price: 0.99, quantity: 6)
 
 GoSquared.sharedTracker().trackTransaction(id: "unique-id", items: [coke])
-```
-
-## Displaying Live Chat
-
-#### Objective-C
-
-```objc
-#import <GoSquared/GoSquared.h>
-#import <GoSquared/GoSquared+Chat.h>
-#import <GoSquared/UIViewController+Chat.h>
-
-// from within a UIViewController
-
-// open from storyboard action
-- (IBAction)buttonWasTapped:(id)sender
-{
-    [self gs_presentChatViewController];
-}
-
-```
-
-#### Swift
-
-```swift
-import GoSquared
-
-// from within a UIViewController
-
-// open from storyboard action
-@IBAction func buttonWasTapped(sender: AnyObject) {
-    self.gs_presentChatViewController();
-}
-```
-
-## Displaying Number of Unread Messages
-
-Often you'll want to display the number of unread messages from a live chat somewhere (on the button which opens chat, is usually a sensible option).
-
-#### Objective-C
-
-```objc
-#import <GoSquared/GoSquared.h>
-#import <GoSquared/GoSquared+Chat.h>
-
-// add a notification observer for `GSUnreadMessageNotification`
-- (void)someSetupMethod
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(unreadNotificationHandler:)
-                                                 name:GSUnreadMessageNotification
-                                               object:nil];
-}
-
-// method for handling notification
-- (void)unreadNotificationHandler:(NSNotification *)notification
-{
-    NSUInteger count = ((NSNumber *)notification.userInfo[GSUnreadMessageNotificationCount]).unsignedIntegerValue;
-    // update ui with count
-}
-```
-
-#### Swift
-
-```swift
-import GoSquared
-
-// add a notification obsever for `GSUnreadMessageNotification`
-func someSetupFunction() {
-    let notifCenter = NSNotificationCenter.defaultCenter()
-    let notifHandler = #selector(CustomUIButton.unreadNotificationHandler(_:))
-
-    notifCenter.addObserver(self, selector: notifHandler, name: GSUnreadMessageNotification, object:nil)
-}
-
-// function for handling notification
-func unreadNotificationHandler(notification: NSNotification) {
-    let count = notification.userInfo![GSUnreadMessageNotificationCount]
-    // update ui with count
-}
-
-```
-
-## Displaying In-App Notification For New Messages
-
-We currently don't provide any UI for displaying an in-app notification for new messages, however we do allow you to build and display your own.
-
-#### Objective-C
-
-```objc
-#import <GoSquared/GoSquared.h>
-#import <GoSquared/GoSquared+Chat.h>
-
-// add a notification observer for `GSMessageNotification`
-- (void)someSetupMethod
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(newMessageHandler:)
-                                                 name:GSMessageNotification
-                                               object:nil];
-}
-
-// method for handling notification
-- (void)newMessageHandler:(NSNotification *)notification
-{
-    NSDictionary *messageInfo = notification.userInfo;
-
-    NSString *senderName = messageInfo[GSMessageNotificationAuthor];
-    NSString *senderAvatar = messageInfo[GSMessageNotificationAvatar];
-    NSString *messageBody = messageInfo[GSMessageNotificationBody];
-
-    // build and display ui for message notification
-}
-```
-
-#### Swift
-
-```swift
-import GoSquared
-
-// add a notification obsever for `GSMessageNotification`
-func someSetupFunction() {
-    let notifCenter = NSNotificationCenter.defaultCenter()
-    let notifHandler = #selector(CustomUIButton.newMessageHandler(_:))
-
-    notifCenter.addObserver(self, selector: notifHandler, name: GSMessageNotification, object:nil)
-}
-
-// function for handling notification
-func newMessageHandler(notification: NSNotification) {
-    let messageInfo = notification.userInfo!
-
-    let senderName = messageInfo[GSMessageNotificationAuthor]
-    let senderAvatar = messageInfo[GSMessageNotificationAvatar]
-    let messageBody = messageInfo[GSMessageNotificationBody]
-
-    // build and display ui for message notification
-}
-
 ```
 
 ## Code of Conduct
