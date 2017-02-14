@@ -12,7 +12,7 @@ If you'd like to see our live chat SDK in action, we use it in our own app. Down
 * [Configruation](https://github.com/gosquared/gosquared-ios#configuration)
 * [Live Chat](https://github.com/gosquared/gosquared-ios#open-live-chat)
 * [Create and update People profiles](https://github.com/gosquared/gosquared-ios#create-and-update-people-profiles)
-* [Screen/View tracking (pageviews)](https://github.com/gosquared/gosquared-ios#create-and-update-people-profiles)
+* [Screen/View tracking (pageviews)](https://github.com/gosquared/gosquared-ios#page-view-screen-tracking)
 * [Event tracking](https://github.com/gosquared/gosquared-ios#event-tracking)
 * [Transaction tracking (Ecommerce)](https://github.com/gosquared/gosquared-ios#transaction-tracking-ecommerce)
 * [Code of conduct/License](https://github.com/gosquared/gosquared-ios#code-of-conduct) 
@@ -386,7 +386,7 @@ GoSquared.sharedTracker().unidentify();
 
 ## Page View (screen) Tracking
 
-When the user navigates between different screens/views in your app, we can track them as pageviews in GoSquared.
+When the user navigates between different screens/views in your app, we can track them as pageviews in GoSquared. These will show up in the Now and Trends dashboards. If you are identifying your users, they will also form part of that user's activtiy feed.
 
 ### Automatic Page View Tracking (Recommended)
 
