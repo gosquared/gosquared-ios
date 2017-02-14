@@ -8,14 +8,14 @@ This guide is for adding GoSquared Analytics, People CRM and Live Chat to your n
 If you'd like to see our live chat SDK in action, we use it in our own app. Download the GoSquared [Inbox iOS app](https://itunes.apple.com/gb/app/inbox-live-chat-by-gosquared/id1069741072?mt=8) and start a support conversation with us!
 
 
-[Installation](https://github.com/gosquared/gosquared-ios#installation)
-[Configruation](https://github.com/gosquared/gosquared-ios#configuration)
-[Live Chat]()
-[Create and update People profiles]()
-[Screen/View tracking (pageviews)]()
-[Event tracking]()
-[Transaction tracking (Ecommerce)]()
-
+* [Installation](https://github.com/gosquared/gosquared-ios#installation)
+* [Configruation](https://github.com/gosquared/gosquared-ios#configuration)
+* [Live Chat](https://github.com/gosquared/gosquared-ios#open-live-chat)
+* [Create and update People profiles](https://github.com/gosquared/gosquared-ios#create-and-update-people-profiles)
+* [Screen/View tracking (pageviews)](https://github.com/gosquared/gosquared-ios#create-and-update-people-profiles)
+* [Event tracking](https://github.com/gosquared/gosquared-ios#event-tracking)
+* [Transaction tracking (Ecommerce)](https://github.com/gosquared/gosquared-ios#transaction-tracking-ecommerce)
+* [Code of conduct/License](https://github.com/gosquared/gosquared-ios#code-of-conduct) 
 
 
 
@@ -40,13 +40,15 @@ pod 'GoSquared/Chat'
 pod 'GoSquared/Autoload'
 ```
 
-Then simply run `pod install`
+Then simply run `pod install` 
+
 
 ### Installing with Carthage
 
 Installation with [Carthage](https://github.com/Carthage/Carthage) is supported, however automatic view tracking will not be available. As such, you'll need to call `trackScreen:` on each of your ViewControllers.
 
-For instructions using Carthage, [please read their documentation](https://github.com/Carthage/Carthage).
+For instructions using Carthage, [please read their documentation](https://github.com/Carthage/Carthage). 
+
 
 ## Configuration
 
@@ -145,7 +147,8 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
     return true
 }
-```
+``` 
+
 
 
 ## Open Live Chat
@@ -186,7 +189,8 @@ import GoSquared
     self.gs_presentChatViewController();
 }
 ```
-
+ 
+ 
 
 ## Displaying Number of Unread Messages
 
@@ -235,7 +239,8 @@ func unreadNotificationHandler(notification: NSNotification) {
     // update ui with count
 }
 
-```
+``` 
+
 
 ## Displaying In-App Notification For New Messages
 
@@ -293,13 +298,13 @@ func newMessageHandler(notification: NSNotification) {
     // build and display ui for message notification
 }
 
-```
+``` 
 
 
 
 ## Create and update People profiles
 
-If your app requires a user to login, you can pass back their details (id, email address, etc) to GoSquared. This is useful for tracking their in app activity and identifying who you are talking with when the user starts a live chat.
+If your app requires a user to login, you can pass back their details (id, email address, etc) to GoSquared. This creates a profile for them in People CRM. This is useful for tracking their in app activity and identifying who you are talking with when the user starts a live chat.
 
 Any events or custom properties you track during a session will then be attributed to this user.
 
@@ -358,7 +363,7 @@ let properties = [
 ]
 
 GoSquared.sharedTracker().identify(properties: properties)
-```
+``` 
 
 
 
@@ -376,8 +381,7 @@ By default we will cache the user's details when they close the app so we know w
 
 ```swift
 GoSquared.sharedTracker().unidentify();
-```
-
+``` 
 
 
 ## Page View (screen) Tracking
@@ -427,8 +431,7 @@ override func viewDidLoad() {
     // set this to true to disable tracking for a particular ViewController
     self.doNotTrack = true;
 }
-```
-
+``` 
 
 
 ### Manual Page View Tracking
@@ -463,8 +466,7 @@ override func viewDidAppear(animated: Bool) {
     GoSquared.sharedTracker().trackScreen(title: self.title, path:"/custom-url-path")
 }
 
-```
-
+``` 
 
 
 ## Event Tracking
@@ -499,8 +501,7 @@ You can optionally provide additional information as key value pairs within the 
 
 ```swift
 GoSquared.sharedTracker().trackEvent(name: "event name", properties: ["properties": "are cool"])
-```
-
+``` 
 
 
 ## Transaction tracking (Ecommerce)
@@ -525,8 +526,7 @@ GSTransactionItem *coke = [GSTransactionItem transactionItemWithName:@"Coca Cola
 let coke = GSTransactionItem(name: "Coca Cola", price: 0.99, quantity: 6)
 
 GoSquared.sharedTracker().trackTransaction(id: "unique-id", items: [coke])
-```
-
+``` 
 
 
 ## Code of Conduct
