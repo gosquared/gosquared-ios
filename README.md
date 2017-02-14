@@ -8,6 +8,17 @@ This guide is for adding GoSquared Analytics, People CRM and Live Chat to your n
 If you'd like to see our live chat SDK in action, we use it in our own app. Download the GoSquared [Inbox iOS app](https://itunes.apple.com/gb/app/inbox-live-chat-by-gosquared/id1069741072?mt=8) and start a support conversation with us!
 
 
+[Installation](https://github.com/gosquared/gosquared-ios#installation)
+[Configruation](https://github.com/gosquared/gosquared-ios#configuration)
+[Live Chat]()
+[Create and update People profiles]()
+[Screen/View tracking (pageviews)]()
+[Event tracking]()
+[Transaction tracking (Ecommerce)]()
+
+
+
+
 ## Installation
 
 ### Installing with CocoaPods (Recommended)
@@ -42,6 +53,7 @@ For instructions using Carthage, [please read their documentation](https://githu
 Make sure you initialise the library with your Project Token (the unique identifier for your GoSquared Project – you can find it in your [Project Settings](https://www.gosquared.com/setup/general)) before calling any tracking / people methods otherwise the library will throw an exception. It is recommended to add the below line to your UIApplication's `didFinishLaunchingWithOptions` method.
 
 **Note:** As of iOS 10 (Xcode 8), Apple requires that the `NSPhotoLibraryUsageDescription` key is included in your `info.plist` when accessing the photo library. If you would like the ability for users to send images over chat then you must add this key with a short description to be displayed when Chat accesses the Photo Library. If this is omitted previous to iOS 10 then the upload button will simply be hidden.
+
 
 **Objective-C:**
 
@@ -91,6 +103,7 @@ Make sure you initialise the library with your Project Token (the unique identif
 }
 ```
 
+
 **Swift:**
 
 ```swift
@@ -134,13 +147,15 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 }
 ```
 
-## Displaying Live Chat
+
+## Open Live Chat
 
 We know every app is deisgned differently, so rather than providing our own in-app chat button, it's up to you to choose how/when/where you provide the option to chat. Live chat could be part of help menu or have it's own dedicated icon in the UI. All you need to do is use the methods avaliable in our SDK to trigger live chat to open when your desired UI element is tapped.
 
 In our own app we've used a question mark icon to trigger chat open:
 
 ![iOS live chat](https://static.gosquared.com/images/liquidicity/16_10_12_ios_sdk_1.gif)
+
 
 #### Objective-C
 
@@ -172,6 +187,7 @@ import GoSquared
 }
 ```
 
+
 ## Displaying Number of Unread Messages
 
 Often you'll want to display the number of unread messages from a live chat somewhere (on the button which opens chat, is usually a sensible option).
@@ -198,6 +214,7 @@ Often you'll want to display the number of unread messages from a live chat some
     // update ui with count
 }
 ```
+
 
 #### Swift
 
@@ -278,116 +295,13 @@ func newMessageHandler(notification: NSNotification) {
 
 ```
 
-## Page View Tracking
 
-### Automatic Page View Tracking (Recommended)
 
-> **Note**: This is only available if you installed with CocoaPods.
+## Create and update People profiles
 
-Make sure you're using the `GoSquared/Autoload` subspec in your Podfile. Configure your Project Token and API Key as described above, and you're good to go!
+If your app requires a user to login, you can pass back their details (id, email address, etc) to GoSquared. This is useful for tracking their in app activity and identifying who you are talking with when the user starts a live chat.
 
-If needed, you can disable tracking on individual ViewControllers, or set a custom title:
-
-**Objective-C:**
-
-```objc
-#import <GoSquared/GoSquared.h>
-
-// ...
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
-    // use this to override the title property on a ViewController class
-    self.trackingTitle = @"My Custom Title";
-    // set this to YES to disable tracking for a particular ViewController
-    self.doNotTrack = YES;
-}
-
-```
-
-**Swift:**
-
-```swift
-import GoSquared
-
-// ...
-
-override func viewDidLoad() {
-    super.viewDidLoad()
-
-    // use this to override the title property on a ViewController class
-    self.trackingTitle = "My Custom Title";
-    // set this to true to disable tracking for a particular ViewController
-    self.doNotTrack = true;
-}
-```
-
-### Manual Page View Tracking
-
-You can use one of the below methods to manually track a UIViewController:
-
-**Objective-C:**
-
-```objc
-#import <GoSquared/GoSquared.h>
-
-// ...
-
-- (void)viewDidAppear
-{
-    [[GoSquared sharedTracker] trackScreenWithTitle:self.title];
-    [[GoSquared sharedTracker] trackScreenWithTitle:self.title path:@"/custom-url-path"];
-}
-```
-
-**Swift:**
-
-```swift
-import GoSquared
-
-// ...
-
-override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-
-    GoSquared.sharedTracker().trackScreen(title: self.title)
-    GoSquared.sharedTracker().trackScreen(title: self.title, path:"/custom-url-path")
-}
-
-```
-
-## Event Tracking
-
-### Track an event
-
-**Objective-C:**
-
-```objc
-[[GoSquared sharedTracker] trackEventWithName:"event name"];
-```
-
-**Swift:**
-
-```swift
-GoSquared.sharedTracker().trackEvent(name: "event name")
-```
-
-### Track an event with properties
-
-**Objective-C:**
-
-```objc
-[[GoSquared sharedTracker] trackEventWithName:@"event name" properties:@{ @"properties": @"are cool" }];
-```
-
-**Swift:**
-
-```swift
-GoSquared.sharedTracker().trackEvent(name: "event name", properties: ["properties": "are cool"])
-```
-
-## People
+Any events or custom properties you track during a session will then be attributed to this user.
 
 ### Identify your user
 To identify a user you will need to provide an `id` or `email` property. This will create a new profile in [GoSquared People](https://www.gosquared.com/customer/en/portal/articles/2170492-an-introduction-to-gosquared-people) where all of the user's session data, events and custom properties will be tracked.
@@ -446,7 +360,11 @@ let properties = [
 GoSquared.sharedTracker().identify(properties: properties)
 ```
 
+
+
 ### Unidentify (e.g. on logout)
+
+By default we will cache the user's details when they close the app so we know who they are next time they open it. If you don't want this behaviour, then you can use the 'unidentify' method.
 
 **Objective-C:**
 
@@ -460,7 +378,134 @@ GoSquared.sharedTracker().identify(properties: properties)
 GoSquared.sharedTracker().unidentify();
 ```
 
-## Ecommerce
+
+
+## Page View (screen) Tracking
+
+When the user navigates between different screens/views in your app, we can track them as pageviews in GoSquared.
+
+### Automatic Page View Tracking (Recommended)
+
+> **Note**: This is only available if you installed with CocoaPods.
+
+Make sure you're using the `GoSquared/Autoload` subspec in your Podfile. Configure your Project Token and API Key as described above, and you're good to go!
+
+If needed, you can disable tracking on individual ViewControllers, or set a custom title:
+
+**Objective-C:**
+
+```objc
+#import <GoSquared/GoSquared.h>
+
+// ...
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    // use this to override the title property on a ViewController class
+    self.trackingTitle = @"My Custom Title";
+    // set this to YES to disable tracking for a particular ViewController
+    self.doNotTrack = YES;
+}
+
+```
+
+
+
+**Swift:**
+
+```swift
+import GoSquared
+
+// ...
+
+override func viewDidLoad() {
+    super.viewDidLoad()
+
+    // use this to override the title property on a ViewController class
+    self.trackingTitle = "My Custom Title";
+    // set this to true to disable tracking for a particular ViewController
+    self.doNotTrack = true;
+}
+```
+
+
+
+### Manual Page View Tracking
+
+You can use one of the below methods to manually track a UIViewController:
+
+**Objective-C:**
+
+```objc
+#import <GoSquared/GoSquared.h>
+
+// ...
+
+- (void)viewDidAppear
+{
+    [[GoSquared sharedTracker] trackScreenWithTitle:self.title];
+    [[GoSquared sharedTracker] trackScreenWithTitle:self.title path:@"/custom-url-path"];
+}
+```
+
+**Swift:**
+
+```swift
+import GoSquared
+
+// ...
+
+override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+
+    GoSquared.sharedTracker().trackScreen(title: self.title)
+    GoSquared.sharedTracker().trackScreen(title: self.title, path:"/custom-url-path")
+}
+
+```
+
+
+
+## Event Tracking
+
+Events will aggregated within the Events widget in your Trends dashboard. If you are identifying users, the events will be attributed to that user and show up in their profile feed in the People dashaord. You can then search and filter your users based on the events they have tracked.
+
+### Track an event
+
+**Objective-C:**
+
+```objc
+[[GoSquared sharedTracker] trackEventWithName:"event name"];
+```
+
+**Swift:**
+
+```swift
+GoSquared.sharedTracker().trackEvent(name: "event name")
+```
+
+### Track an event with properties
+
+You can optionally provide additional information as key value pairs within the event body. This information will be viewable within a profile's event feed. However you currently cannot search/filter based upon event body properties.
+
+**Objective-C:**
+
+```objc
+[[GoSquared sharedTracker] trackEventWithName:@"event name" properties:@{ @"properties": @"are cool" }];
+```
+
+**Swift:**
+
+```swift
+GoSquared.sharedTracker().trackEvent(name: "event name", properties: ["properties": "are cool"])
+```
+
+
+
+## Transaction tracking (Ecommerce)
+
+Transactions will show up in the Ecommerce dashboard and People CRM (if you are indentifying users).
 
 ### Track a transaction
 
@@ -481,6 +526,8 @@ let coke = GSTransactionItem(name: "Coca Cola", price: 0.99, quantity: 6)
 
 GoSquared.sharedTracker().trackTransaction(id: "unique-id", items: [coke])
 ```
+
+
 
 ## Code of Conduct
 
