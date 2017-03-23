@@ -1,6 +1,6 @@
 # GoSquared iOS
 
-**This is an early beta, please open an issue if you find anything not working, or to leave feedback for improvement. You can also get in touch directly: <leo@gosquared.com>.**
+**This is a beta, please open an issue if you find anything not working, or to leave feedback for improvement. You can also get in touch directly: <leo@gosquared.com>.**
 
 This guide is for adding GoSquared Analytics, People CRM and Live Chat to your native iOS app. You'll need to generate an API key with 'Write Tracking' permission. You can do this from your [Account Settings here](https://www.gosquared.com/settings/api).
 
