@@ -235,7 +235,9 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
     [self checkWebViewLoaded];
     [self checkSessionIsValid];
 
-    [self.webView evaluateJavaScript:@"receiveFromSDK('set_visibility', true)" completionHandler:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.webView evaluateJavaScript:@"receiveFromSDK('set_visibility', true)" completionHandler:nil];
+    });
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -244,7 +246,9 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
     [self dismissKeyboard];
     [self.inputAccessoryView endEditing];
     [self resignFirstResponder];
-    [self.webView evaluateJavaScript:@"receiveFromSDK('set_visibility', false)" completionHandler:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.webView evaluateJavaScript:@"receiveFromSDK('set_visibility', false)" completionHandler:nil];
+    });
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
@@ -281,7 +285,9 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
     NSString *config = [GSChatManager configForTracker:self.tracker];
     NSString *loadConfigString = [NSString stringWithFormat:@"%@\n loadChat()", config];
 
-    [self.webView evaluateJavaScript:loadConfigString completionHandler:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.webView evaluateJavaScript:loadConfigString completionHandler:nil];
+    });
 }
 
 - (void)checkWebViewLoaded
@@ -402,7 +408,10 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
 {
     if (self.lastSentTypingNotifTimestamp == nil || self.lastSentTypingNotifTimestamp.timeIntervalSinceNow < -1) {
         NSString *js = @"receiveFromSDK('send_typing')";
-        [self.webView evaluateJavaScript:js completionHandler:nil];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.webView evaluateJavaScript:js completionHandler:nil];
+        });
 
         self.lastSentTypingNotifTimestamp = [[NSDate alloc] init];
     }
@@ -419,7 +428,10 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
     NSString *escapedMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 
     NSString *js = [NSString stringWithFormat:@"receiveFromSDK('%@', %@)", @"send_message", [escapedMessage substringWithRange:NSMakeRange(2, escapedMessage.length-4)]];
-    [self.webView evaluateJavaScript:js completionHandler:nil];
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.webView evaluateJavaScript:js completionHandler:nil];
+    });
 }
 
 - (void)didRequestUpload
@@ -456,7 +468,9 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
 
     NSData *data = [extension isEqual: @"jpg"] ? UIImageJPEGRepresentation(image, 1) : UIImagePNGRepresentation(image);
 
-    [self.webView evaluateJavaScript:[NSString stringWithFormat:@"receiveFromSDK('upload_image', '%@', '%@')", [data base64EncodedStringWithOptions:0], extension] completionHandler:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.webView evaluateJavaScript:[NSString stringWithFormat:@"receiveFromSDK('upload_image', '%@', '%@')", [data base64EncodedStringWithOptions:0], extension] completionHandler:nil];
+    });
 }
 
 
@@ -505,7 +519,9 @@ NSString * const GSMessageNotificationAvatar      = @"GSMessageNotificationAvata
 - (void)chatDidLoad
 {
     if (self.isPresented) {
-        [self.webView evaluateJavaScript:@"receiveFromSDK('set_visibility', true)" completionHandler:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.webView evaluateJavaScript:@"receiveFromSDK('set_visibility', true)" completionHandler:nil];
+        });
     }
 }
 
