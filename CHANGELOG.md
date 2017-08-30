@@ -1,5 +1,10 @@
 # GoSquared iOS Change Log
 
+## 2017-08-30, [v1.0.1]
+
+### Fixed
+- Fixed occasional crashes when using Chat on iOS 11
+
 ## 2016-10-11, [v1.0.0]
 
 ### Added
