@@ -1,9 +1,10 @@
-# GoSquared iOS
+# GoSquared Live Chat for iOS
 
-**This is a beta, please open an issue if you find anything not working, or to leave feedback for improvement. You can also get in touch directly: <jt@gosquared.com>.**
+**Please open an issue if you find anything not working, or to leave feedback for improvement. You can also get in touch directly: <jt@gosquared.com>.**
 
-This guide is for adding GoSquared Analytics, People CRM and Live Chat to your native iOS app. You'll need to generate an API key with 'Write Tracking' permission. You can do this from your [Account Settings here](https://www.gosquared.com/settings/api).
+This guide is for adding People CRM tracking and Live Chat to your native iOS app.
 
+![iOS live chat](https://static.gosquared.com/images/liquidicity/16_10_12_ios_sdk_1.gif)
 
 If you'd like to see our live chat SDK in action, we use it in our own app. Download the GoSquared [Inbox iOS app](https://itunes.apple.com/gb/app/inbox-live-chat-by-gosquared/id1069741072?mt=8) and start a support conversation with us!
 
@@ -11,15 +12,17 @@ If you'd like to see our live chat SDK in action, we use it in our own app. Down
 * [Installation](https://github.com/gosquared/gosquared-ios#installation)
 * [Configuration](https://github.com/gosquared/gosquared-ios#configuration)
 * [Live Chat](https://github.com/gosquared/gosquared-ios#open-live-chat)
-* [Create and update People profiles](https://github.com/gosquared/gosquared-ios#create-and-update-people-profiles)
-* [Screen/View tracking (pageviews)](https://github.com/gosquared/gosquared-ios#page-view-screen-tracking)
+* [Create and update People CRM profiles](https://github.com/gosquared/gosquared-ios#create-and-update-people-profiles)
+* [Screen/View tracking (pageviews)](https://github.com/gosquared/gosquared-ios#pageview-screen-tracking)
 * [Event tracking](https://github.com/gosquared/gosquared-ios#event-tracking)
 * [Transaction tracking (Ecommerce)](https://github.com/gosquared/gosquared-ios#transaction-tracking-ecommerce)
-* [Code of conduct/License](https://github.com/gosquared/gosquared-ios#code-of-conduct) 
+* [Code of conduct/License](https://github.com/gosquared/gosquared-ios#code-of-conduct)  
 
-
+<br>
 
 ## Installation
+
+You'll need to generate an **API key** with _Write Tracking_ permission. You can do this from [Settings > Your Account > API](https://www.gosquared.com/settings/api).
 
 ### Installing with CocoaPods (Recommended)
 
@@ -40,22 +43,25 @@ pod 'GoSquared/Chat'
 pod 'GoSquared/Autoload'
 ```
 
-Then simply run `pod install` 
+Then simply run `pod install`    
 
+<br>
 
 ### Installing with Carthage
 
 Installation with [Carthage](https://github.com/Carthage/Carthage) is supported, however automatic view tracking will not be available. As such, you'll need to call `trackScreen:` on each of your ViewControllers.
 
-For instructions using Carthage, [please read their documentation](https://github.com/Carthage/Carthage). 
+For instructions using Carthage, [please read their documentation](https://github.com/Carthage/Carthage).  
+<br>
 
 
 ## Configuration
 
 Make sure you initialise the library with your Project Token (the unique identifier for your GoSquared Project – you can find it in your [Project Settings](https://www.gosquared.com/setup/general)) before calling any tracking / people methods otherwise the library will throw an exception. It is recommended to add the below line to your UIApplication's `didFinishLaunchingWithOptions` method.
 
-**Note:** As of iOS 10 (Xcode 8), Apple requires that the `NSPhotoLibraryUsageDescription` key is included in your `info.plist` when accessing the photo library. If you would like the ability for users to send images over chat then you must add this key with a short description to be displayed when Chat accesses the Photo Library. If this is omitted previous to iOS 10 then the upload button will simply be hidden.
+**Note:** As of iOS 10 (Xcode 8), Apple requires that the `NSPhotoLibraryUsageDescription` key is included in your `info.plist` when accessing the photo library. If you would like the ability for users to send images over chat then you must add this key with a short description to be displayed when Chat accesses the Photo Library. If this is omitted previous to iOS 10 then the upload button will simply be hidden.   
 
+<br>
 
 **Objective-C:**
 
@@ -104,7 +110,7 @@ Make sure you initialise the library with your Project Token (the unique identif
     return YES;
 }
 ```
-
+<br>
 
 **Swift:**
 
@@ -148,16 +154,14 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     return true
 }
 ``` 
-
+<br>
 
 
 ## Open Live Chat
 
 We know every app is deisgned differently, so rather than providing our own in-app chat button, it's up to you to choose how/when/where you provide the option to chat. Live chat could be part of help menu or have it's own dedicated icon in the UI. All you need to do is use the methods avaliable in our SDK to trigger live chat to open when your desired UI element is tapped.
 
-In our own app we've used a question mark icon to trigger chat to open:
-
-![iOS live chat](https://static.gosquared.com/images/liquidicity/16_10_12_ios_sdk_1.gif)
+In our own app we've used a question mark icon to trigger chat to open.
 
 
 #### Objective-C
@@ -188,9 +192,9 @@ import GoSquared
 @IBAction func buttonWasTapped(sender: AnyObject) {
     self.gs_presentChatViewController();
 }
-```
- 
- 
+```   
+<br>
+
 
 ## Displaying Number of Unread Messages
 
@@ -240,6 +244,7 @@ func unreadNotificationHandler(notification: NSNotification) {
 }
 
 ``` 
+<br>
 
 
 ## Displaying In-App Notification For New Messages
@@ -299,16 +304,17 @@ func newMessageHandler(notification: NSNotification) {
 }
 
 ``` 
+<br>
 
-
-
-## Create and update People profiles
+## Create and update People CRM profiles
 
 If your app requires a user to login, you can pass back their details (id, email address, etc) to GoSquared. This creates a profile for them in People CRM any any tracked actions from the seeion will be attributed to them. This is also very useful for identifying who you are talking to when the user starts a live chat.
 
 > **Note:** to track the user's device information (iOS version, IP address/location, screen size etc) you need to implement [page/screen view tracking](https://github.com/gosquared/gosquared-ios#page-view-screen-tracking) as currently this is the only way to update this info.
 
 Any events or custom properties you track during a session will then be attributed to this user.
+
+<br>
 
 ### Identify your user
 To identify a user you will need to provide an `id` or `email` property. This will create a new profile in [GoSquared People](https://www.gosquared.com/customer/en/portal/articles/2170492-an-introduction-to-gosquared-people) where all of the user's session data, events and custom properties will be tracked.
@@ -367,7 +373,7 @@ let properties = [
 GoSquared.sharedTracker().identify(properties: properties)
 ``` 
 
-
+<br>
 
 ### Unidentify (e.g. on logout)
 
@@ -384,16 +390,20 @@ By default we will cache the user's details when they close the app so we know w
 ```swift
 GoSquared.sharedTracker().unidentify();
 ``` 
-
+<br>
 
 ## Pageview (screen) Tracking
 
-When the user navigates between different screens/views in your app, we can track them as pageviews in GoSquared. These will show up in the Now and Trends dashboards. If you are identifying your users, they will also form part of that user's activtiy feed.
+GoSquared's history of website tracking means that a lot information about your users is expected to be tracked through a pageview. Pageviews don't translate perfectly to mobile app tracking, however, emulating a pageview when the `UIViewController` changes is the best method for updating your user's device/session information in People CRM and Live Chat.
 
-> **Note:** Tracking a page/screen view will also automatically track the user's device info (iOS version, IP address/location, screen size etc)
+> **Note:** Tracking a pageview will automatically track the user's iOS version, IP address/loaction, screen size, _Last seen_ online timestamp, and _Total visits_ count in People CRM and Live Chat.
+
+Pageviews will also form part of a user's session history in People CRM.
 
 
-### Automatic Page View Tracking (Recommended)
+### Automatic Pageview Tracking
+
+This method will automatically track changes to the UIViewController as new pageviews. This is the easiest method to install but can use more mobile data and battery power than your user's would like. For more fine grain control, use the manual pageview method instead.
 
 > **Note**: This is only available if you installed with CocoaPods.
 
@@ -420,7 +430,6 @@ If needed, you can disable tracking on individual ViewControllers, or set a cust
 ```
 
 
-
 **Swift:**
 
 ```swift
@@ -438,10 +447,11 @@ override func viewDidLoad() {
 }
 ``` 
 
+<br>
 
-### Manual Page View Tracking
+### Manual Pageview Tracking
 
-You can use one of the below methods to manually track a UIViewController:
+If you don't want to track every new screen, but you do want to track a user's device information, this method is recommended. Manually tracking a pageview will automatically update the user's device info and location in Live Chat and People CRM:
 
 **Objective-C:**
 
@@ -472,7 +482,7 @@ override func viewDidAppear(animated: Bool) {
 }
 
 ``` 
-
+<br>
 
 ## Event Tracking
 
@@ -507,7 +517,7 @@ You can optionally provide additional information as key value pairs within the 
 ```swift
 GoSquared.sharedTracker().trackEvent(name: "event name", properties: ["properties": "are cool"])
 ``` 
-
+<br>
 
 ## Transaction tracking (Ecommerce)
 
@@ -533,6 +543,7 @@ let coke = GSTransactionItem(name: "Coca Cola", price: 0.99, quantity: 6)
 GoSquared.sharedTracker().trackTransaction(id: "unique-id", items: [coke])
 ``` 
 
+<br>
 
 ## Code of Conduct
 
@@ -540,9 +551,13 @@ Please note that this project is released with a Contributor Code of Conduct. By
 
 Please see [CODE\_OF\_CONDUCT.md](https://github.com/gosquared/gosquared-ios/blob/master/CODE_OF_CONDUCT.md) for full terms.
 
+<br>
+
 ## License
 
 The MIT License (MIT)
+
+<br>
 
 ## Credits
 
