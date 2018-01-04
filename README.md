@@ -12,7 +12,7 @@ If you'd like to see our live chat SDK in action, we use it in our own app. Down
 * [Installation](https://github.com/gosquared/gosquared-ios#installation)
 * [Configuration](https://github.com/gosquared/gosquared-ios#configuration)
 * [Live Chat](https://github.com/gosquared/gosquared-ios#open-live-chat)
-* [Create and update People CRM profiles](https://github.com/gosquared/gosquared-ios#create-and-update-people-profiles)
+* [Create and update People CRM profiles](https://github.com/gosquared/gosquared-ios#create-and-update-people-crm-profiles)
 * [Screen/View tracking (pageviews)](https://github.com/gosquared/gosquared-ios#pageview-screen-tracking)
 * [Event tracking](https://github.com/gosquared/gosquared-ios#event-tracking)
 * [Transaction tracking (Ecommerce)](https://github.com/gosquared/gosquared-ios#transaction-tracking-ecommerce)
