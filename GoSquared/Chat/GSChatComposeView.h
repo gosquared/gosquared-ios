@@ -10,7 +10,7 @@
 #import "GSChatComposeTextView.h"
 #import "GSChatComposeViewDelegate.h"
 
-@interface GSChatComposeView : UIToolbar <UITextViewDelegate>
+@interface GSChatComposeView : UIView <UITextViewDelegate>
 
 @property id<GSChatComposeViewDelegate> composeViewDelegate;
 
