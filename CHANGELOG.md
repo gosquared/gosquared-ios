@@ -1,5 +1,11 @@
 # GoSquared iOS Change Log
 
+## 2018-03-28, [v1.0.2]
+
+### Fixed
+
+- Fixed issue where composer view would be unresponsive to touch input on iOS 11
+
 ## 2017-08-30, [v1.0.1]
 
 ### Fixed
