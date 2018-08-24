@@ -1,6 +1,6 @@
 # GoSquared Live Chat for iOS
 
-**Please open an issue if you find anything not working, or to leave feedback for improvement. You can also get in touch directly: <jt@gosquared.com>.**
+**To report an issue or leave feedback, please get in touch with us at https://www.gosquared.com/contact/**
 
 This guide is for adding People CRM tracking and Live Chat to your native iOS app.
 
