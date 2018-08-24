@@ -76,9 +76,10 @@ Make sure you initialise the library with your Project Token (the unique identif
     [GoSquared sharedTracker].token = @"your-project-token";
     [GoSquared sharedTracker].key   = @"your-api-key";
 
-    // this enables Secure Mode and is required for Live Chat. 
+    // this enables Secure Mode and is required for Live Chat.
     // generate a Secure Mode Secret from your Project Settings here:
     // https://www.gosquared.com/setup/general
+    // See below for more information about Secure Mode
     // [NOTE] If you are using the same project token on a website, you will also need to implement Secure Mode on your site too.
     [GoSquared sharedTracker].secret = @"your-secure-secret";
 
@@ -124,9 +125,10 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     GoSquared.sharedTracker().token = "your-project-token"
     GoSquared.sharedTracker().key   = "your-api-key"
 
-    // this enables Secure Mode and is required for Live Chat. 
+    // this enables Secure Mode and is required for Live Chat.
     // generate a Secure Mode Secret from your Project Settings here:
     // https://www.gosquared.com/setup/general
+    // See below for more information about Secure Mode
     // [NOTE] If you are using the same project token on a website, you will also need to implement Secure Mode on your site too.
     GoSquared.sharedTracker().secret = "your-secure-secret"
 
@@ -153,7 +155,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
     return true
 }
-``` 
+```
 <br>
 
 
@@ -243,7 +245,7 @@ func unreadNotificationHandler(notification: NSNotification) {
     // update ui with count
 }
 
-``` 
+```
 <br>
 
 
@@ -303,7 +305,7 @@ func newMessageHandler(notification: NSNotification) {
     // build and display ui for message notification
 }
 
-``` 
+```
 <br>
 
 ## Create and update People CRM profiles
@@ -371,7 +373,7 @@ let properties = [
 ]
 
 GoSquared.sharedTracker().identify(properties: properties)
-``` 
+```
 
 <br>
 
@@ -389,8 +391,51 @@ By default we will cache the user's details when they close the app so we know w
 
 ```swift
 GoSquared.sharedTracker().unidentify();
-``` 
+```
 <br>
+
+### Secure mode signature
+
+Secure Mode is an optional setting for tracking which provides an additional layer of security for People CRM and Live Chat. It is required in order to use Live Chat in the iOS SDK. For more information on how Secure Mode works, see our [tracking code docmentation](https://www.gosquared.com/docs/api/javascript-tracking-code/secure-mode/#).
+
+To implement Secure Mode in your iOS app, you have two options.
+
+#### Passing a signature with identify
+
+The recommended way to use Secure Mode is to generate a Person Signature server-side as part of your login process, and then pass this to the tracker whenever you call identify. The signature should be set immediately _before_ the identify so it can be sent along with the identify request:
+
+**Objective-C:**
+
+```objc
+[GoSquared sharedTracker].signature = @"your-person-signature";
+[[GoSquared sharedTracker] identifyWithProperties:...];
+```
+
+**Swift:**
+
+```swift
+GoSquared.sharedTracker().signature = "your-person-signature"
+GoSquared.sharedTracker().identify(properties:...)
+```
+<br>
+
+#### Embed your Secure Mode Secret directly in your app
+
+This is the simplest solution, since it generates a Person Signature dynamically when you call `identify` and enables the use of Live Chat. However, since it involves embedding your Secure Mode Secret in your App's binary, it is not recommended for production apps.
+
+**Objective-C:**
+
+```objc
+[GoSquared sharedTracker].secret = @"your-secure-secret";
+```
+
+**Swift:**
+
+```swift
+GoSquared.sharedTracker().secret = "your-secure-secret"
+```
+<br>
+
 
 ## Pageview (screen) Tracking
 
@@ -445,7 +490,7 @@ override func viewDidLoad() {
     // set this to true to disable tracking for a particular ViewController
     self.doNotTrack = true;
 }
-``` 
+```
 
 <br>
 
@@ -481,7 +526,7 @@ override func viewDidAppear(animated: Bool) {
     GoSquared.sharedTracker().trackScreen(title: self.title, path:"/custom-url-path")
 }
 
-``` 
+```
 <br>
 
 ## Event Tracking
@@ -516,7 +561,7 @@ You can optionally provide additional information as key value pairs within the 
 
 ```swift
 GoSquared.sharedTracker().trackEvent(name: "event name", properties: ["properties": "are cool"])
-``` 
+```
 <br>
 
 ## Transaction tracking (Ecommerce)
@@ -541,7 +586,7 @@ GSTransactionItem *coke = [GSTransactionItem transactionItemWithName:@"Coca Cola
 let coke = GSTransactionItem(name: "Coca Cola", price: 0.99, quantity: 6)
 
 GoSquared.sharedTracker().trackTransaction(id: "unique-id", items: [coke])
-``` 
+```
 
 <br>
 
